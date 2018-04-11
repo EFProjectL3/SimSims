@@ -5,14 +5,14 @@
 
 forme::forme(int id, int nbFac, int nbSom, int nbAtt, int nbrSommetParFaceMax, int ** facCons, struct sommet * tabSom, struct face * tabFac, std::map<std::string,float> tabAtt) : _idForme(id), _nbrFaces(nbFac), _nbrSommets(nbSom), _nbrAttributs(nbAtt), _nbrSommetParFaceMax(nbrSommetParFaceMax), _faceConstruction(facCons), _sommets(tabSom), _faces(tabFac), _attributs(tabAtt)
 {}
-
-forme::forme(std::shared_ptr<forme> f): _idForme(f->getId()), _nbrFaces(f->getNbrFace()), _nbrSommets(f->getNbrSommet()), _nbrAttributs(f->getNbrAtt()), _nbrSommetParFaceMax(f->getnbrSommetsParFaceMax())
+/*
+forme::forme(forme & f): _idForme(f.getId()), _nbrFaces(f.getNbrFace()), _nbrSommets(f.getNbrSommet()), _nbrAttributs(f.getNbrAtt()), _nbrSommetParFaceMax(f.getnbrSommetsParFaceMax())
 {
-    _faceConstruction = f->getFaceConstruction();
-    _sommets = f->getSommets();
-    _faces = f->getFaces();
-    _attributs = f->getAttributs();
-}
+    _faceConstruction = f.getFaceConstruction();
+    _sommets = f.getSommets();
+    _faces = f.getFaces();
+    _attributs = f.getAttributs();
+}*/
 
 void forme::setAttribut(std::vector<float> valeursAtt)
 {
@@ -51,6 +51,12 @@ void forme::infoForme()
         std::cout << (*it).first << "," << (*it).second << " | ";
     }
     std::cout << std::endl;
+    std::cout << "Tableau de construction" << std::endl;
+    for (int i(0); i<100; i++)
+        for (int j(0); j<3; j++)
+            std::cout << "Initiale[" << i << "][" << j << "] : " << getFaceConstruction()[i][j] << std::endl;
+            //std::cout << "Initiale[" << i << "][" << j << "] : " << _faceConstruction[i][j] << std::endl;
+    std::cout << std::endl;
 
     std::cout << "Tableau des sommets (coordonnées)" << std::endl;
     for (int i(0); i<_nbrSommets; i++)
@@ -88,7 +94,7 @@ void forme::afficher_forme()
             for (i=0; i<=2; i++)	// on parcours les 3 sommets de chaque face
             {
                 glVertex3f(
-                            _sommets[_faceConstruction[j][i]].coordonnees.x,
+                        _sommets[_faceConstruction[j][i]].coordonnees.x,
                         _sommets[_faceConstruction[j][i]].coordonnees.y,
                         _sommets[_faceConstruction[j][i]].coordonnees.z
                         );

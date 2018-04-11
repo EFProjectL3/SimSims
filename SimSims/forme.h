@@ -37,8 +37,6 @@ public:
     forme(int id, int nbFac, int nbSom, int nbAtt, int nbrSommetParFaceMax, int ** faceCons, struct sommet * tabSom, struct face * tabFac, std::map<std::string,float> tabAtt);
     ~forme();
 
-    forme(std::shared_ptr<forme> f);
-
     forme creation_forme();
 
     //void calcul_normale(float s0x, float s0y, float s0z, float s1x, float s1y, float s1z, float s2x, float s2y, float s2z, struct normale * normale);
