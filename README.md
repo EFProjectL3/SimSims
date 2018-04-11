@@ -1,2 +1,4 @@
 # SimSims
-L3 Project
+Projet SimSims L3 Informatique Angers
+
+Test

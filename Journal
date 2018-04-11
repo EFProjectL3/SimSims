@@ -1,0 +1,26 @@
+Semaine 1:
+Réflexion:
+- Choix de la façon dont on lit le fichier
+- Choix de base par rapport à l'aspect de l'interface
+	- Coordination entre l'interface et la lecture du fichier
+	- Consultation des possibilités sur la doc Qt
+Code:
+- Anaïs s'est occupée de l'implémentation initiale de l'interface
+	- mainwindwow
+	- popus
+- Bastien s'est occupé de la lecture du fichier
+- A et B: Implémentation de l'openGl dans le programme de base
+
+
+Semaine 2: Objectif de mise en commun, affichage d'un élément lorsque l'on veut,
+		modification de ses propriétés
+	//Lundi
+Réflexion:
+Code:
+- Lecture initiale terminée
+- Signaux et slots de l'interface
+	//Mardi
+Mardi:
+- Lecture de deux formes différentes (normales à revoir)
+- Mise en commun des deux aspects
+
