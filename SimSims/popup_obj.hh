@@ -41,4 +41,6 @@ private:
                     QLineEdit * _le_attribut3;
 
         WidgetOGL * _affichage_popup;
+
+        unsigned int _idFormePopup;
 };

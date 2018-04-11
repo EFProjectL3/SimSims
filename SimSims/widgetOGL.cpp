@@ -1,9 +1,7 @@
 #include "widgetOGL.h"
 #include <GL/glut.h>
-#include <memory>
 #include <QOpenGLTexture>
 #include <iostream>
-#include "forme.h"
 #include "affichage.hh"
 
 extern std::vector<std::shared_ptr<forme>> TOUTES_LES_FORMES;
@@ -11,8 +9,10 @@ extern std::vector<QOpenGLTexture *> TOUTES_LES_TEXTURES;
 
 int angleX;
 int angleY;
+int anglePopupX;
+int anglePopupY;
 
-WidgetOGL::WidgetOGL(int fps, QWidget *parent, std::string type) : QOpenGLWidget(parent), _type(type)
+WidgetOGL::WidgetOGL(int fps, QWidget *parent, std::string type) : QOpenGLWidget(parent), _type(type), _formesAAfficher()
 {
     setFocusPolicy(Qt::StrongFocus);
 
@@ -196,7 +196,33 @@ void WidgetOGL::paintGL()
 
     //C'est ici qu'il faudra lire le fichier des données à afficher
 
-    affichage(_type);
+    if (_type == "main")   //affichage de toutes les formes
+    {
+        glRotatef(angleX,0,1,0);
+        glRotatef(angleY,1,0,0);
+
+        for (unsigned int i(0); i<_formesAAfficher.size(); i++)
+            _formesAAfficher[i]->afficher_forme();
+    }
+    else if (_type == "popup")  //affichage type popu
+    {
+        glPushMatrix();
+        {
+            anglePopupX++;
+            anglePopupY=anglePopupY+2;
+            glRotatef(anglePopupX,0,1,0);
+            glRotatef(anglePopupY,1,0,0);
+
+            if (_formesAAfficher.size()>0)
+                _formesAAfficher[0]->afficher_forme();
+
+        }
+        glPopMatrix();
+    }
+
+
+
+    //affichage(_type);
 }
 
 void WidgetOGL::resizeGL(int Width, int Height)

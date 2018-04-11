@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <vector>
 #include <iostream>
+#include <memory>
 
 #include "normale.hh"
 
@@ -36,7 +37,6 @@ public:
     forme(int id, int nbFac, int nbSom, int nbAtt, int nbrSommetParFaceMax, int ** faceCons, struct sommet * tabSom, struct face * tabFac, std::map<std::string,float> tabAtt);
     ~forme();
 
-
     forme creation_forme();
 
     //void calcul_normale(float s0x, float s0y, float s0z, float s1x, float s1y, float s1z, float s2x, float s2y, float s2z, struct normale * normale);
@@ -47,6 +47,29 @@ public:
 
     void test()
     { std::cout << "ID FORME EN COURS: " << _idForme << std::endl; }
+
+    /* Setters */
+    void setAttribut(std::vector<float> valeursAtt);
+
+    /* Getters */
+    int getId()
+    {return _idForme;}
+    int getNbrFace()
+    {return _nbrFaces;}
+    int getNbrSommet()
+    {return _nbrSommets;}
+    int getNbrAtt()
+    {return _nbrAttributs;}
+    int getnbrSommetsParFaceMax()
+    {return _nbrSommetParFaceMax;}
+    int ** getFaceConstruction()
+    {return _faceConstruction;}
+    struct sommet * getSommets()
+    { return _sommets; }
+    struct face * getFaces()
+    { return _faces; }
+    std::map<std::string,float> getAttributs()
+    { return _attributs; }
 
 private:
     int _idForme;

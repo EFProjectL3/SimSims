@@ -157,7 +157,7 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
 
         int ** facesTabTmp = new int*[100];  //correspond au tableau de construction des faces
         for(int i(0); i < 100; i++)
-        { facesTabTmp[i] = new int[100]; }
+        { facesTabTmp[i] = new int[3]; }
         int ** somTabTmp = new int*[100];   //correspond au tableau de construction des sommets
         for(int i(0); i < 100; i++)
         { somTabTmp[i] = new int[3]; }

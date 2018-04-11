@@ -7,12 +7,11 @@ extern std::vector<std::shared_ptr<forme>> TOUTES_LES_FORMES;
 extern int angleX;
 extern int angleY;
 
-int anglePopupX;
-int anglePopupY;
+
 
 void affichage(std::string type)
 {
-    if (type == "main")   //affichage de toutes les formes
+   /* if (type == "main")   //affichage de toutes les formes
     {
 //DebutAffichageMain
         glPushMatrix();
@@ -38,5 +37,5 @@ TOUTES_LES_FORMES[1]->afficher_forme();
 //FinAffichagePopup
         }
         glPopMatrix();
-    }
+    }*/
 }

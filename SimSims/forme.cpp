@@ -2,12 +2,27 @@
 #include <math.h>
 #include <iostream>
 
+
 forme::forme(int id, int nbFac, int nbSom, int nbAtt, int nbrSommetParFaceMax, int ** facCons, struct sommet * tabSom, struct face * tabFac, std::map<std::string,float> tabAtt) : _idForme(id), _nbrFaces(nbFac), _nbrSommets(nbSom), _nbrAttributs(nbAtt), _nbrSommetParFaceMax(nbrSommetParFaceMax), _faceConstruction(facCons), _sommets(tabSom), _faces(tabFac), _attributs(tabAtt)
+{}
+/*
+forme::forme(forme & f): _idForme(f.getId()), _nbrFaces(f.getNbrFace()), _nbrSommets(f.getNbrSommet()), _nbrAttributs(f.getNbrAtt()), _nbrSommetParFaceMax(f.getnbrSommetsParFaceMax())
 {
+    _faceConstruction = f.getFaceConstruction();
+    _sommets = f.getSommets();
+    _faces = f.getFaces();
+    _attributs = f.getAttributs();
+}*/
 
-
+void forme::setAttribut(std::vector<float> valeursAtt)
+{
+    unsigned int indice = 0;
+    for (std::map<std::string,float>::iterator it = _attributs.begin(); it!=_attributs.end();++it)
+    {
+        float valeur = valeursAtt[indice];
+        it->second = valeur;
+    }
 }
-
 
 forme::~forme(){}
 
@@ -35,6 +50,12 @@ void forme::infoForme()
     {
         std::cout << (*it).first << "," << (*it).second << " | ";
     }
+    std::cout << std::endl;
+    std::cout << "Tableau de construction" << std::endl;
+    for (int i(0); i<100; i++)
+        for (int j(0); j<3; j++)
+            std::cout << "Initiale[" << i << "][" << j << "] : " << getFaceConstruction()[i][j] << std::endl;
+            //std::cout << "Initiale[" << i << "][" << j << "] : " << _faceConstruction[i][j] << std::endl;
     std::cout << std::endl;
 
     std::cout << "Tableau des sommets (coordonnées)" << std::endl;

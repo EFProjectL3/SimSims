@@ -4,18 +4,22 @@
 #include <iostream>
 #include "forme.h"
 
+
 extern std::vector<std::shared_ptr<forme>> TOUTES_LES_FORMES;
 extern std::vector<QOpenGLTexture *> TOUTES_LES_TEXTURES;
 extern std::vector<std::string> NOM_DES_FORMES;
 
 PopUpObjet::PopUpObjet()
 {
+    _idFormePopup = 75000;
+
     setFixedSize(600, 250);
 
     _layoutPrincipal = new QGridLayout(this);
 
     _layoutObjetPopup = new QGridLayout();
     _affichage_popup = new WidgetOGL(60,this,"popup");
+    _affichage_popup->ajouterForme(TOUTES_LES_FORMES[0]);
     _affichage_popup->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 
@@ -87,19 +91,77 @@ PopUpObjet::~PopUpObjet()
 void PopUpObjet::OnClicCancel()
 {
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Cancel", "Voulez-vous annuler la création de la nouvelle lumière positionnelle ?", (QMessageBox::No | QMessageBox::Yes));
+    reply = QMessageBox::question(this, "Cancel", "Voulez-vous annuler la création du nouvel objet ?", (QMessageBox::No | QMessageBox::Yes));
     if (reply == QMessageBox::Yes)
         this->close();
 }
 
 void PopUpObjet::EcritureAffichagePopup(QString text)
 {
+    std::cout << "TEST ICI" << std::endl;
     unsigned int j(0);
-    bool trouve = false;
+    //bool trouve = false;
     while (j<NOM_DES_FORMES.size())
     {
         if (text == QString::fromStdString(NOM_DES_FORMES[j]))
         {
+            std::cout << "Test là" << std::endl;
+            _affichage_popup->toutEffacer();
+            if (text.toStdString() == "CUBE")
+            {
+                std::cout << "Je suis là" << std::endl;
+                /* Copie de la forme de base, afin de ne pas juste faire pointer les pointeurs vers les tableaux initiaux */
+                int ** facesCons = new int*[100];  //correspond au tableau de construction des faces
+                for(int i(0); i < 100; i++)
+                { facesCons[i] = new int[3]; }
+                std::cout << "Je suis là0" << std::endl;
+                for (int i(0); i<100; i++)
+                {
+                    for (int k(0); k<3; k++)
+                    {
+                        if (i<TOUTES_LES_FORMES[j]->getNbrFace())
+                            facesCons[i][k] = TOUTES_LES_FORMES[j]->getFaceConstruction()[i][k];
+                        else
+                            facesCons[i][k] = 0;
+                        std::cout << "Initiale[" << i << "][" << k << "] : " << TOUTES_LES_FORMES[j]->getFaceConstruction()[i][k] << std::endl;
+                        std::cout << "FaceCons[" << i << "][" << k << "] : " << facesCons[i][k] << std::endl;
+                    }
+                }
+                std::cout << "Je suis là1" << std::endl;
+                sommet * somTmp = new sommet [50];
+                for (int i(0); i<TOUTES_LES_FORMES[j]->getNbrSommet(); i++)
+                    somTmp[i] = TOUTES_LES_FORMES[j]->getSommets()[i];
+                std::cout << "Je suis là2" << std::endl;
+                face * facTmp = new face [50];     //tableau de faces
+                for (int i(0); i<TOUTES_LES_FORMES[j]->getNbrFace(); i++)
+                    facTmp[i] = TOUTES_LES_FORMES[j]->getFaces()[i];
+                /******************************************************************************/
+                std::cout << "Je suis là3" << std::endl;
+                auto formePtr = std::make_shared<forme>(
+                            _idFormePopup,
+                            TOUTES_LES_FORMES[j]->getNbrFace(),
+                            TOUTES_LES_FORMES[j]->getNbrSommet(),
+                            TOUTES_LES_FORMES[j]->getNbrAtt(),
+                            TOUTES_LES_FORMES[j]->getnbrSommetsParFaceMax(),
+                            facesCons,
+                            somTmp,
+                            facTmp,
+                            TOUTES_LES_FORMES[j]->getAttributs());
+                std::cout << "Je suis là4" << std::endl;
+                std::vector<float> test;
+                test.push_back(4);
+                test.push_back(2);
+                std::cout << "Je suis là5" << std::endl;
+                formePtr->setAttribut(test);
+                std::cout << "Je suis là6" << std::endl;
+                formePtr->infoForme();
+
+                std::cout << "FINI0?" << std::endl;
+                _affichage_popup->ajouterForme(formePtr);
+                std::cout << "FINI?" << std::endl;
+            }
+            //_affichage_popup->
+            /*
             std::cout << "COMBO: " << text.toStdString() << std::endl;
             std::cout << "NOM FORME: " << NOM_DES_FORMES[j] << std::endl;
             std::ifstream fichier("../SimSims/affichage.cpp",std::ios::in);  // Flux de lecture
@@ -132,7 +194,7 @@ void PopUpObjet::EcritureAffichagePopup(QString text)
                 }
                 remove("../SimSims/affichage.cpp");
                 rename("../SimSims/affichageTmp.cpp", "../SimSims/affichage.cpp");
-                /*
+                *
                  *
                  *
                  *
@@ -148,7 +210,7 @@ void PopUpObjet::EcritureAffichagePopup(QString text)
                  *
                  *
                  * */
-                /* Test pour réinitialiser le popup */
+            /* Test pour réinitialiser le popup *
                 delete _affichage_popup;
                 _affichage_popup = new WidgetOGL(60,this,"popup");
                 _affichage_popup->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -159,7 +221,7 @@ void PopUpObjet::EcritureAffichagePopup(QString text)
             else
             {
                 std::cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << std::endl;
-            }
+            }*/
         }
         j++;
     }
