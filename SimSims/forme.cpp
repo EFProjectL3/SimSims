@@ -2,12 +2,27 @@
 #include <math.h>
 #include <iostream>
 
+
 forme::forme(int id, int nbFac, int nbSom, int nbAtt, int nbrSommetParFaceMax, int ** facCons, struct sommet * tabSom, struct face * tabFac, std::map<std::string,float> tabAtt) : _idForme(id), _nbrFaces(nbFac), _nbrSommets(nbSom), _nbrAttributs(nbAtt), _nbrSommetParFaceMax(nbrSommetParFaceMax), _faceConstruction(facCons), _sommets(tabSom), _faces(tabFac), _attributs(tabAtt)
+{}
+
+forme::forme(std::shared_ptr<forme> f): _idForme(f->getId()), _nbrFaces(f->getNbrFace()), _nbrSommets(f->getNbrSommet()), _nbrAttributs(f->getNbrAtt()), _nbrSommetParFaceMax(f->getnbrSommetsParFaceMax())
 {
-
-
+    _faceConstruction = f->getFaceConstruction();
+    _sommets = f->getSommets();
+    _faces = f->getFaces();
+    _attributs = f->getAttributs();
 }
 
+void forme::setAttribut(std::vector<float> valeursAtt)
+{
+    unsigned int indice = 0;
+    for (std::map<std::string,float>::iterator it = _attributs.begin(); it!=_attributs.end();++it)
+    {
+        float valeur = valeursAtt[indice];
+        it->second = valeur;
+    }
+}
 
 forme::~forme(){}
 
@@ -73,7 +88,7 @@ void forme::afficher_forme()
             for (i=0; i<=2; i++)	// on parcours les 3 sommets de chaque face
             {
                 glVertex3f(
-                        _sommets[_faceConstruction[j][i]].coordonnees.x,
+                            _sommets[_faceConstruction[j][i]].coordonnees.x,
                         _sommets[_faceConstruction[j][i]].coordonnees.y,
                         _sommets[_faceConstruction[j][i]].coordonnees.z
                         );

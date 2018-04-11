@@ -16,6 +16,7 @@ PopUpObjet::PopUpObjet()
 
     _layoutObjetPopup = new QGridLayout();
     _affichage_popup = new WidgetOGL(60,this,"popup");
+    _affichage_popup->ajouterForme(TOUTES_LES_FORMES[0]);
     _affichage_popup->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 
@@ -87,7 +88,7 @@ PopUpObjet::~PopUpObjet()
 void PopUpObjet::OnClicCancel()
 {
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Cancel", "Voulez-vous annuler la création de la nouvelle lumière positionnelle ?", (QMessageBox::No | QMessageBox::Yes));
+    reply = QMessageBox::question(this, "Cancel", "Voulez-vous annuler la création du nouvel objet ?", (QMessageBox::No | QMessageBox::Yes));
     if (reply == QMessageBox::Yes)
         this->close();
 }
@@ -100,6 +101,17 @@ void PopUpObjet::EcritureAffichagePopup(QString text)
     {
         if (text == QString::fromStdString(NOM_DES_FORMES[j]))
         {
+            _affichage_popup->toutEffacer();
+            if (text.toStdString() == "CUBE")
+            {
+                forme f = new forme(TOUTES_LES_FORMES[j]);
+
+
+                f.
+                _affichage_popup->ajouterForme(TOUTES_LES_FORMES[j]);
+            }
+            //_affichage_popup->
+            /*
             std::cout << "COMBO: " << text.toStdString() << std::endl;
             std::cout << "NOM FORME: " << NOM_DES_FORMES[j] << std::endl;
             std::ifstream fichier("../SimSims/affichage.cpp",std::ios::in);  // Flux de lecture
@@ -148,7 +160,7 @@ void PopUpObjet::EcritureAffichagePopup(QString text)
                  *
                  *
                  * */
-                /* Test pour réinitialiser le popup */
+                /* Test pour réinitialiser le popup *
                 delete _affichage_popup;
                 _affichage_popup = new WidgetOGL(60,this,"popup");
                 _affichage_popup->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -159,7 +171,7 @@ void PopUpObjet::EcritureAffichagePopup(QString text)
             else
             {
                 std::cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << std::endl;
-            }
+            }*/
         }
         j++;
     }

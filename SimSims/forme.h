@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <vector>
 #include <iostream>
+#include <memory>
 
 #include "normale.hh"
 
@@ -36,6 +37,7 @@ public:
     forme(int id, int nbFac, int nbSom, int nbAtt, int nbrSommetParFaceMax, int ** faceCons, struct sommet * tabSom, struct face * tabFac, std::map<std::string,float> tabAtt);
     ~forme();
 
+    forme(std::shared_ptr<forme> f);
 
     forme creation_forme();
 
@@ -47,6 +49,29 @@ public:
 
     void test()
     { std::cout << "ID FORME EN COURS: " << _idForme << std::endl; }
+
+    /* Setters */
+    void setAttribut(std::vector<float> valeursAtt);
+
+    /* Getters */
+    int getId()
+    {return _idForme;}
+    int getNbrFace()
+    {return _nbrFaces;}
+    int getNbrSommet()
+    {return _nbrSommets;}
+    int getNbrAtt()
+    {return _nbrAttributs;}
+    int getnbrSommetsParFaceMax()
+    {return _nbrSommetParFaceMax;}
+    int ** getFaceConstruction()
+    {return _faceConstruction;}
+    struct sommet * getSommets()
+    { return _sommets; }
+    struct face * getFaces()
+    { return _faces; }
+    std::map<std::string,float> getAttributs()
+    { return _attributs; }
 
 private:
     int _idForme;

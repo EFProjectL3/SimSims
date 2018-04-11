@@ -5,6 +5,8 @@
 #include <QTimer>
 #include <QKeyEvent>
 #include <string>
+#include <memory>
+#include "forme.h"
 
 class WidgetOGL : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -16,7 +18,11 @@ public:
 
     void chargerTexture(std::string nomTexture);
 
+    void ajouterForme(std::shared_ptr<forme> frm)
+    { _formesAAfficher.push_back(frm); }
 
+    void toutEffacer()
+    { _formesAAfficher.clear(); }
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
@@ -58,4 +64,6 @@ private:
     float _ambianteR;
     float _ambianteV;
     float _ambianteB;
+
+    std::vector<std::shared_ptr<forme>> _formesAAfficher;
 };
