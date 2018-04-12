@@ -23,8 +23,7 @@ SOURCES += main.cpp\
         popup_lum.cc\
         popup_obj.cc\
         affichage.cpp\
-        lumierepos.cc\
-        objet.cc
+        lumierepos.cc
 
 HEADERS  += widgetOGL.h\
          mainwindow.h\
@@ -33,8 +32,7 @@ HEADERS  += widgetOGL.h\
          popup_lum.hh\
          popup_obj.hh\
          affichage.hh\
-         lumierepos.hh\
-         objet.hh
+         lumierepos.hh
 
 LIBS += -lglut -lGLU
 

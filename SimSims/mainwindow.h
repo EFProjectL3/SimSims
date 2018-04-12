@@ -36,7 +36,6 @@ public slots:
     void OnClicDeleteObj();
 
     void receptionLumiere(LumierePos lp);
-    void receptionObjet(Objet o);
 
 private:
     QGridLayout * _layoutprincipal;
@@ -265,7 +264,6 @@ private:
         std::vector<QOpenGLTexture *> TOUTES_LES_TEXTURES;
         std::vector<std::string> NOM_DES_FORMES;
         std::vector<LumierePos> ENSEMBLE_LUM_POS;
-        std::vector<Objet> ENSEMBLE_OBJET;
 
     QWidget * _window;
 };
