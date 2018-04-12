@@ -14,15 +14,18 @@ Code:
 
 Semaine 2: Objectif de mise en commun, affichage d'un élément lorsque l'on veut,
 		modification de ses propriétés
+		
 	//Lundi
 Réflexion:
 Code:
 - Lecture initiale terminée
 - Signaux et slots de l'interface
+
 	//Mardi
 Code:
 - Lecture de deux formes différentes (normales à revoir)
 - Mise en commun des deux aspects
+
 	//Mercredi
 Reflexion:
 - Choix de la façon dont on affiche les éléments. Modification en temps réel (avec les shared libraries) si le temps le permet
@@ -36,7 +39,11 @@ Code:
 Reflexion:
 - Case à cocher pour afficher une sphère au niveau de l'origine de la lumière positionnelle
 - Pour le moment dans le popup les attributs ne sont pas entièrement automatique, à voir si ça peut être réglé
+- Idée du zoom avec la molette sur la partie openGL du popup objet
+- Utilisation de std::stringstream pour les transformation float/chaine
+
 Code:
-- B: Affichage finalement réussi. Signaux et slot pour attributs automatiques et rendu en temps réel
+- B: Affichage finalement réussi. Signaux et slot pour attributs quasi automatiques (manque les attributs dépendants d'autre attributs) et rendu en temps réel
 - A: Classe lumière et gestion du popup lumière	ainsi que du stockage de celles ci dans le mainwindow
-- B: Modification de l'implétmentation: les extern ont été rendus obsolètes
+- B: Modification de l'implémentation: les extern ont été rendus obsolètes
+=============> Sortie SimSims v0.2

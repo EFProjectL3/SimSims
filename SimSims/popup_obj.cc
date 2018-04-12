@@ -32,7 +32,7 @@ PopUpObjet::PopUpObjet(std::vector<std::string> noms) : NOM_DES_FORMES_POPUP(nom
 
     _selectForm = new QComboBox(this);
     for (unsigned int i(0); i<NOM_DES_FORMES_POPUP.size(); i++)
-      _selectForm->addItem(QString::fromStdString(NOM_DES_FORMES_POPUP[i]));
+        _selectForm->addItem(QString::fromStdString(NOM_DES_FORMES_POPUP[i]));
     _selectForm->setMaximumWidth(150);
 
     _name_obj = new QLabel("Nom : ", this);
@@ -109,10 +109,9 @@ void PopUpObjet::OnClicCancel()
 void PopUpObjet::AffichagePopup(QString text)
 {
     unsigned int j(0);
-    //bool trouve = false;
     while (j<NOM_DES_FORMES_POPUP.size())
     {
-        if (text == QString::fromStdString(NOM_DES_FORMES_POPUP[j]))
+        if (_selectForm->currentText() == QString::fromStdString(NOM_DES_FORMES_POPUP[j]))
         {
             _affichage_popup->toutEffacer();
             std::vector<float> attributs;
@@ -149,9 +148,16 @@ void PopUpObjet::AffichagePopup(QString text)
                 attributs.push_back(2.5*_le_attribut2->text().toFloat());
                 attributs.push_back(2.5*_le_attribut3->text().toFloat());
             }
-            std::cout << "Attributs pour la forme " << NOM_DES_FORMES_POPUP[j] << std::endl;
-            for (unsigned int i(0); i<attributs.size(); i++)
-                std::cout << "Attribut " << i << ": " << attributs[0] << std::endl;
+            if (j == 2)
+            {
+                attributs.push_back(_le_attribut1->text().toFloat());
+                attributs.push_back(_le_attribut2->text().toFloat());
+                attributs.push_back(_le_attribut3->text().toFloat());
+                attributs.push_back(0.5*_le_attribut1->text().toFloat());
+                attributs.push_back(0.5*_le_attribut2->text().toFloat());
+                attributs.push_back(0.5*_le_attribut3->text().toFloat());
+            }
+
             char * fichierDonnees = "./FICHIER_DE_DONNEES";
 
             std::shared_ptr<forme> ptrForme;

@@ -5,7 +5,7 @@
 #include "iostream"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),TOUTES_LES_FORMES(),TOUTES_LES_TEXTURES(), NOM_DES_FORMES(), ENSEMBLE_LUM_POS()
+    QMainWindow(parent),TOUTES_LES_FORMES(),TOUTES_LES_ADRESSE_TEXTURES(), NOM_DES_FORMES(), ENSEMBLE_LUM_POS()
 {
     resize(1200, 600);
 
@@ -26,7 +26,11 @@ MainWindow::MainWindow(QWidget *parent) :
     // Obtention du vecteur avec le nom des formes (on connait donc le nombre avec sa taille)
     NOM_DES_FORMES = lireIntro(fichierDonnees);
     std::cout << "Terminé." << std::endl;
-
+    std::cout << "LECTURE DES TEXTURESS" << std::endl;
+    // Obtention du vecteur avec le nom des formes (on connait donc le nombre avec sa taille)
+    TOUTES_LES_ADRESSE_TEXTURES = lireAdresseTextures(fichierDonnees);
+    std::cout << "Terminé." << std::endl;
+    /***************************************/
     /* -------------------- ONGLET LUMIERES -------------------- */
     _layoutLumiere = new QGridLayout();
     QWidget * _wLumiere = new QWidget(this);

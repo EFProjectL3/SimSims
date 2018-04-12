@@ -132,6 +132,7 @@ void WidgetOGL::initializeGL()
     /********** TEXTURES ************/
     /*glGenTextures(47,textures);
 
+
     //Murs en papier peint
     TEXTURE_STRUCT * TXpapierP = readPpm("./Images/murs.ppm");
     glBindTexture(GL_TEXTURE_2D,textures[1]);
