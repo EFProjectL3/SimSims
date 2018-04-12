@@ -52,7 +52,7 @@ void forme::infoForme()
     }
     std::cout << std::endl;
     std::cout << "Tableau de construction" << std::endl;
-    for (int i(0); i<100; i++)
+    for (int i(0); i<_nbrFaces; i++)
         for (int j(0); j<3; j++)
             std::cout << "Initiale[" << i << "][" << j << "] : " << getFaceConstruction()[i][j] << std::endl;
             //std::cout << "Initiale[" << i << "][" << j << "] : " << _faceConstruction[i][j] << std::endl;

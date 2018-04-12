@@ -20,6 +20,9 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    std::vector<std::string> getNomFormes()
+    { return NOM_DES_FORMES; }
+
 public slots:
     void SliderALineEdit(int i);
 
@@ -31,6 +34,8 @@ public slots:
 
     void OnClicDeleteLum();
     void OnClicDeleteObj();
+
+    void receptionLumiere(LumierePos lp);
 
 private:
     QGridLayout * _layoutprincipal;
@@ -254,6 +259,11 @@ private:
 
         int _nbLumierePos;
         int _nbObjet;
+
+        std::vector<std::shared_ptr<forme>> TOUTES_LES_FORMES;
+        std::vector<QOpenGLTexture *> TOUTES_LES_TEXTURES;
+        std::vector<std::string> NOM_DES_FORMES;
+        std::vector<LumierePos> ENSEMBLE_LUM_POS;
 
     QWidget * _window;
 };

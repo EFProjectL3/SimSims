@@ -2,10 +2,9 @@
 #include <GL/glut.h>
 #include <QOpenGLTexture>
 #include <iostream>
-#include "affichage.hh"
 
-extern std::vector<std::shared_ptr<forme>> TOUTES_LES_FORMES;
-extern std::vector<QOpenGLTexture *> TOUTES_LES_TEXTURES;
+//extern std::vector<std::shared_ptr<forme>> TOUTES_LES_FORMES;
+//extern std::vector<QOpenGLTexture *> TOUTES_LES_TEXTURES;
 
 int angleX;
 int angleY;
@@ -30,8 +29,10 @@ WidgetOGL::WidgetOGL(int fps, QWidget *parent, std::string type) : QOpenGLWidget
     /* Camera */
     _posxcam = 0;
     _posycam = 0;
-    _poszcam = -5;
-
+    if (_type == "main")
+        _poszcam = -5;
+    else
+        _poszcam = -8;
     /* Lumières */
     _ambianteR = 0.8;
     _ambianteV = 0.8;

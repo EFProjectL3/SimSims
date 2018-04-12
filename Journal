@@ -20,7 +20,23 @@ Code:
 - Lecture initiale terminée
 - Signaux et slots de l'interface
 	//Mardi
-Mardi:
+Code:
 - Lecture de deux formes différentes (normales à revoir)
 - Mise en commun des deux aspects
+	//Mercredi
+Reflexion:
+- Choix de la façon dont on affiche les éléments. Modification en temps réel (avec les shared libraries) si le temps le permet
+- Idée du save and load si on peut le faire (sauvegarde de l'affichage en cours pour repartir de ça
+- Drag and drop des textures à terme
 
+Code:
+- Affichage des éléments dans le popup objet (beaucoup de temps perdu)
+	
+	//Jeudi
+Reflexion:
+- Case à cocher pour afficher une sphère au niveau de l'origine de la lumière positionnelle
+- Pour le moment dans le popup les attributs ne sont pas entièrement automatique, à voir si ça peut être réglé
+Code:
+- B: Affichage finalement réussi. Signaux et slot pour attributs automatiques et rendu en temps réel
+- A: Classe lumière et gestion du popup lumière	ainsi que du stockage de celles ci dans le mainwindow
+- B: Modification de l'implétmentation: les extern ont été rendus obsolètes

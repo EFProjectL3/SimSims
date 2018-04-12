@@ -1,15 +1,11 @@
 #include "mainwindow.h"
 #include <memory>
 #include "forme.h"
-
+#include "lectureDoc.h"
 #include "iostream"
 
-extern std::vector<std::shared_ptr<forme>> TOUTES_LES_FORMES;
-extern std::vector<QOpenGLTexture *> TOUTES_LES_TEXTURES;
-extern std::vector<std::string> NOM_DES_FORMES;
-
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent)
+    QMainWindow(parent),TOUTES_LES_FORMES(),TOUTES_LES_TEXTURES(), NOM_DES_FORMES(), ENSEMBLE_LUM_POS()
 {
     resize(1200, 600);
 
@@ -24,6 +20,12 @@ MainWindow::MainWindow(QWidget *parent) :
     _nbLumierePos = 0;
     _nbObjet = 0;
 
+    /* Chargement initial des informations */
+    char * fichierDonnees = "./FICHIER_DE_DONNEES";
+    std::cout << "LECTURE DU NOM DES FORMES" << std::endl;
+    // Obtention du vecteur avec le nom des formes (on connait donc le nombre avec sa taille)
+    NOM_DES_FORMES = lireIntro(fichierDonnees);
+    std::cout << "Terminé." << std::endl;
 
     /* -------------------- ONGLET LUMIERES -------------------- */
     _layoutLumiere = new QGridLayout();
@@ -670,6 +672,11 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {}
 
+/**
+ * @brief MainWindow::SliderALineEdit
+ * @param i
+ * Met le LineEdit à la valeur indiquée par le Slider
+ */
 void MainWindow::SliderALineEdit(int i)
 {
     QString texte = QString::number(i);
@@ -705,32 +712,43 @@ void MainWindow::SliderALineEdit(int i)
         _le_angZ_obj->setText(texte);
 }
 
+/**
+ * @brief MainWindow::PopUpLum
+ * Fait apparaître la fenêtre de création de lumières positionnelles
+ */
 void MainWindow::PopUpLum()
 {
     PopUpLumiere * ppl = new PopUpLumiere;
+
     /* On empêche de toucher à la fenêtre parent pendant que la fenêtre enfant est ouverte */
     ppl->setWindowModality(Qt::ApplicationModal);
     ppl->show();
 
     QObject::connect(ppl->_create_lp, &QPushButton::clicked, this, &MainWindow::IncNbLum);
 
-    /* Si je veux le mettre, quand je créer ou annule la création, je dois réafficher la fenetre */
-    //this->hide();
+    /* Reception de la lumière émise par le pop up */
+    QObject::connect(ppl, &PopUpLumiere::lumiereCreee, this, &MainWindow::receptionLumiere);
 }
 
+/**
+ * @brief MainWindow::PopUpObj
+ * Fait apparaître la fenêtre de création d'objets
+ */
 void MainWindow::PopUpObj()
 {
-    PopUpObjet * ppo = new PopUpObjet;
+    PopUpObjet * ppo = new PopUpObjet(NOM_DES_FORMES);
+
     /* On empêche de toucher à la fenêtre parent pendant que la fenêtre enfant est ouverte */
     ppo->setWindowModality(Qt::ApplicationModal);
     ppo->show();
 
     QObject::connect(ppo->_create_obj, &QPushButton::clicked, this, &MainWindow::IncNbObj);
-
-    /* Si je veux le mettre, quand je créer ou annule la création, je dois réafficher la fenetre */
-    //this->hide();
 }
 
+/**
+ * @brief MainWindow::IncNbLum
+ * On vérifie le nombre de lumières positionnelles pour griser ou non les boutons de création/suppression
+ */
 void MainWindow::IncNbLum()
 {
     _nbLumierePos++;
@@ -746,6 +764,10 @@ void MainWindow::IncNbLum()
         _new_lp->setEnabled(true);
 }
 
+/**
+ * @brief MainWindow::IncNbObj
+ * On vérifie le nombre d'objets pour griser ou non les boutons de création/suppression
+ */
 void MainWindow::IncNbObj()
 {
     _nbObjet++;
@@ -761,6 +783,11 @@ void MainWindow::IncNbObj()
         _new_obj->setEnabled(true);
 }
 
+/**
+ * @brief MainWindow::OnClicDeleteLum
+ * On vérifie le nombre de lumières positionnelles pour griser ou non les boutons de création/suppression
+ * et supprimer la lumière positionnelle choisie
+ */
 void MainWindow::OnClicDeleteLum()
 {
     QMessageBox::StandardButton reply;
@@ -782,6 +809,10 @@ void MainWindow::OnClicDeleteLum()
     }
 }
 
+/**
+ * @brief MainWindow::OnClicDeleteObj
+ * On vérifie le nombre d'objets pour griser ou non les boutons de création/suppression et supprimer l'objet choisi
+ */
 void MainWindow::OnClicDeleteObj()
 {
     QMessageBox::StandardButton reply;
@@ -801,4 +832,24 @@ void MainWindow::OnClicDeleteObj()
         else
             _new_obj->setEnabled(true);
     }
+}
+
+/**
+ * @brief MainWindow::receptionLumiere
+ * @param lp
+ * Ajoute la lumière positionnelle créée dans la popup dans le mainwindow
+ */
+void MainWindow::receptionLumiere(LumierePos lp)
+{
+    _lp->addItem(QString::fromStdString(lp.getNom()));
+    ENSEMBLE_LUM_POS.push_back(lp);
+
+    if (_nbLumierePos == 0)
+    {
+        _s_posX_lp->setValue(lp.getPosX());
+        _s_posY_lp->setValue(lp.getPosY());
+        _s_posZ_lp->setValue(lp.getPosZ());
+    }
+
+    _nbLumierePos++;
 }

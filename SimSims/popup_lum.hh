@@ -1,5 +1,6 @@
 #pragma once
 #include <QtWidgets>
+#include "lumierepos.hh"
 
 class PopUpLumiere:
         public QWidget
@@ -16,6 +17,9 @@ public:
 public slots:
     void OnClicCreate();
     void OnClicCancel();
+
+signals:
+    void lumiereCreee(LumierePos lp);
 
 private:
     QGridLayout * _layoutPrincipal;

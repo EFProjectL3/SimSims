@@ -54,7 +54,21 @@ void PopUpLumiere::OnClicCancel()
 
 void PopUpLumiere::OnClicCreate()
 {
-    /* A compléter avec la partie de Bastien */
-    this->close();
+    bool okX;
+    int X = _le_posX->text().toInt(&okX, 10);
+    bool okY;
+    int Y = _le_posY->text().toInt(&okY, 10);
+    bool okZ;
+    int Z = _le_posZ->text().toInt(&okZ, 10);
 
+    if (okX && okY && okZ && X >= -10 && X <= 10 && Y >= -10 && Y <= 10 && Z >= -10 && Z <= 10)
+    {
+        LumierePos l(_le_name_lp->text().toStdString(), X, Y, Z);
+        emit lumiereCreee(l);
+        this->close();
+    }
+    else
+    {
+        QMessageBox::warning(this, "Error", "Une ou plusieurs des valeurs entrées n'est pas du bon type ou excède les bornes autorisées. Veuillez recommencer.");
+    }
 }

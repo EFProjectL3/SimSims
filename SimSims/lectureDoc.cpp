@@ -158,6 +158,13 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
         int ** facesTabTmp = new int*[100];  //correspond au tableau de construction des faces
         for(int i(0); i < 100; i++)
         { facesTabTmp[i] = new int[3]; }
+
+        for (int i(0); i<100; i++)          //toutes les valeurs à 0 pour éviter d'avoir des valeurs aléatoires en fin de tableau
+        {
+            for (int j(0); j<3; j++)
+                facesTabTmp[i][j] = 0;
+        }
+
         int ** somTabTmp = new int*[100];   //correspond au tableau de construction des sommets
         for(int i(0); i < 100; i++)
         { somTabTmp[i] = new int[3]; }
@@ -230,6 +237,7 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
                         facesTabTmp[iFacesCons][j] = val;
                         j++;
                     }
+
                     iFacesCons++;
                 }
 
@@ -273,7 +281,9 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
                             passerFin = false;
                         if (xyz == 2)   //coordonnées Z
                         {
-                            float val = atof(chaine.c_str());
+                            float val;
+                            std::stringstream stream(chaine);
+                            stream >> val;
                             sommetTemporaire.coordonnees.z = val;
                             somTmp[iSommet]=sommetTemporaire;
                             iSommet++;
@@ -286,13 +296,17 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
                         {
                             if (xyz == 1)   //coordonnées Y
                             {
-                                float val = atof(chaine.c_str());
+                                float val;
+                                std::stringstream stream(chaine);
+                                stream >> val;
                                 sommetTemporaire.coordonnees.y = val;
                                 xyz++;
                             }
                             if (xyz == 0)   //coordonnées X
                             {
-                                float val = atof(chaine.c_str());
+                                float val;
+                                std::stringstream stream(chaine);
+                                stream >> val;
                                 sommetTemporaire.coordonnees.x = val;
                                 xyz++;
                             }
@@ -306,7 +320,9 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
                                 passerFin = false;
                             if (xyz == 2)   //coordonnées Z
                             {
-                                float val = atof(chaine.c_str());
+                                float val;
+                                std::stringstream stream(chaine);
+                                stream >> val;
                                 faceTemporaire.centre.z = val;
                                 facTmp[iFaces]=faceTemporaire;
                                 iFaces++;
@@ -319,13 +335,17 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
                             {
                                 if (xyz == 1)   //coordonnées Y
                                 {
-                                    float val = atof(chaine.c_str());
+                                    float val;
+                                    std::stringstream stream(chaine);
+                                    stream >> val;
                                     faceTemporaire.centre.y = val;
                                     xyz++;
                                 }
                                 if (xyz == 0)   //coordonnées X
                                 {
-                                    float val = atof(chaine.c_str());
+                                    float val;
+                                    std::stringstream stream(chaine);
+                                    stream >> val;
                                     faceTemporaire.centre.x = val;
                                     xyz++;
                                 }
@@ -377,7 +397,6 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
  */
 std::vector<QOpenGLTexture *> lireTextures(char * fichierDonnees)
 {
-    std::cout << "Test1";
     bool textureTrouve = false;
     std::vector<QString> tabAdresseTextures;
     std::vector<QOpenGLTexture *> tabTextures;
@@ -399,7 +418,6 @@ std::vector<QOpenGLTexture *> lireTextures(char * fichierDonnees)
         for (unsigned int i(0); i<tabAdresseTextures.size();i++)
         {
             QOpenGLTexture * img = new QOpenGLTexture(QImage(QString(tabAdresseTextures[i])));
-            std::cout << "Test2";
             tabTextures.push_back(img);
 
         }

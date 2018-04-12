@@ -22,7 +22,8 @@ SOURCES += main.cpp\
         lectureDoc.cpp\
         popup_lum.cc\
         popup_obj.cc\
-        affichage.cpp
+        affichage.cpp\
+        lumierepos.cc
 
 HEADERS  += widgetOGL.h\
          mainwindow.h\
@@ -30,7 +31,8 @@ HEADERS  += widgetOGL.h\
          lectureDoc.h\
          popup_lum.hh\
          popup_obj.hh\
-         affichage.hh
+         affichage.hh\
+         lumierepos.hh
 
 LIBS += -lglut -lGLU
 

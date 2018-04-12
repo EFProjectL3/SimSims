@@ -8,7 +8,7 @@ class PopUpObjet:
     Q_OBJECT
 
 public:
-    PopUpObjet();
+    PopUpObjet(std::vector<std::string> noms);
     ~PopUpObjet();
 
     QPushButton * _create_obj;
@@ -17,7 +17,7 @@ public:
 public slots:
     void OnClicCancel();
     void OnClicCreate();
-    void EcritureAffichagePopup(QString text);
+    void AffichagePopup(QString text);
 
 signals:
     void pretPourUpdate();
@@ -43,4 +43,6 @@ private:
         WidgetOGL * _affichage_popup;
 
         unsigned int _idFormePopup;
+
+        std::vector<std::string> NOM_DES_FORMES_POPUP;
 };

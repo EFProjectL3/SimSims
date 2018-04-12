@@ -3,13 +3,11 @@
 #include <fstream>
 #include <iostream>
 #include "forme.h"
+#include "lectureDoc.h"
+#include "mainwindow.h"
 
 
-extern std::vector<std::shared_ptr<forme>> TOUTES_LES_FORMES;
-extern std::vector<QOpenGLTexture *> TOUTES_LES_TEXTURES;
-extern std::vector<std::string> NOM_DES_FORMES;
-
-PopUpObjet::PopUpObjet()
+PopUpObjet::PopUpObjet(std::vector<std::string> noms) : NOM_DES_FORMES_POPUP(noms)
 {
     _idFormePopup = 75000;
 
@@ -19,13 +17,22 @@ PopUpObjet::PopUpObjet()
 
     _layoutObjetPopup = new QGridLayout();
     _affichage_popup = new WidgetOGL(60,this,"popup");
-    _affichage_popup->ajouterForme(TOUTES_LES_FORMES[0]);
+    /* Creation forme initiale */
+    char * fichierDonnees = "./FICHIER_DE_DONNEES";
+    float taillecube = 1;
+    std::vector<float> attribut;
+    attribut.push_back(taillecube);
+    attribut.push_back(0.5*taillecube);
+    std::shared_ptr<forme> ptrForme;
+    ptrForme = creerFormesLecture(fichierDonnees,1,attribut);
+    _affichage_popup->ajouterForme(ptrForme);
+    /**************************/
     _affichage_popup->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 
     _selectForm = new QComboBox(this);
-    for (unsigned int i(0); i<NOM_DES_FORMES.size(); i++)
-        _selectForm->addItem(QString::fromStdString(NOM_DES_FORMES[i]));
+    for (unsigned int i(0); i<NOM_DES_FORMES_POPUP.size(); i++)
+      _selectForm->addItem(QString::fromStdString(NOM_DES_FORMES_POPUP[i]));
     _selectForm->setMaximumWidth(150);
 
     _name_obj = new QLabel("Nom : ", this);
@@ -34,15 +41,15 @@ PopUpObjet::PopUpObjet()
 
     _taille_obj_popup = new QLabel("Taille", this);
     _taille_obj_popup->setMaximumSize(150, 26);
-    _attribut1 = new QLabel("Attribut 1 : ", this);
+    _attribut1 = new QLabel("Taille X : ", this);
     _le_attribut1 = new QLineEdit("1", this);
     _le_attribut1->setMaximumWidth(150);
 
-    _attribut2 = new QLabel("Attribut 2 : ", this);
+    _attribut2 = new QLabel("Taille Y : ", this);
     _le_attribut2 = new QLineEdit("1", this);
     _le_attribut2->setMaximumWidth(150);
 
-    _attribut3 = new QLabel("Attribut 3 : ", this);
+    _attribut3 = new QLabel("Taille Z : ", this);
     _le_attribut3 = new QLineEdit("1", this);
     _le_attribut3->setMaximumWidth(150);
 
@@ -81,7 +88,10 @@ PopUpObjet::PopUpObjet()
 
     QObject::connect(_cancel_obj, &QPushButton::clicked, this, &PopUpObjet::OnClicCancel);
     QObject::connect(_create_obj, &QPushButton::clicked, this, &PopUpObjet::OnClicCreate);
-    QObject::connect(_selectForm, &QComboBox::currentTextChanged, this, &PopUpObjet::EcritureAffichagePopup);
+    QObject::connect(_selectForm, &QComboBox::currentTextChanged, this, &PopUpObjet::AffichagePopup);
+    QObject::connect(_le_attribut1, &QLineEdit::textChanged, this, &PopUpObjet::AffichagePopup);
+    QObject::connect(_le_attribut2, &QLineEdit::textChanged, this, &PopUpObjet::AffichagePopup);
+    QObject::connect(_le_attribut3, &QLineEdit::textChanged, this, &PopUpObjet::AffichagePopup);
     QObject::connect(this,&PopUpObjet::pretPourUpdate,_affichage_popup,&WidgetOGL::slotUpdate);
 }
 
@@ -96,132 +106,60 @@ void PopUpObjet::OnClicCancel()
         this->close();
 }
 
-void PopUpObjet::EcritureAffichagePopup(QString text)
+void PopUpObjet::AffichagePopup(QString text)
 {
-    std::cout << "TEST ICI" << std::endl;
     unsigned int j(0);
     //bool trouve = false;
-    while (j<NOM_DES_FORMES.size())
+    while (j<NOM_DES_FORMES_POPUP.size())
     {
-        if (text == QString::fromStdString(NOM_DES_FORMES[j]))
+        if (text == QString::fromStdString(NOM_DES_FORMES_POPUP[j]))
         {
-            std::cout << "Test là" << std::endl;
             _affichage_popup->toutEffacer();
-            if (text.toStdString() == "CUBE")
+            std::vector<float> attributs;
+            attributs.clear();
+            if (j == 0)
             {
-                std::cout << "Je suis là" << std::endl;
-                /* Copie de la forme de base, afin de ne pas juste faire pointer les pointeurs vers les tableaux initiaux */
-                int ** facesCons = new int*[100];  //correspond au tableau de construction des faces
-                for(int i(0); i < 100; i++)
-                { facesCons[i] = new int[3]; }
-                std::cout << "Je suis là0" << std::endl;
-                for (int i(0); i<100; i++)
-                {
-                    for (int k(0); k<3; k++)
-                    {
-                        if (i<TOUTES_LES_FORMES[j]->getNbrFace())
-                            facesCons[i][k] = TOUTES_LES_FORMES[j]->getFaceConstruction()[i][k];
-                        else
-                            facesCons[i][k] = 0;
-                        std::cout << "Initiale[" << i << "][" << k << "] : " << TOUTES_LES_FORMES[j]->getFaceConstruction()[i][k] << std::endl;
-                        std::cout << "FaceCons[" << i << "][" << k << "] : " << facesCons[i][k] << std::endl;
-                    }
-                }
-                std::cout << "Je suis là1" << std::endl;
-                sommet * somTmp = new sommet [50];
-                for (int i(0); i<TOUTES_LES_FORMES[j]->getNbrSommet(); i++)
-                    somTmp[i] = TOUTES_LES_FORMES[j]->getSommets()[i];
-                std::cout << "Je suis là2" << std::endl;
-                face * facTmp = new face [50];     //tableau de faces
-                for (int i(0); i<TOUTES_LES_FORMES[j]->getNbrFace(); i++)
-                    facTmp[i] = TOUTES_LES_FORMES[j]->getFaces()[i];
-                /******************************************************************************/
-                std::cout << "Je suis là3" << std::endl;
-                auto formePtr = std::make_shared<forme>(
-                            _idFormePopup,
-                            TOUTES_LES_FORMES[j]->getNbrFace(),
-                            TOUTES_LES_FORMES[j]->getNbrSommet(),
-                            TOUTES_LES_FORMES[j]->getNbrAtt(),
-                            TOUTES_LES_FORMES[j]->getnbrSommetsParFaceMax(),
-                            facesCons,
-                            somTmp,
-                            facTmp,
-                            TOUTES_LES_FORMES[j]->getAttributs());
-                std::cout << "Je suis là4" << std::endl;
-                std::vector<float> test;
-                test.push_back(4);
-                test.push_back(2);
-                std::cout << "Je suis là5" << std::endl;
-                formePtr->setAttribut(test);
-                std::cout << "Je suis là6" << std::endl;
-                formePtr->infoForme();
-
-                std::cout << "FINI0?" << std::endl;
-                _affichage_popup->ajouterForme(formePtr);
-                std::cout << "FINI?" << std::endl;
+                attributs.push_back(_le_attribut1->text().toFloat());
+                attributs.push_back(0.5*_le_attribut1->text().toFloat());
             }
-            //_affichage_popup->
-            /*
-            std::cout << "COMBO: " << text.toStdString() << std::endl;
-            std::cout << "NOM FORME: " << NOM_DES_FORMES[j] << std::endl;
-            std::ifstream fichier("../SimSims/affichage.cpp",std::ios::in);  // Flux de lecture
-            std::ofstream flux("../SimSims/affichageTmp.cpp", std::ios::out); // Flux d'ecriture
-
-            if(fichier) // Si le fichier existe bien
+            if (j == 1)
             {
-                std::string ligne;
-                while(getline(fichier, ligne)) // On le lis ligne par ligne
-                {
-
-                    if(flux) // Si le lieu de destination existe
-                    {
-                        if (trouve == false)
-                            flux << ligne << std::endl; // On ecrit dans le fichier de destination
-                        if (trouve == true)
-                        {
-                            trouve = false;
-                            std::cout << "ICI J EST EGAL A " << j << std::endl;
-                            flux << "TOUTES_LES_FORMES[" << j <<"]->afficher_forme(); \n";
-                        }
-                        if (ligne == "//DebutAffichagePopup")
-                            trouve=true;
-                    }
-                    else
-                    {
-                        std::cout << "ERREUR: Impossible d'ouvrir le fichier." << std::endl;
-                    }
-
-                }
-                remove("../SimSims/affichage.cpp");
-                rename("../SimSims/affichageTmp.cpp", "../SimSims/affichage.cpp");
-                *
-                 *
-                 *
-                 *
-                 *
-                 *
-                 *
-                 *      ICI
-                 *
-                 *
-                 *
-                 *
-                 *
-                 *
-                 *
-                 * */
-            /* Test pour réinitialiser le popup *
-                delete _affichage_popup;
-                _affichage_popup = new WidgetOGL(60,this,"popup");
-                _affichage_popup->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-                _layoutPrincipal->addWidget(_affichage_popup, 0, 1, 1, 1);
-
-                emit pretPourUpdate();
+                attributs.push_back(_le_attribut1->text().toFloat());
+                attributs.push_back(_le_attribut2->text().toFloat());
+                attributs.push_back(_le_attribut3->text().toFloat());
+                attributs.push_back(0.5*_le_attribut1->text().toFloat());
+                attributs.push_back(0.5*_le_attribut2->text().toFloat());
+                attributs.push_back(0.5*_le_attribut3->text().toFloat());
+                attributs.push_back(1.33*_le_attribut1->text().toFloat());
+                attributs.push_back(1.33*_le_attribut2->text().toFloat());
+                attributs.push_back(1.33*_le_attribut3->text().toFloat());
+                attributs.push_back(1.4*_le_attribut1->text().toFloat());
+                attributs.push_back(1.4*_le_attribut2->text().toFloat());
+                attributs.push_back(1.4*_le_attribut3->text().toFloat());
+                attributs.push_back(1.5*_le_attribut1->text().toFloat());
+                attributs.push_back(1.5*_le_attribut2->text().toFloat());
+                attributs.push_back(1.5*_le_attribut3->text().toFloat());
+                attributs.push_back(1.75*_le_attribut1->text().toFloat());
+                attributs.push_back(1.75*_le_attribut2->text().toFloat());
+                attributs.push_back(1.75*_le_attribut3->text().toFloat());
+                attributs.push_back(2.15*_le_attribut1->text().toFloat());
+                attributs.push_back(2.15*_le_attribut2->text().toFloat());
+                attributs.push_back(2.15*_le_attribut3->text().toFloat());
+                attributs.push_back(2.5*_le_attribut1->text().toFloat());
+                attributs.push_back(2.5*_le_attribut2->text().toFloat());
+                attributs.push_back(2.5*_le_attribut3->text().toFloat());
             }
-            else
-            {
-                std::cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << std::endl;
-            }*/
+            std::cout << "Attributs pour la forme " << NOM_DES_FORMES_POPUP[j] << std::endl;
+            for (unsigned int i(0); i<attributs.size(); i++)
+                std::cout << "Attribut " << i << ": " << attributs[0] << std::endl;
+            char * fichierDonnees = "./FICHIER_DE_DONNEES";
+
+            std::shared_ptr<forme> ptrForme;
+            ptrForme = creerFormesLecture(fichierDonnees,j+1,attributs);
+            /* Debug */
+            //ptrForme->infoForme();
+            /*********/
+            _affichage_popup->ajouterForme(ptrForme);
         }
         j++;
     }
