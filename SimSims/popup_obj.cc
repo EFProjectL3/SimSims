@@ -32,7 +32,7 @@ PopUpObjet::PopUpObjet(std::vector<std::string> noms) : NOM_DES_FORMES_POPUP(nom
 
     _selectForm = new QComboBox(this);
     for (unsigned int i(0); i<NOM_DES_FORMES_POPUP.size(); i++)
-      _selectForm->addItem(QString::fromStdString(NOM_DES_FORMES_POPUP[i]));
+        _selectForm->addItem(QString::fromStdString(NOM_DES_FORMES_POPUP[i]));
     _selectForm->setMaximumWidth(150);
 
     _name_obj = new QLabel("Nom : ", this);
@@ -109,10 +109,10 @@ void PopUpObjet::OnClicCancel()
 void PopUpObjet::AffichagePopup(QString text)
 {
     unsigned int j(0);
-    //bool trouve = false;
+
     while (j<NOM_DES_FORMES_POPUP.size())
     {
-        if (text == QString::fromStdString(NOM_DES_FORMES_POPUP[j]))
+        if (_selectForm->currentText() == QString::fromStdString(NOM_DES_FORMES_POPUP[j]))
         {
             _affichage_popup->toutEffacer();
             std::vector<float> attributs;
@@ -149,16 +149,10 @@ void PopUpObjet::AffichagePopup(QString text)
                 attributs.push_back(2.5*_le_attribut2->text().toFloat());
                 attributs.push_back(2.5*_le_attribut3->text().toFloat());
             }
-            std::cout << "Attributs pour la forme " << NOM_DES_FORMES_POPUP[j] << std::endl;
-            for (unsigned int i(0); i<attributs.size(); i++)
-                std::cout << "Attribut " << i << ": " << attributs[0] << std::endl;
-            char * fichierDonnees = "./FICHIER_DE_DONNEES";
 
+            char * fichierDonnees = "./FICHIER_DE_DONNEES";
             std::shared_ptr<forme> ptrForme;
             ptrForme = creerFormesLecture(fichierDonnees,j+1,attributs);
-            /* Debug */
-            //ptrForme->infoForme();
-            /*********/
             _affichage_popup->ajouterForme(ptrForme);
         }
         j++;
@@ -167,6 +161,21 @@ void PopUpObjet::AffichagePopup(QString text)
 
 void PopUpObjet::OnClicCreate()
 {
-    /* A compléter avec la partie de Bastien */
-    this->close();
+    bool ok1;
+    int at1 = _le_attribut1->text().toInt(&ok1, 10);
+    bool ok2;
+    int at2 = _le_attribut2->text().toInt(&ok2, 10);
+    bool ok3;
+    int at3 = _le_attribut3->text().toInt(&ok3, 10);
+
+    if (ok1 && ok2 && ok3)
+    {
+        Objet o(_le_name_obj->text().toStdString(), at1, at2, at3);
+        emit objetCree(o);
+        this->close();
+    }
+    else
+    {
+        QMessageBox::warning(this, "Error", "Une ou plusieurs des valeurs entrées n'est pas du bon type. Veuillez recommencer.");
+    }
 }

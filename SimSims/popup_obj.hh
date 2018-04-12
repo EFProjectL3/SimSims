@@ -1,6 +1,7 @@
 #pragma once
 #include <QtWidgets>
 #include <widgetOGL.h>
+#include "objet.hh"
 
 class PopUpObjet:
         public QWidget
@@ -21,6 +22,7 @@ public slots:
 
 signals:
     void pretPourUpdate();
+    void objetCree(Objet o);
 
 private:
     QGridLayout * _layoutPrincipal;

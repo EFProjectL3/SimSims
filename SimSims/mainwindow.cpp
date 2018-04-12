@@ -5,7 +5,7 @@
 #include "iostream"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),TOUTES_LES_FORMES(),TOUTES_LES_TEXTURES(), NOM_DES_FORMES(), ENSEMBLE_LUM_POS()
+    QMainWindow(parent),TOUTES_LES_FORMES(),TOUTES_LES_TEXTURES(), NOM_DES_FORMES(), ENSEMBLE_LUM_POS(), ENSEMBLE_OBJET()
 {
     resize(1200, 600);
 
@@ -852,4 +852,12 @@ void MainWindow::receptionLumiere(LumierePos lp)
     }
 
     _nbLumierePos++;
+}
+
+
+void MainWindow::receptionObjet(Objet o)
+{
+    _obj->addItem(QString::fromStdString(o.getNom()));
+    ENSEMBLE_OBJET.push_back(o);
+    _nbObjet++;
 }
