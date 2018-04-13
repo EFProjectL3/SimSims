@@ -5,7 +5,7 @@
 #include "iostream"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),TOUTES_LES_FORMES(),TOUTES_LES_TEXTURES(), NOM_DES_FORMES(), ENSEMBLE_LUM_POS()
+    QMainWindow(parent),TOUS_LES_OBJETS(),TOUTES_LES_ADRESSE_TEXTURES(), NOM_DES_FORMES(), ENSEMBLE_LUM_POS()
 {
     resize(1200, 600);
 
@@ -26,6 +26,11 @@ MainWindow::MainWindow(QWidget *parent) :
     // Obtention du vecteur avec le nom des formes (on connait donc le nombre avec sa taille)
     NOM_DES_FORMES = lireIntro(fichierDonnees);
     std::cout << "Terminé." << std::endl;
+    std::cout << "LECTURE DES TEXTURESS" << std::endl;
+    // Obtention du vecteur avec le nom des formes (on connait donc le nombre avec sa taille)
+    TOUTES_LES_ADRESSE_TEXTURES = lireAdresseTextures(fichierDonnees);
+    std::cout << "Terminé." << std::endl;
+    /***************************************/
 
     /* -------------------- ONGLET LUMIERES -------------------- */
     _layoutLumiere = new QGridLayout();
@@ -667,6 +672,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(_s_angX_cam, &QSlider::valueChanged, _affichage, &WidgetOGL::setAngXCam);
     QObject::connect(_s_angY_cam, &QSlider::valueChanged, _affichage, &WidgetOGL::setAngYCam);
     QObject::connect(_s_angZ_cam, &QSlider::valueChanged, _affichage, &WidgetOGL::setAngZCam);
+
 }
 
 MainWindow::~MainWindow()
@@ -743,6 +749,7 @@ void MainWindow::PopUpObj()
     ppo->show();
 
     QObject::connect(ppo->_create_obj, &QPushButton::clicked, this, &MainWindow::IncNbObj);
+    QObject::connect(ppo, &PopUpObjet::creationObjet, this, &MainWindow::receptionObjet);
 }
 
 /**
@@ -852,4 +859,11 @@ void MainWindow::receptionLumiere(LumierePos lp)
     }
 
     _nbLumierePos++;
+}
+
+
+void MainWindow::receptionObjet(std::string nom, std::shared_ptr<forme> ptr)
+{
+    Objet obj(nom,ptr);
+    TOUS_LES_OBJETS.push_back(obj);
 }

@@ -5,6 +5,7 @@
 #include <QtWidgets>
 #include "popup_lum.hh"
 #include "popup_obj.hh"
+#include "objet.hh"
 
 namespace Ui
 {
@@ -36,6 +37,7 @@ public slots:
     void OnClicDeleteObj();
 
     void receptionLumiere(LumierePos lp);
+    void receptionObjet(std::string nom, std::shared_ptr<forme> ptr);
 
 private:
     QGridLayout * _layoutprincipal;
@@ -260,8 +262,8 @@ private:
         int _nbLumierePos;
         int _nbObjet;
 
-        std::vector<std::shared_ptr<forme>> TOUTES_LES_FORMES;
-        std::vector<QOpenGLTexture *> TOUTES_LES_TEXTURES;
+        std::vector<Objet> TOUS_LES_OBJETS;
+        std::vector<std::string> TOUTES_LES_ADRESSE_TEXTURES;
         std::vector<std::string> NOM_DES_FORMES;
         std::vector<LumierePos> ENSEMBLE_LUM_POS;
 

@@ -1,126 +1,8 @@
 /-NOMBREFORME
 2
 /-NOMFORME
-CUBE
 GROSTRUC
-//NOUVELLEFORME
-/-NOMBREFACE
-12
-/-NOMBRESOMMETS
-8
-/-NOMBREATTRIBUTS
-2
-/-FACEMAX
-3
-/-TABFACES
-0 1 3
-1 2 3
-2 7 3
-2 6 7
-5 7 6 
-4 7 5
-5 1 4
-4 1 0
-0 3 7
-0 7 4
-1 5 6
-1 6 2
-/-TABSOMMETS
-0 7 9
-0 6 10
-1 3 11
-8 2 1
-4 3 11
-10 6 5
-9 5 7
-8 2 4
-/-ATTRIBUTS
-demi_taille_arete
-quart_taille_arete
-/-FONCTIONCREATIONFORME
-//
--demi_taille_arete
-demi_taille_arete
-demi_taille_arete
-//
--demi_taille_arete
--demi_taille_arete
-demi_taille_arete
-//
-demi_taille_arete
--demi_taille_arete
-demi_taille_arete
-//
-demi_taille_arete
-demi_taille_arete
-demi_taille_arete
-//
--demi_taille_arete
-demi_taille_arete
--demi_taille_arete
-//
--demi_taille_arete
--demi_taille_arete
--demi_taille_arete
-//
-demi_taille_arete
--demi_taille_arete
--demi_taille_arete
-//
-demi_taille_arete
-demi_taille_arete
--demi_taille_arete
-//
-//
--quart_taille_arete
-quart_taille_arete
-demi_taille_arete
-//
-quart_taille_arete
--quart_taille_arete
-demi_taille_arete
-//
-demi_taille_arete
-quart_taille_arete
-quart_taille_arete
-//
-demi_taille_arete
--quart_taille_arete
--quart_taille_arete
-//
-quart_taille_arete
--quart_taille_arete
--demi_taille_arete
-//
--quart_taille_arete
-quart_taille_arete
--demi_taille_arete
-//
--demi_taille_arete
--quart_taille_arete
--quart_taille_arete
-//
--demi_taille_arete
-quart_taille_arete
-quart_taille_arete
-//
-quart_taille_arete
-demi_taille_arete
-quart_taille_arete
-//
--quart_taille_arete
-demi_taille_arete
--quart_taille_arete
-//
--quart_taille_arete
--demi_taille_arete
--quart_taille_arete
-//
-quart_taille_arete
--demi_taille_arete
-quart_taille_arete
-/---CREATIONFORME
-
+PAVE
 
 //NOUVELLEFORME
 /-NOMBREFACE
@@ -202,29 +84,53 @@ quart_taille_arete
 31 33 25
 32 33 34
 /-ATTRIBUTS
+1
 longueur
+1
 largeur
+1
 hauteur
+0.5
 moitielongueur
+0.5
 moitielargeur
+0.5
 moitiehauteur
+1.33
 quatretierslongueur
+1.33
 quatretierslargeur
+1.33
 quatretiershauteur
+1.4
 unquatrelongueur
+1.4
 unquatrelargeur
+1.4
 unquatrehauteur
+1.5
 uncinqlongueur
+1.5
 uncinqlargeur
+1.5
 uncinqhauteur
+1.75
 unseptcinqlongueur
+1.75
 unseptcinqlargeur
+1.75
 unseptcinqhauteur
+2.15
 deuxquinzelongueur
+2.15
 deuxquinzelargeur
+2.15
 deuxquinzehauteur
+2.5
 deuxcinqlongueur
+2.5
 deuxcinqlargeur
+2.5
 deuxcinqhauteur
 /-FONCTIONCREATIONFORME
 //
@@ -500,6 +406,134 @@ moitielargeur
 -unseptcinqlongueur
 -hauteur
 -moitielargeur
+/---CREATIONFORME
+
+//NOUVELLEFORME
+/-NOMBREFACE
+12
+/-NOMBRESOMMETS
+8
+/-NOMBREATTRIBUTS
+6
+/-FACEMAX
+3
+/-TABFACES
+0 1 3
+1 2 3
+2 7 3
+2 6 7
+5 7 6 
+4 7 5
+5 1 4
+4 1 0
+0 3 7
+0 7 4
+1 5 6
+1 6 2
+/-TABSOMMETS
+0 7 9
+0 6 10
+1 3 11
+8 2 1
+4 3 11
+10 6 5
+9 5 7
+8 2 4
+/-ATTRIBUTS
+1
+demi_taille_longueur
+1
+demi_taille_largeur
+1
+demi_taille_hauteur
+0.5
+quart_taille_longueur
+0.5
+quart_taille_largeur
+0.5
+quart_taille_hauteur
+/-FONCTIONCREATIONFORME
+//
+-demi_taille_longueur
+demi_taille_largeur
+demi_taille_hauteur
+//
+-demi_taille_longueur
+-demi_taille_largeur
+demi_taille_hauteur
+//
+demi_taille_longueur
+-demi_taille_largeur
+demi_taille_hauteur
+//
+demi_taille_longueur
+demi_taille_largeur
+demi_taille_hauteur
+//
+-demi_taille_longueur
+demi_taille_largeur
+-demi_taille_hauteur
+//
+-demi_taille_longueur
+-demi_taille_largeur
+-demi_taille_hauteur
+//
+demi_taille_longueur
+-demi_taille_largeur
+-demi_taille_hauteur
+//
+demi_taille_longueur
+demi_taille_largeur
+-demi_taille_hauteur
+//
+//
+-quart_taille_longueur
+quart_taille_largeur
+demi_taille_hauteur
+//
+quart_taille_longueur
+-quart_taille_largeur
+demi_taille_hauteur
+//
+demi_taille_longueur
+quart_taille_largeur
+quart_taille_hauteur
+//
+demi_taille_longueur
+-quart_taille_largeur
+-quart_taille_hauteur
+//
+quart_taille_longueur
+-quart_taille_largeur
+-demi_taille_hauteur
+//
+-quart_taille_longueur
+quart_taille_largeur
+-demi_taille_hauteur
+//
+-demi_taille_longueur
+-quart_taille_largeur
+-quart_taille_hauteur
+//
+-demi_taille_longueur
+quart_taille_largeur
+quart_taille_hauteur
+//
+quart_taille_longueur
+demi_taille_largeur
+quart_taille_hauteur
+//
+-quart_taille_longueur
+demi_taille_largeur
+-quart_taille_hauteur
+//
+-quart_taille_longueur
+-demi_taille_largeur
+-quart_taille_hauteur
+//
+quart_taille_longueur
+-demi_taille_largeur
+quart_taille_hauteur
 /---CREATIONFORME
 
 /---TEXTURES

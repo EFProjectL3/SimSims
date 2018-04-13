@@ -1,10 +1,12 @@
 #pragma once
 #include <string>
+#include <memory>
+#include "forme.h"
 
 class Objet
 {
 public:
-    Objet(std::string n, int tailleXInit, int tailleYInit, int tailleZInit);
+    Objet(std::string n, std::shared_ptr<forme> ptr);
     ~Objet() = default;
 
     std::string getNom()
@@ -39,7 +41,7 @@ public:
 
     int getScale()
     { return _scale; }
-
+/*
     int getTaiX()
     { return _tailleX; }
 
@@ -51,13 +53,11 @@ public:
 
     int getId()
     { return _id; }
+*/
 
 private:
     std::string _nom;
-    int _id;
-    int _tailleX;
-    int _tailleY;
-    int _tailleZ;
+    std::shared_ptr<forme> _forme;
 
     float _couleurR;
     float _couleurG;

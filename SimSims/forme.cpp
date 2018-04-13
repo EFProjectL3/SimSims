@@ -5,14 +5,6 @@
 
 forme::forme(int id, int nbFac, int nbSom, int nbAtt, int nbrSommetParFaceMax, int ** facCons, struct sommet * tabSom, struct face * tabFac, std::map<std::string,float> tabAtt) : _idForme(id), _nbrFaces(nbFac), _nbrSommets(nbSom), _nbrAttributs(nbAtt), _nbrSommetParFaceMax(nbrSommetParFaceMax), _faceConstruction(facCons), _sommets(tabSom), _faces(tabFac), _attributs(tabAtt)
 {}
-/*
-forme::forme(forme & f): _idForme(f.getId()), _nbrFaces(f.getNbrFace()), _nbrSommets(f.getNbrSommet()), _nbrAttributs(f.getNbrAtt()), _nbrSommetParFaceMax(f.getnbrSommetsParFaceMax())
-{
-    _faceConstruction = f.getFaceConstruction();
-    _sommets = f.getSommets();
-    _faces = f.getFaces();
-    _attributs = f.getAttributs();
-}*/
 
 void forme::setAttribut(std::vector<float> valeursAtt)
 {

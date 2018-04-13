@@ -22,6 +22,8 @@ public slots:
 signals:
     void pretPourUpdate();
 
+    void creationObjet(std::string nomObj, std::shared_ptr<forme> ptr);
+
 private:
     QGridLayout * _layoutPrincipal;
         QGridLayout * _layoutObjetPopup;

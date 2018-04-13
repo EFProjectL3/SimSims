@@ -45,6 +45,47 @@ std::vector<std::string> lireIntro(char* fichierDonnees)
     }
 }
 
+int nombreAttributForme(char* fichierDonnees, int indice)
+{
+    int idForme = 0;
+    bool trouve = false;
+    std::ifstream fichier(fichierDonnees, std::ios::in);  // on ouvre le fichier en lecture
+
+    if(fichier)  // si l'ouverture a réussi
+    {
+        bool trouve = false;
+        std::string ligneEnCours;
+        while(getline(fichier, ligneEnCours))  // tant que l'on peut mettre la ligne dans "contenu"
+        {
+            if (ligneEnCours == "//NOUVELLEFORME")
+            {
+                idForme++;
+            }
+            if (idForme == indice)
+            {
+                if (trouve)
+                {
+                    int val;
+                    std::stringstream stream(ligneEnCours);
+                    stream >> val;
+                    std::cout << "NOMBRE D'ATTRIBUTS DE L'ELEMENT " << indice << ": " << val << std::endl;
+                    return val;
+                }
+
+                if (ligneEnCours == "/-NOMBREATTRIBUTS")
+                    trouve = true;
+            }
+        }
+
+        fichier.close();
+    }
+    else
+    {
+        std::cout << "Ouverture du fichier impossible" << std::endl;
+        exit(1);
+    }
+}
+
 
 
 /* FONCTIONS PROVENANT DE STACK OVERFLOW */
@@ -132,6 +173,9 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
 {
     int nombreDeFormes = 0;
     int etape=0;
+
+    bool coeffAttribut = true;  //vrai si on est sur le coeff de l'attribut, faut si on est sur l'attribut lui même
+    float valeurCoeff;
     std::string tmp; //Pour passer les lignes non utiles
     std::ifstream fichier(fichierDonnees, std::ios::in);  // on ouvre le fichier en lecture
     std::string ligneEnCours;
@@ -254,11 +298,24 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
                     }
                     iSommetCons++;
                 }
+
                 if (etape == 3 && ligneEnCours != "/-ATTRIBUTS") //Lecture des attributs, et on les relie à leur valeur
                 {
-                    attTmp.insert(std::make_pair(ligneEnCours,att[iAtt]));
-                    iAtt++;
+                    if (coeffAttribut)
+                    {
+                        std::stringstream stream(ligneEnCours);
+                        stream >> valeurCoeff;
+                    }
+                    else
+                    {
+                        attTmp.insert(std::make_pair(ligneEnCours,att[iAtt]*valeurCoeff));
+                        iAtt++;
+                    }
                 }
+                if (coeffAttribut)
+                    coeffAttribut = false;
+                else
+                    coeffAttribut = true;
 
                 if (etape==4 && ligneEnCours != "/-FONCTIONCREATIONFORME" && ligneEnCours != "//")  //Position des sommets et centre des faces
                 {
@@ -380,6 +437,8 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
         }
         auto formePtr = std::make_shared<forme>(idTmp, nbFacTmp, nbSomTmp, nbAttTmp, nbFacMax, facesTabTmp, somTmp, facTmp, attTmp);
 
+        formePtr->infoForme();
+
         return formePtr;
     }   //Fichier fermé
     else  // Sinon
@@ -395,11 +454,10 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
  *
  * Stock les noms de textures dans un vecteur
  */
-std::vector<QOpenGLTexture *> lireTextures(char * fichierDonnees)
+std::vector<std::string> lireAdresseTextures(char * fichierDonnees)
 {
     bool textureTrouve = false;
-    std::vector<QString> tabAdresseTextures;
-    std::vector<QOpenGLTexture *> tabTextures;
+    std::vector<std::string> tabAdresseTextures;
     std::ifstream fichier(fichierDonnees, std::ios::in);  // on ouvre le fichier en lecture
     std::string ligneEnCours;
     if(fichier)  // si l'ouverture a réussi
@@ -410,18 +468,11 @@ std::vector<QOpenGLTexture *> lireTextures(char * fichierDonnees)
                 textureTrouve = true;
             if (textureTrouve && ligneEnCours != "/---TEXTURES")
             {
-                QString chaine = QString::fromStdString(ligneEnCours);
+                std::string chaine = ligneEnCours;
                 tabAdresseTextures.push_back(chaine);
             }
         }
-
-        for (unsigned int i(0); i<tabAdresseTextures.size();i++)
-        {
-            QOpenGLTexture * img = new QOpenGLTexture(QImage(QString(tabAdresseTextures[i])));
-            tabTextures.push_back(img);
-
-        }
-        return tabTextures;
+        return tabAdresseTextures;
     }
     else
     {

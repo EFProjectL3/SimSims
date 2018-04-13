@@ -19,10 +19,19 @@ PopUpObjet::PopUpObjet(std::vector<std::string> noms) : NOM_DES_FORMES_POPUP(nom
     _affichage_popup = new WidgetOGL(60,this,"popup");
     /* Creation forme initiale */
     char * fichierDonnees = "./FICHIER_DE_DONNEES";
-    float taillecube = 1;
+    float longueur = 1;
+    float largeur = 1;
+    float hauteur = 1;
     std::vector<float> attribut;
-    attribut.push_back(taillecube);
-    attribut.push_back(0.5*taillecube);
+    for (unsigned int i(0); i<24; i++)
+    {
+        attribut.push_back(longueur);
+        attribut.push_back(hauteur);
+        attribut.push_back(largeur);
+
+        i++;
+        i++;
+    }
     std::shared_ptr<forme> ptrForme;
     ptrForme = creerFormesLecture(fichierDonnees,1,attribut);
     _affichage_popup->ajouterForme(ptrForme);
@@ -32,7 +41,7 @@ PopUpObjet::PopUpObjet(std::vector<std::string> noms) : NOM_DES_FORMES_POPUP(nom
 
     _selectForm = new QComboBox(this);
     for (unsigned int i(0); i<NOM_DES_FORMES_POPUP.size(); i++)
-      _selectForm->addItem(QString::fromStdString(NOM_DES_FORMES_POPUP[i]));
+        _selectForm->addItem(QString::fromStdString(NOM_DES_FORMES_POPUP[i]));
     _selectForm->setMaximumWidth(150);
 
     _name_obj = new QLabel("Nom : ", this);
@@ -109,56 +118,29 @@ void PopUpObjet::OnClicCancel()
 void PopUpObjet::AffichagePopup(QString text)
 {
     unsigned int j(0);
-    //bool trouve = false;
     while (j<NOM_DES_FORMES_POPUP.size())
     {
-        if (text == QString::fromStdString(NOM_DES_FORMES_POPUP[j]))
+        if (_selectForm->currentText() == QString::fromStdString(NOM_DES_FORMES_POPUP[j]))
         {
             _affichage_popup->toutEffacer();
             std::vector<float> attributs;
             attributs.clear();
-            if (j == 0)
-            {
-                attributs.push_back(_le_attribut1->text().toFloat());
-                attributs.push_back(0.5*_le_attribut1->text().toFloat());
-            }
-            if (j == 1)
-            {
-                attributs.push_back(_le_attribut1->text().toFloat());
-                attributs.push_back(_le_attribut2->text().toFloat());
-                attributs.push_back(_le_attribut3->text().toFloat());
-                attributs.push_back(0.5*_le_attribut1->text().toFloat());
-                attributs.push_back(0.5*_le_attribut2->text().toFloat());
-                attributs.push_back(0.5*_le_attribut3->text().toFloat());
-                attributs.push_back(1.33*_le_attribut1->text().toFloat());
-                attributs.push_back(1.33*_le_attribut2->text().toFloat());
-                attributs.push_back(1.33*_le_attribut3->text().toFloat());
-                attributs.push_back(1.4*_le_attribut1->text().toFloat());
-                attributs.push_back(1.4*_le_attribut2->text().toFloat());
-                attributs.push_back(1.4*_le_attribut3->text().toFloat());
-                attributs.push_back(1.5*_le_attribut1->text().toFloat());
-                attributs.push_back(1.5*_le_attribut2->text().toFloat());
-                attributs.push_back(1.5*_le_attribut3->text().toFloat());
-                attributs.push_back(1.75*_le_attribut1->text().toFloat());
-                attributs.push_back(1.75*_le_attribut2->text().toFloat());
-                attributs.push_back(1.75*_le_attribut3->text().toFloat());
-                attributs.push_back(2.15*_le_attribut1->text().toFloat());
-                attributs.push_back(2.15*_le_attribut2->text().toFloat());
-                attributs.push_back(2.15*_le_attribut3->text().toFloat());
-                attributs.push_back(2.5*_le_attribut1->text().toFloat());
-                attributs.push_back(2.5*_le_attribut2->text().toFloat());
-                attributs.push_back(2.5*_le_attribut3->text().toFloat());
-            }
-            std::cout << "Attributs pour la forme " << NOM_DES_FORMES_POPUP[j] << std::endl;
-            for (unsigned int i(0); i<attributs.size(); i++)
-                std::cout << "Attribut " << i << ": " << attributs[0] << std::endl;
+
             char * fichierDonnees = "./FICHIER_DE_DONNEES";
+
+            for (int i(0); i<nombreAttributForme(fichierDonnees,j+1); i+=3)
+            {
+                float longueur = _le_attribut1->text().toFloat();
+                float largeur = _le_attribut2->text().toFloat();
+                float hauteur = _le_attribut3->text().toFloat();
+                attributs.push_back(longueur);
+                attributs.push_back(hauteur);
+                attributs.push_back(largeur);
+            }
 
             std::shared_ptr<forme> ptrForme;
             ptrForme = creerFormesLecture(fichierDonnees,j+1,attributs);
-            /* Debug */
-            //ptrForme->infoForme();
-            /*********/
+
             _affichage_popup->ajouterForme(ptrForme);
         }
         j++;
@@ -167,6 +149,33 @@ void PopUpObjet::AffichagePopup(QString text)
 
 void PopUpObjet::OnClicCreate()
 {
-    /* A compléter avec la partie de Bastien */
+    unsigned int j(0);
+    bool fini = false;
+    std::string nomObjet;
+    std::vector<float> attributs;
+    std::shared_ptr<forme> ptrForme;
+    while ((j<NOM_DES_FORMES_POPUP.size()) && (fini == false))
+    {
+        if (_selectForm->currentText() == QString::fromStdString(NOM_DES_FORMES_POPUP[j]))
+        {
+            char * fichierDonnees = "./FICHIER_DE_DONNEES";
+
+            for (int i(0); i<nombreAttributForme(fichierDonnees,j+1); i+=3)
+            {
+                float longueur = _le_attribut1->text().toFloat();
+                float largeur = _le_attribut2->text().toFloat();
+                float hauteur = _le_attribut3->text().toFloat();
+                attributs.push_back(longueur);
+                attributs.push_back(hauteur);
+                attributs.push_back(largeur);
+            }
+
+            nomObjet = _le_name_obj->text().toStdString();
+            ptrForme = creerFormesLecture(fichierDonnees,j+1,attributs);
+            fini = true;
+        }
+    }
+
+    emit creationObjet(nomObjet, ptrForme);
     this->close();
 }
