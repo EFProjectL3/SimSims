@@ -437,7 +437,7 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
         }
         auto formePtr = std::make_shared<forme>(idTmp, nbFacTmp, nbSomTmp, nbAttTmp, nbFacMax, facesTabTmp, somTmp, facTmp, attTmp);
 
-        formePtr->infoForme();
+        //formePtr->infoForme();
 
         return formePtr;
     }   //Fichier fermé

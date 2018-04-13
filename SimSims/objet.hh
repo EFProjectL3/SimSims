@@ -41,6 +41,9 @@ public:
 
     int getScale()
     { return _scale; }
+
+    std::shared_ptr<forme> getForme()
+    { return _forme; }
 /*
     int getTaiX()
     { return _tailleX; }

@@ -866,4 +866,12 @@ void MainWindow::receptionObjet(std::string nom, std::shared_ptr<forme> ptr)
 {
     Objet obj(nom,ptr);
     TOUS_LES_OBJETS.push_back(obj);
+
+    std::cout << "Objets actuels:" << std::endl;
+    for (unsigned int i(0); i<TOUS_LES_OBJETS.size();i++)
+        std::cout << TOUS_LES_OBJETS[i].getNom() << " | ";
+    std::cout << std::endl;
+    std::cout << "J'ai reçu l'objet" << std::endl;
+    //_affichage->ajouterForme(obj.getForme());
+    std::cout << "J'ai envoyé la forme" << std::endl;
 }

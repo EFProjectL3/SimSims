@@ -175,7 +175,6 @@ void PopUpObjet::OnClicCreate()
             fini = true;
         }
     }
-
     emit creationObjet(nomObjet, ptrForme);
     this->close();
 }
