@@ -395,11 +395,10 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
  *
  * Stock les noms de textures dans un vecteur
  */
-std::vector<QOpenGLTexture *> lireTextures(char * fichierDonnees)
+std::vector<std::string> lireAdresseTextures(char * fichierDonnees)
 {
     bool textureTrouve = false;
-    std::vector<QString> tabAdresseTextures;
-    std::vector<QOpenGLTexture *> tabTextures;
+    std::vector<std::string> tabAdresseTextures;
     std::ifstream fichier(fichierDonnees, std::ios::in);  // on ouvre le fichier en lecture
     std::string ligneEnCours;
     if(fichier)  // si l'ouverture a réussi
@@ -410,18 +409,11 @@ std::vector<QOpenGLTexture *> lireTextures(char * fichierDonnees)
                 textureTrouve = true;
             if (textureTrouve && ligneEnCours != "/---TEXTURES")
             {
-                QString chaine = QString::fromStdString(ligneEnCours);
+                std::string chaine = ligneEnCours;
                 tabAdresseTextures.push_back(chaine);
             }
         }
-
-        for (unsigned int i(0); i<tabAdresseTextures.size();i++)
-        {
-            QOpenGLTexture * img = new QOpenGLTexture(QImage(QString(tabAdresseTextures[i])));
-            tabTextures.push_back(img);
-
-        }
-        return tabTextures;
+        return tabAdresseTextures;
     }
     else
     {
