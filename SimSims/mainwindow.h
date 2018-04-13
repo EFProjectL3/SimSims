@@ -30,9 +30,6 @@ public slots:
     void PopUpLum();
     void PopUpObj();
 
-    void IncNbLum();
-    void IncNbObj();
-
     void OnClicDeleteLum();
     void OnClicDeleteObj();
 

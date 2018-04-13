@@ -149,33 +149,47 @@ void PopUpObjet::AffichagePopup(QString text)
 
 void PopUpObjet::OnClicCreate()
 {
+    bool ok1;
+    int at1 = _le_attribut1->text().toFloat(&ok1);
+    bool ok2;
+    int at2 = _le_attribut2->text().toFloat(&ok2);
+    bool ok3;
+    int at3 = _le_attribut3->text().toFloat(&ok3);
+
     unsigned int j(0);
     bool fini = false;
     std::string nomObjet;
     std::vector<float> attributs;
     std::shared_ptr<forme> ptrForme;
-    while ((j<NOM_DES_FORMES_POPUP.size()) && (fini == false))
+
+    if (ok1 && ok2 && ok3 && !_le_name_obj->text().isEmpty() && !_le_attribut1->text().isEmpty() && !_le_attribut2->text().isEmpty() && !_le_attribut3->text().isEmpty())
     {
-        if (_selectForm->currentText() == QString::fromStdString(NOM_DES_FORMES_POPUP[j]))
+        while ((j<NOM_DES_FORMES_POPUP.size()) && (fini == false))
         {
-            char * fichierDonnees = "./FICHIER_DE_DONNEES";
-
-            for (int i(0); i<nombreAttributForme(fichierDonnees,j+1); i+=3)
+            if (_selectForm->currentText() == QString::fromStdString(NOM_DES_FORMES_POPUP[j]))
             {
-                float longueur = _le_attribut1->text().toFloat();
-                float largeur = _le_attribut2->text().toFloat();
-                float hauteur = _le_attribut3->text().toFloat();
-                attributs.push_back(longueur);
-                attributs.push_back(hauteur);
-                attributs.push_back(largeur);
+                char * fichierDonnees = "./FICHIER_DE_DONNEES";
+
+                for (int i(0); i<nombreAttributForme(fichierDonnees,j+1); i+=3)
+                {
+                    float longueur = at1;
+                    float largeur = at2;
+                    float hauteur = at3;
+                    attributs.push_back(longueur);
+                    attributs.push_back(hauteur);
+                    attributs.push_back(largeur);
+                }
+
+                nomObjet = _le_name_obj->text().toStdString();
+                ptrForme = creerFormesLecture(fichierDonnees,j+1,attributs);
+                fini = true;
             }
-
-            nomObjet = _le_name_obj->text().toStdString();
-            ptrForme = creerFormesLecture(fichierDonnees,j+1,attributs);
-            fini = true;
         }
-    }
 
-    emit creationObjet(nomObjet, ptrForme);
-    this->close();
+        emit creationObjet(nomObjet, ptrForme);
+        this->close();
+    }
+    else
+        QMessageBox::warning(this, "Error", "Une ou plusieurs des valeurs entrées n'est pas du bon type ou non renseignée. Veuillez recommencer.");
+
 }
