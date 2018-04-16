@@ -19,7 +19,11 @@ public:
     void chargerTexture(std::string nomTexture);
 
     void ajouterForme(std::shared_ptr<forme> frm)
-    { _formesAAfficher.push_back(frm); }
+    {
+        std::cout << "Widget " << _type << std::endl;
+        std::cout << "Je suis arrivé ici" << std::endl;
+        _formesAAfficher.push_back(frm);
+    }
 
     void toutEffacer()
     { _formesAAfficher.clear(); }

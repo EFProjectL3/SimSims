@@ -54,3 +54,14 @@ Reflexion:
 Code:
 - A: Signal de la création de l'objet, celui ci s'ajoute au vector d'objet de MainWindow
 - B: Modification du fichier d'entrée et du code de lecture afin que la construction des éléments soit maintenant completement automatique à partir de la fenetre de création
+- A: Gestion de la création de la lumière
+
+Semaine 3: Finir l'affichage, gestion du parent
+	
+	//Lundi
+Reflexion:
+- Gestion de parent pour l'affichage
+
+Code:
+- B: Correction du bug qui faisait planter à la création de la dernière forme du fichier d'entrée
+

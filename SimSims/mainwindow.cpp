@@ -730,6 +730,8 @@ void MainWindow::PopUpLum()
     ppl->setWindowModality(Qt::ApplicationModal);
     ppl->show();
 
+    QObject::connect(ppl->_create_lp, &QPushButton::clicked, this, &MainWindow::IncNbLum);
+
     /* Reception de la lumière émise par le pop up */
     QObject::connect(ppl, &PopUpLumiere::lumiereCreee, this, &MainWindow::receptionLumiere);
 }
@@ -746,8 +748,46 @@ void MainWindow::PopUpObj()
     ppo->setWindowModality(Qt::ApplicationModal);
     ppo->show();
 
-    /* Reception de l'objet émis par le pop up */
+    QObject::connect(ppo->_create_obj, &QPushButton::clicked, this, &MainWindow::IncNbObj);
     QObject::connect(ppo, &PopUpObjet::creationObjet, this, &MainWindow::receptionObjet);
+}
+
+/**
+ * @brief MainWindow::IncNbLum
+ * On vérifie le nombre de lumières positionnelles pour griser ou non les boutons de création/suppression
+ */
+void MainWindow::IncNbLum()
+{
+    _nbLumierePos++;
+
+    if (_nbLumierePos == 0)
+        _delete_lp->setEnabled(false);
+    else
+        _delete_lp->setEnabled(true);
+
+    if (_nbLumierePos >= 7)
+        _new_lp->setEnabled(false);
+    else
+        _new_lp->setEnabled(true);
+}
+
+/**
+ * @brief MainWindow::IncNbObj
+ * On vérifie le nombre d'objets pour griser ou non les boutons de création/suppression
+ */
+void MainWindow::IncNbObj()
+{
+    _nbObjet++;
+
+    if (_nbObjet == 0)
+        _delete_obj->setEnabled(false);
+    else
+        _delete_obj->setEnabled(true);
+
+    if (_nbObjet >= 100)
+        _new_obj->setEnabled(false);
+    else
+        _new_obj->setEnabled(true);
 }
 
 /**
@@ -761,15 +801,7 @@ void MainWindow::OnClicDeleteLum()
     reply = QMessageBox::question(this, "Cancel", "Voulez-vous supprimer cette lumière positionnelle ?", (QMessageBox::No | QMessageBox::Yes));
     if (reply == QMessageBox::Yes)
     {
-        for (unsigned int i(0); i < ENSEMBLE_LUM_POS.size(); i++)
-        {
-            if(ENSEMBLE_LUM_POS[i].getNom() == _lp->currentText().toStdString())
-            {
-                ENSEMBLE_LUM_POS.erase(ENSEMBLE_LUM_POS.begin()+i);
-                _lp->removeItem(i);
-            }
-        }
-
+        /* A compléter avec la suppression de la lumière*/
         _nbLumierePos--;
 
         if (_nbLumierePos == 0)
@@ -794,15 +826,7 @@ void MainWindow::OnClicDeleteObj()
     reply = QMessageBox::question(this, "Cancel", "Voulez-vous supprimer cet objet ?", (QMessageBox::No | QMessageBox::Yes));
     if (reply == QMessageBox::Yes)
     {
-        for (unsigned int i(0); i < TOUS_LES_OBJETS.size(); i++)
-        {
-            if(TOUS_LES_OBJETS[i].getNom() == _obj->currentText().toStdString())
-            {
-                TOUS_LES_OBJETS.erase(TOUS_LES_OBJETS.begin()+i);
-                _obj->removeItem(i);
-            }
-        }
-
+        /* A compléter avec la suppression de l'objet*/
         _nbObjet--;
 
         if (_nbObjet == 0)
@@ -851,18 +875,13 @@ void MainWindow::receptionLumiere(LumierePos lp)
 void MainWindow::receptionObjet(std::string nom, std::shared_ptr<forme> ptr)
 {
     Objet obj(nom,ptr);
-
-    _obj->addItem(QString::fromStdString(obj.getNom()));
     TOUS_LES_OBJETS.push_back(obj);
 
-    _nbObjet++;
-    if (_nbObjet == 0)
-        _delete_obj->setEnabled(false);
-    else
-        _delete_obj->setEnabled(true);
-
-    if (_nbObjet >= 100)
-        _new_obj->setEnabled(false);
-    else
-        _new_obj->setEnabled(true);
+    std::cout << "Objets actuels:" << std::endl;
+    for (unsigned int i(0); i<TOUS_LES_OBJETS.size();i++)
+        std::cout << TOUS_LES_OBJETS[i].getNom() << " | ";
+    std::cout << std::endl;
+    std::cout << "J'ai reçu l'objet" << std::endl;
+    _affichage->ajouterForme(obj.getForme());
+    std::cout << "J'ai envoyé la forme" << std::endl;
 }
