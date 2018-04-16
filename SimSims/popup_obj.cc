@@ -7,7 +7,7 @@
 #include "mainwindow.h"
 
 
-PopUpObjet::PopUpObjet(std::vector<std::string> noms) : NOM_DES_FORMES_POPUP(noms)
+PopUpObjet::PopUpObjet(std::vector<std::string> noms, std::vector<Objet> objets) : NOM_DES_FORMES_POPUP(noms), TOUS_LES_OBJETS_POPUP(objets)
 {
     _idFormePopup = 75000;
 
@@ -43,6 +43,13 @@ PopUpObjet::PopUpObjet(std::vector<std::string> noms) : NOM_DES_FORMES_POPUP(nom
     for (unsigned int i(0); i<NOM_DES_FORMES_POPUP.size(); i++)
         _selectForm->addItem(QString::fromStdString(NOM_DES_FORMES_POPUP[i]));
     _selectForm->setMaximumWidth(150);
+
+    _name_parent = new QLabel("Parent: ",this);
+    _selectParent = new QComboBox(this);
+    for (unsigned int i(0); i<TOUS_LES_OBJETS_POPUP.size(); i++)
+        _selectParent->addItem(QString::fromStdString(TOUS_LES_OBJETS_POPUP[i].getNom()));
+    _selectParent->setMaximumWidth(150);
+
 
     _name_obj = new QLabel("Nom : ", this);
     _le_name_obj = new QLineEdit(this);
@@ -140,7 +147,6 @@ void PopUpObjet::AffichagePopup(QString text)
 
             std::shared_ptr<forme> ptrForme;
             ptrForme = creerFormesLecture(fichierDonnees,j+1,attributs);
-
             _affichage_popup->ajouterForme(ptrForme);
         }
         j++;

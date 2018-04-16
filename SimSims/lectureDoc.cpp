@@ -68,7 +68,6 @@ int nombreAttributForme(char* fichierDonnees, int indice)
                     int val;
                     std::stringstream stream(ligneEnCours);
                     stream >> val;
-                    std::cout << "NOMBRE D'ATTRIBUTS DE L'ELEMENT " << indice << ": " << val << std::endl;
                     return val;
                 }
 

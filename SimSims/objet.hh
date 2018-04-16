@@ -62,6 +62,7 @@ private:
     std::string _nom;
     std::shared_ptr<forme> _forme;
 
+
     float _couleurR;
     float _couleurG;
     float _couleurB;
@@ -72,4 +73,6 @@ private:
     int _angleY;
     int _angleZ;
     int _scale;
+
+    std::vector<Objet> _formesFilles;
 };

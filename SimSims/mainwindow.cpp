@@ -742,7 +742,7 @@ void MainWindow::PopUpLum()
  */
 void MainWindow::PopUpObj()
 {
-    PopUpObjet * ppo = new PopUpObjet(NOM_DES_FORMES);
+    PopUpObjet * ppo = new PopUpObjet(NOM_DES_FORMES,TOUS_LES_OBJETS);
 
     /* On empêche de toucher à la fenêtre parent pendant que la fenêtre enfant est ouverte */
     ppo->setWindowModality(Qt::ApplicationModal);
@@ -798,22 +798,30 @@ void MainWindow::IncNbObj()
 void MainWindow::OnClicDeleteLum()
 {
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Cancel", "Voulez-vous supprimer cette lumière positionnelle ?", (QMessageBox::No | QMessageBox::Yes));
-    if (reply == QMessageBox::Yes)
-    {
-        /* A compléter avec la suppression de la lumière*/
-        _nbLumierePos--;
+        reply = QMessageBox::question(this, "Cancel", "Voulez-vous supprimer cette lumière positionnelle ?", (QMessageBox::No | QMessageBox::Yes));
+        if (reply == QMessageBox::Yes)
+        {
+            for (unsigned int i(0); i < ENSEMBLE_LUM_POS.size(); i++)
+            {
+                if(ENSEMBLE_LUM_POS[i].getNom() == _lp->currentText().toStdString())
+                {
+                    ENSEMBLE_LUM_POS.erase(ENSEMBLE_LUM_POS.begin()+i);
+                    _lp->removeItem(i);
+                }
+            }
 
-        if (_nbLumierePos == 0)
-            _delete_lp->setEnabled(false);
-        else
-            _delete_lp->setEnabled(true);
+            _nbLumierePos--;
 
-        if (_nbLumierePos >= 7)
-            _new_lp->setEnabled(false);
-        else
-            _new_lp->setEnabled(true);
-    }
+            if (_nbLumierePos == 0)
+                _delete_lp->setEnabled(false);
+            else
+                _delete_lp->setEnabled(true);
+
+            if (_nbLumierePos >= 7)
+                _new_lp->setEnabled(false);
+            else
+                _new_lp->setEnabled(true);
+        }
 }
 
 /**
@@ -826,7 +834,15 @@ void MainWindow::OnClicDeleteObj()
     reply = QMessageBox::question(this, "Cancel", "Voulez-vous supprimer cet objet ?", (QMessageBox::No | QMessageBox::Yes));
     if (reply == QMessageBox::Yes)
     {
-        /* A compléter avec la suppression de l'objet*/
+        for (unsigned int i(0); i < TOUS_LES_OBJETS.size(); i++)
+        {
+            if(TOUS_LES_OBJETS[i].getNom() == _obj->currentText().toStdString())
+            {
+                TOUS_LES_OBJETS.erase(TOUS_LES_OBJETS.begin()+i);
+                _obj->removeItem(i);
+            }
+        }
+
         _nbObjet--;
 
         if (_nbObjet == 0)
