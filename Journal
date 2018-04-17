@@ -56,6 +56,7 @@ Code:
 - B: Modification du fichier d'entrée et du code de lecture afin que la construction des éléments soit maintenant completement automatique à partir de la fenetre de création
 - A: Gestion de la création de la lumière
 
+
 Semaine 3: Finir l'affichage, gestion du parent
 	
 	//Lundi
@@ -78,5 +79,6 @@ Code:
 =============> Sortie SimSims v0.3
 - A: Mise en relation des lumières avec l'interface (modifications)
 - A: Mise en relation des objets avec l'interface (modifications)
-- B: Implémenation de le suppression des formes et de leur filles (choix de supprimer toutes les formes filles d'une forme lors de la suppression de leur mère)
+- B: Implémenation de le suppression des formes et de leur filles (on a fait le choix de supprimer toutes les formes filles d'une forme lors de la suppression de leur mère)
+
 

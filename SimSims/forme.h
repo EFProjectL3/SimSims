@@ -52,25 +52,35 @@ public:
     void setNomForme(std::string nom)
     { _nomForme = nom; }
 
-    void setCouleurR(GLfloat r)
+    void setRed(GLfloat r)
     { _couleurR = r; }
-    void setCouleurG(GLfloat g)
+
+    void setGreen(GLfloat g)
     { _couleurG = g; }
-    void setCouleurB(GLfloat b)
+
+    void setBlue(GLfloat b)
     { _couleurB = b; }
-    void setPositionX(GLfloat x)
+
+    void setPosX(GLfloat x)
     { _positionX = x; }
-    void setPositionY(GLfloat y)
+
+    void setPosY(GLfloat y)
     { _positionY = y; }
-    void setPositionZ(GLfloat z)
+
+    void setPosZ(GLfloat z)
     { _positionZ = z; }
-    void setRotationX(GLfloat x)
+
+    void setAng(GLfloat x)
     { _angleX = x; }
-    void setRotationY(GLfloat y)
+
+    void setAngY(GLfloat y)
     { _angleY = y; }
-    void setRotationZ(GLfloat z)
+
+    void setAngZ(GLfloat z)
     { _angleZ = z; }
-    void setScale(int s);
+
+    void setScale(int s)
+    { _scale = s; }
 
     void clearFormesFilles()
     { _FormesFille.clear(); }

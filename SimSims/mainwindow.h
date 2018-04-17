@@ -33,9 +33,10 @@ public slots:
     void OnClicDeleteObj();
 
     void MAJInterfaceLum();
-    //void MAJInterfaceObj();
+    void MAJInterfaceObj();
 
     void SliderALumierePos();
+    void SliderAObjet();
 
     void receptionLumiere(LumierePos lp);
     void receptionObjet(std::shared_ptr<forme> ptr, QString parent);

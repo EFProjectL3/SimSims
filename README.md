@@ -13,11 +13,11 @@ Elements implémentés
 - Affichage des objets
 - Connexion des modifications des lumières
 - Gestion du parent des objets
+- Suppression des objets
+- Modification des objets (à terminer)
 
 Idées et implémentations à venir
 - Shared libraries pour une lecture dynamique des fichiers
-- Suppression des objets
-- Modification des objets
 - Modification finale des lumières
 - Affichage de la lumière
 - Effets (type brouillard, ombre par ex)

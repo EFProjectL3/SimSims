@@ -665,6 +665,17 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(_s_posY_lp, &QSlider::valueChanged, this, &MainWindow::SliderALumierePos);
     QObject::connect(_s_posZ_lp, &QSlider::valueChanged, this, &MainWindow::SliderALumierePos);
 
+    /* De QSlider à l'objet choisi */
+    QObject::connect(_s_red_obj, &QSlider::valueChanged, this, &MainWindow::SliderAObjet);
+    QObject::connect(_s_green_obj, &QSlider::valueChanged, this, &MainWindow::SliderAObjet);
+    QObject::connect(_s_blue_obj, &QSlider::valueChanged, this, &MainWindow::SliderAObjet);
+    QObject::connect(_s_posX_obj, &QSlider::valueChanged, this, &MainWindow::SliderAObjet);
+    QObject::connect(_s_posY_obj, &QSlider::valueChanged, this, &MainWindow::SliderAObjet);
+    QObject::connect(_s_posZ_obj, &QSlider::valueChanged, this, &MainWindow::SliderAObjet);
+    QObject::connect(_s_angX_obj, &QSlider::valueChanged, this, &MainWindow::SliderAObjet);
+    QObject::connect(_s_angY_obj, &QSlider::valueChanged, this, &MainWindow::SliderAObjet);
+    QObject::connect(_s_angZ_obj, &QSlider::valueChanged, this, &MainWindow::SliderAObjet);
+
 
     /* Boutons */
     QObject::connect(_new_lp, &QPushButton::clicked, this, &MainWindow::PopUpLum);
@@ -758,30 +769,33 @@ void MainWindow::MAJInterfaceLum()
 }
 
 /**
- * @brief MainWindow::MAJInterfaceLum
+ * @brief MainWindow::MAJInterfaceObj
  * Met les slider / spinbox / line edit aux bons endroits lors de la sélection d'un objet dans le QComboBox
  */
-/* A CHANGER ATTENTION BASTIEN A MODIFIER L'IMPLEMENTATION (faire [...].getForme.get[...] */
-/*void MainWindow::MAJInterfaceObj()
+void MainWindow::MAJInterfaceObj()
 {
     for (unsigned int i(0); i < TOUS_LES_OBJETS.size(); i++)
     {
-        if(TOUS_LES_OBJETS[i].getNom() == _obj->currentText().toStdString())
+        if(TOUS_LES_OBJETS[i]->getNomForme() == _obj->currentText().toStdString())
         {
-            _s_red_obj->setValue(TOUS_LES_OBJETS[i].getRed());
-            _s_green_obj->setValue(TOUS_LES_OBJETS[i].getGreen());
-            _s_blue_obj->setValue(TOUS_LES_OBJETS[i].getBlue());
-            _s_posX_obj->setValue(TOUS_LES_OBJETS[i].getPosX());
-            _s_posY_obj->setValue(TOUS_LES_OBJETS[i].getPosY());
-            _s_posZ_obj->setValue(TOUS_LES_OBJETS[i].getPosZ());
-            _s_angX_obj->setValue(TOUS_LES_OBJETS[i].getAngX());
-            _s_angY_obj->setValue(TOUS_LES_OBJETS[i].getAngY());
-            _s_angZ_obj->setValue(TOUS_LES_OBJETS[i].getAngZ());
-            _le_scale_obj->setText(TOUS_LES_OBJETS[i].getScale());
+            _s_red_obj->setValue(TOUS_LES_OBJETS[i]->getRed());
+            _s_green_obj->setValue(TOUS_LES_OBJETS[i]->getGreen());
+            _s_blue_obj->setValue(TOUS_LES_OBJETS[i]->getBlue());
+            _s_posX_obj->setValue(TOUS_LES_OBJETS[i]->getPosX());
+            _s_posY_obj->setValue(TOUS_LES_OBJETS[i]->getPosY());
+            _s_posZ_obj->setValue(TOUS_LES_OBJETS[i]->getPosZ());
+            _s_angX_obj->setValue(TOUS_LES_OBJETS[i]->getAngX());
+            _s_angY_obj->setValue(TOUS_LES_OBJETS[i]->getAngY());
+            _s_angZ_obj->setValue(TOUS_LES_OBJETS[i]->getAngZ());
+            _le_scale_obj->setText(QString::number(TOUS_LES_OBJETS[i]->getScale()));
         }
     }
-}*/
+}
 
+/**
+ * @brief MainWindow::SliderALumierePos
+ * Met à jour les valeurs de la lumière positionnelle choisie quand il y a modification sur l'interface
+ */
 void MainWindow::SliderALumierePos()
 {
     for (unsigned int i(0); i < ENSEMBLE_LUM_POS.size(); i++)
@@ -804,6 +818,40 @@ void MainWindow::SliderALumierePos()
     }
 }
 
+/**
+ * @brief MainWindow::SliderAObjet
+ * Met à jour les valeurs de l'objet choisi quand il y a modification sur l'interface
+ */
+void MainWindow::SliderAObjet()
+{
+    for (unsigned int i(0); i < TOUS_LES_OBJETS.size(); i++)
+    {
+        if(TOUS_LES_OBJETS[i]->getNomForme() == _obj->currentText().toStdString())
+        {
+            if (sender() == _s_red_obj)
+                TOUS_LES_OBJETS[i]->setRed(_s_red_obj->value());
+            if (sender() == _s_green_obj)
+                TOUS_LES_OBJETS[i]->setGreen(_s_green_obj->value());
+            if (sender() == _s_blue_obj)
+                TOUS_LES_OBJETS[i]->setBlue(_s_blue_obj->value());
+            if (sender()==_s_posX_obj)
+                TOUS_LES_OBJETS[i]->setPosX(_s_posX_obj->value());
+            if (sender()==_s_posY_obj)
+                TOUS_LES_OBJETS[i]->setPosY(_s_posY_obj->value());
+            if (sender()==_s_posZ_obj)
+                TOUS_LES_OBJETS[i]->setPosZ(_s_posZ_obj->value());
+            if (sender()==_s_angX_obj)
+                TOUS_LES_OBJETS[i]->setPosX(_s_angX_obj->value());
+            if (sender()==_s_angY_obj)
+                TOUS_LES_OBJETS[i]->setPosY(_s_angY_obj->value());
+            if (sender()==_s_angZ_obj)
+                TOUS_LES_OBJETS[i]->setPosZ(_s_angZ_obj->value());
+            if (sender()==_le_scale_obj)
+                TOUS_LES_OBJETS[i]->setScale(_le_scale_obj->text().toInt());
+
+        }
+    }
+}
 
 /**
  * @brief MainWindow::PopUpLum
