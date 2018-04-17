@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[17];
-    char stringdata0[194];
+    QByteArrayData data[20];
+    char stringdata0[239];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -30,30 +30,34 @@ struct qt_meta_stringdata_MainWindow_t {
 static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
     {
 QT_MOC_LITERAL(0, 0, 10), // "MainWindow"
-QT_MOC_LITERAL(1, 11, 15), // "SliderALineEdit"
+QT_MOC_LITERAL(1, 11, 15), // "envoiLumiereOGL"
 QT_MOC_LITERAL(2, 27, 0), // ""
-QT_MOC_LITERAL(3, 28, 1), // "i"
-QT_MOC_LITERAL(4, 30, 8), // "PopUpLum"
-QT_MOC_LITERAL(5, 39, 8), // "PopUpObj"
-QT_MOC_LITERAL(6, 48, 15), // "OnClicDeleteLum"
-QT_MOC_LITERAL(7, 64, 15), // "OnClicDeleteObj"
-QT_MOC_LITERAL(8, 80, 15), // "MAJInterfaceLum"
-QT_MOC_LITERAL(9, 96, 17), // "SliderALumierePos"
-QT_MOC_LITERAL(10, 114, 16), // "receptionLumiere"
-QT_MOC_LITERAL(11, 131, 10), // "LumierePos"
-QT_MOC_LITERAL(12, 142, 2), // "lp"
-QT_MOC_LITERAL(13, 145, 14), // "receptionObjet"
-QT_MOC_LITERAL(14, 160, 22), // "std::shared_ptr<forme>"
-QT_MOC_LITERAL(15, 183, 3), // "ptr"
-QT_MOC_LITERAL(16, 187, 6) // "parent"
+QT_MOC_LITERAL(3, 28, 10), // "LumierePos"
+QT_MOC_LITERAL(4, 39, 2), // "lp"
+QT_MOC_LITERAL(5, 42, 15), // "SliderALineEdit"
+QT_MOC_LITERAL(6, 58, 1), // "i"
+QT_MOC_LITERAL(7, 60, 8), // "PopUpLum"
+QT_MOC_LITERAL(8, 69, 8), // "PopUpObj"
+QT_MOC_LITERAL(9, 78, 15), // "OnClicDeleteLum"
+QT_MOC_LITERAL(10, 94, 15), // "OnClicDeleteObj"
+QT_MOC_LITERAL(11, 110, 15), // "MAJInterfaceLum"
+QT_MOC_LITERAL(12, 126, 15), // "MAJInterfaceObj"
+QT_MOC_LITERAL(13, 142, 17), // "SliderALumierePos"
+QT_MOC_LITERAL(14, 160, 12), // "SliderAObjet"
+QT_MOC_LITERAL(15, 173, 16), // "receptionLumiere"
+QT_MOC_LITERAL(16, 190, 14), // "receptionObjet"
+QT_MOC_LITERAL(17, 205, 22), // "std::shared_ptr<forme>"
+QT_MOC_LITERAL(18, 228, 3), // "ptr"
+QT_MOC_LITERAL(19, 232, 6) // "parent"
 
     },
-    "MainWindow\0SliderALineEdit\0\0i\0PopUpLum\0"
-    "PopUpObj\0OnClicDeleteLum\0OnClicDeleteObj\0"
-    "MAJInterfaceLum\0SliderALumierePos\0"
-    "receptionLumiere\0LumierePos\0lp\0"
-    "receptionObjet\0std::shared_ptr<forme>\0"
-    "ptr\0parent"
+    "MainWindow\0envoiLumiereOGL\0\0LumierePos\0"
+    "lp\0SliderALineEdit\0i\0PopUpLum\0PopUpObj\0"
+    "OnClicDeleteLum\0OnClicDeleteObj\0"
+    "MAJInterfaceLum\0MAJInterfaceObj\0"
+    "SliderALumierePos\0SliderAObjet\0"
+    "receptionLumiere\0receptionObjet\0"
+    "std::shared_ptr<forme>\0ptr\0parent"
 };
 #undef QT_MOC_LITERAL
 
@@ -63,34 +67,44 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: name, argc, parameters, tag, flags
+       1,    1,   74,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   59,    2, 0x0a /* Public */,
-       4,    0,   62,    2, 0x0a /* Public */,
-       5,    0,   63,    2, 0x0a /* Public */,
-       6,    0,   64,    2, 0x0a /* Public */,
-       7,    0,   65,    2, 0x0a /* Public */,
-       8,    0,   66,    2, 0x0a /* Public */,
-       9,    0,   67,    2, 0x0a /* Public */,
-      10,    1,   68,    2, 0x0a /* Public */,
-      13,    2,   71,    2, 0x0a /* Public */,
+       5,    1,   77,    2, 0x0a /* Public */,
+       7,    0,   80,    2, 0x0a /* Public */,
+       8,    0,   81,    2, 0x0a /* Public */,
+       9,    0,   82,    2, 0x0a /* Public */,
+      10,    0,   83,    2, 0x0a /* Public */,
+      11,    0,   84,    2, 0x0a /* Public */,
+      12,    0,   85,    2, 0x0a /* Public */,
+      13,    0,   86,    2, 0x0a /* Public */,
+      14,    0,   87,    2, 0x0a /* Public */,
+      15,    1,   88,    2, 0x0a /* Public */,
+      16,    2,   91,    2, 0x0a /* Public */,
+
+ // signals: parameters
+    QMetaType::Void, 0x80000000 | 3,    4,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::Int,    3,
+    QMetaType::Void, QMetaType::Int,    6,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 11,   12,
-    QMetaType::Void, 0x80000000 | 14, QMetaType::QString,   15,   16,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void, 0x80000000 | 17, QMetaType::QString,   18,   19,
 
        0        // eod
 };
@@ -101,16 +115,28 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         MainWindow *_t = static_cast<MainWindow *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->SliderALineEdit((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: _t->PopUpLum(); break;
-        case 2: _t->PopUpObj(); break;
-        case 3: _t->OnClicDeleteLum(); break;
-        case 4: _t->OnClicDeleteObj(); break;
-        case 5: _t->MAJInterfaceLum(); break;
-        case 6: _t->SliderALumierePos(); break;
-        case 7: _t->receptionLumiere((*reinterpret_cast< LumierePos(*)>(_a[1]))); break;
-        case 8: _t->receptionObjet((*reinterpret_cast< std::shared_ptr<forme>(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 0: _t->envoiLumiereOGL((*reinterpret_cast< LumierePos(*)>(_a[1]))); break;
+        case 1: _t->SliderALineEdit((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: _t->PopUpLum(); break;
+        case 3: _t->PopUpObj(); break;
+        case 4: _t->OnClicDeleteLum(); break;
+        case 5: _t->OnClicDeleteObj(); break;
+        case 6: _t->MAJInterfaceLum(); break;
+        case 7: _t->MAJInterfaceObj(); break;
+        case 8: _t->SliderALumierePos(); break;
+        case 9: _t->SliderAObjet(); break;
+        case 10: _t->receptionLumiere((*reinterpret_cast< LumierePos(*)>(_a[1]))); break;
+        case 11: _t->receptionObjet((*reinterpret_cast< std::shared_ptr<forme>(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         default: ;
+        }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        void **func = reinterpret_cast<void **>(_a[1]);
+        {
+            typedef void (MainWindow::*_t)(LumierePos );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&MainWindow::envoiLumiereOGL)) {
+                *result = 0;
+            }
         }
     }
 }
@@ -140,14 +166,21 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 12)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 9;
+        _id -= 12;
     }
     return _id;
+}
+
+// SIGNAL 0
+void MainWindow::envoiLumiereOGL(LumierePos _t1)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

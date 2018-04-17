@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _layoutprincipal = new QGridLayout();
 
-    _affichage = new WidgetOGL(60,this, "main");
+    _affichage = new WidgetOGL(60,this, "main",ENSEMBLE_LUM_POS);
     _affichage->setMinimumWidth(600);
 
     _tabs = new QTabWidget(this);
@@ -703,6 +703,8 @@ MainWindow::MainWindow(QWidget *parent) :
     // Modification objet
 
 
+    //Lumiere
+    QObject::connect(this, &MainWindow::envoiLumiereOGL, _affichage, &WidgetOGL::recepetionLumiereOGL);
 }
 
 MainWindow::~MainWindow()
@@ -816,6 +818,7 @@ void MainWindow::SliderALumierePos()
                 ENSEMBLE_LUM_POS[i].setPosZ(_s_posZ_lp->value());
         }
     }
+    _affichage->changerLumiere(ENSEMBLE_LUM_POS);
 }
 
 /**
@@ -940,7 +943,8 @@ void MainWindow::OnClicDeleteLum()
 void MainWindow::OnClicDeleteObj()
 {
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Cancel", "Voulez-vous supprimer cet objet ?", (QMessageBox::No | QMessageBox::Yes));
+    reply = QMessageBox::question(this, "Cancel", "Voulez-vous supprimer cet objet ?"
+                                                  "(Tous les descendants seront aussi supprimés.)", (QMessageBox::No | QMessageBox::Yes));
     if (reply == QMessageBox::Yes)
     {
         unsigned int indiceSuppression(0);
@@ -1043,6 +1047,12 @@ void MainWindow::receptionLumiere(LumierePos lp)
         _new_lp->setEnabled(false);
     else
         _new_lp->setEnabled(true);
+
+    std::cout << "Lumieres actuelles:" << std::endl;
+    for (unsigned int i(0); i<ENSEMBLE_LUM_POS.size(); i++)
+        std::cout << "Lumiere " << i << ": " << ENSEMBLE_LUM_POS[i].getNom() << std::endl;
+
+    emit envoiLumiereOGL(lp);
 }
 
 

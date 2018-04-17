@@ -7,13 +7,14 @@
 #include <string>
 #include <memory>
 #include "forme.h"
+#include "lumierepos.hh"
 
 class WidgetOGL : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
 
 public:
-    explicit WidgetOGL(int fps = 0, QWidget *parent = 0, std::string type = "main");
+    explicit WidgetOGL(int fps = 0, QWidget *parent = 0, std::string type = "main", std::vector<LumierePos> ptr_lum = std::vector<LumierePos>());
     ~WidgetOGL();
 
     void chargerTexture(std::string nomTexture);
@@ -50,6 +51,12 @@ public slots:
     void setAngYCam(int y);
     void setAngZCam(int z);
 
+    /* Lumière */
+    void recepetionLumiereOGL(LumierePos lp)
+    { _ensemble_lumiere.push_back(lp); }
+
+    void changerLumiere(std::vector<LumierePos> vecLum)
+    { _ensemble_lumiere = vecLum; }
 
 private:
     std::string _type;
@@ -68,4 +75,5 @@ private:
     float _ambianteB;
 
     std::vector<std::shared_ptr<forme>> _formesAAfficher;
+    std::vector<LumierePos> _ensemble_lumiere;
 };

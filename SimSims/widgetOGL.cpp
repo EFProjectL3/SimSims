@@ -8,7 +8,7 @@ int angleY;
 int anglePopupX;
 int anglePopupY;
 
-WidgetOGL::WidgetOGL(int fps, QWidget *parent, std::string type) : QOpenGLWidget(parent), _type(type), _formesAAfficher()
+WidgetOGL::WidgetOGL(int fps, QWidget *parent, std::string type, std::vector<LumierePos> ptr_lum) : QOpenGLWidget(parent), _type(type), _formesAAfficher(), _ensemble_lumiere(ptr_lum)
 {
     setFocusPolicy(Qt::StrongFocus);
 
@@ -127,14 +127,6 @@ void WidgetOGL::initializeGL()
     //Lumiere ambiante: on voit peu de base
     GLfloat lumiere_ambiante[4] = { _ambianteR, _ambianteV, _ambianteB, 0.0 };
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT,lumiere_ambiante);
-    /* // Lumière 0: soleil du soir
-    GLfloat ambiante0 [] = {0.2,0.2,0.0,0.0};
-    glLightfv(GL_LIGHT0, GL_AMBIENT,ambiante0);
-    GLfloat diffuse0[] = { 0.2, 0.1, 0.0, 0.0 };
-    glLightfv(GL_LIGHT0,GL_DIFFUSE, diffuse0);
-    GLfloat speculaire0[] = {0.2,0.1,0.0,0.0};
-    glLightfv(GL_LIGHT0,GL_SPECULAR,speculaire0);
-    glEnable(GL_LIGHT0);*/
     /*****************/
 
     /********** TEXTURES ************/
@@ -201,9 +193,11 @@ void WidgetOGL::paintGL()
     glTranslatef(_posxcam,_posycam,_poszcam);
 
     /* Lumières */
-
     GLfloat lumiere_ambiante[4] = { _ambianteR, _ambianteV, _ambianteB, 0.0 };
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT,lumiere_ambiante);
+    for (unsigned int i(0); i<_ensemble_lumiere.size(); i++)
+        _ensemble_lumiere[i].afficher_lumiere(i);
+
 
     //C'est ici qu'il faudra lire le fichier des données à afficher
 

@@ -120,7 +120,8 @@ PopUpObjet::~PopUpObjet()
 void PopUpObjet::OnClicCancel()
 {
     QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, "Cancel", "Voulez-vous annuler la création du nouvel objet ?", (QMessageBox::No | QMessageBox::Yes));
+    reply = QMessageBox::question(this, "Cancel", "Voulez-vous annuler la création du nouvel objet ?"
+                                                  "(Tous les descendants seront aussi supprimés.)", (QMessageBox::No | QMessageBox::Yes));
     if (reply == QMessageBox::Yes)
         this->close();
 }

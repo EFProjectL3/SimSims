@@ -1,11 +1,14 @@
 #pragma once
 #include <string>
+#include <QOpenGLFunctions>
 
 class LumierePos
 {
 public:
     LumierePos(std::string n, int posXInit, int posYInit, int posZInit);
     ~LumierePos() = default;
+
+    void afficher_lumiere(int i);
 
     std::string getNom()
     { return _nom; }
@@ -51,6 +54,7 @@ public:
     { _nom = n; }
 
 private:
+
     std::string _nom;
     int _positionX;
     int _positionY;

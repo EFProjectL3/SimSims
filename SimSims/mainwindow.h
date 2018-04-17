@@ -23,6 +23,9 @@ public:
     std::vector<std::string> getNomFormes()
     { return NOM_DES_FORMES; }
 
+signals:
+    void envoiLumiereOGL(LumierePos lp);
+
 public slots:
     void SliderALineEdit(int i);
 

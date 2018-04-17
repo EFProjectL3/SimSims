@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_WidgetOGL_t {
-    QByteArrayData data[19];
-    char stringdata0[151];
+    QByteArrayData data[25];
+    char stringdata0[232];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -47,14 +47,22 @@ QT_MOC_LITERAL(14, 105, 10), // "setPosZCam"
 QT_MOC_LITERAL(15, 116, 1), // "z"
 QT_MOC_LITERAL(16, 118, 10), // "setAngXCam"
 QT_MOC_LITERAL(17, 129, 10), // "setAngYCam"
-QT_MOC_LITERAL(18, 140, 10) // "setAngZCam"
+QT_MOC_LITERAL(18, 140, 10), // "setAngZCam"
+QT_MOC_LITERAL(19, 151, 20), // "recepetionLumiereOGL"
+QT_MOC_LITERAL(20, 172, 10), // "LumierePos"
+QT_MOC_LITERAL(21, 183, 2), // "lp"
+QT_MOC_LITERAL(22, 186, 14), // "changerLumiere"
+QT_MOC_LITERAL(23, 201, 23), // "std::vector<LumierePos>"
+QT_MOC_LITERAL(24, 225, 6) // "vecLum"
 
     },
     "WidgetOGL\0timeOutSlot\0\0slotUpdate\0"
     "setAmbianteR\0r\0setAmbianteV\0v\0"
     "setAmbianteB\0b\0setPosXCam\0x\0setPosYCam\0"
     "y\0setPosZCam\0z\0setAngXCam\0setAngYCam\0"
-    "setAngZCam"
+    "setAngZCam\0recepetionLumiereOGL\0"
+    "LumierePos\0lp\0changerLumiere\0"
+    "std::vector<LumierePos>\0vecLum"
 };
 #undef QT_MOC_LITERAL
 
@@ -64,7 +72,7 @@ static const uint qt_meta_data_WidgetOGL[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -72,17 +80,19 @@ static const uint qt_meta_data_WidgetOGL[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   69,    2, 0x0a /* Public */,
-       3,    0,   70,    2, 0x0a /* Public */,
-       4,    1,   71,    2, 0x0a /* Public */,
-       6,    1,   74,    2, 0x0a /* Public */,
-       8,    1,   77,    2, 0x0a /* Public */,
-      10,    1,   80,    2, 0x0a /* Public */,
-      12,    1,   83,    2, 0x0a /* Public */,
-      14,    1,   86,    2, 0x0a /* Public */,
-      16,    1,   89,    2, 0x0a /* Public */,
-      17,    1,   92,    2, 0x0a /* Public */,
-      18,    1,   95,    2, 0x0a /* Public */,
+       1,    0,   79,    2, 0x0a /* Public */,
+       3,    0,   80,    2, 0x0a /* Public */,
+       4,    1,   81,    2, 0x0a /* Public */,
+       6,    1,   84,    2, 0x0a /* Public */,
+       8,    1,   87,    2, 0x0a /* Public */,
+      10,    1,   90,    2, 0x0a /* Public */,
+      12,    1,   93,    2, 0x0a /* Public */,
+      14,    1,   96,    2, 0x0a /* Public */,
+      16,    1,   99,    2, 0x0a /* Public */,
+      17,    1,  102,    2, 0x0a /* Public */,
+      18,    1,  105,    2, 0x0a /* Public */,
+      19,    1,  108,    2, 0x0a /* Public */,
+      22,    1,  111,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -96,6 +106,8 @@ static const uint qt_meta_data_WidgetOGL[] = {
     QMetaType::Void, QMetaType::Int,   11,
     QMetaType::Void, QMetaType::Int,   13,
     QMetaType::Void, QMetaType::Int,   15,
+    QMetaType::Void, 0x80000000 | 20,   21,
+    QMetaType::Void, 0x80000000 | 23,   24,
 
        0        // eod
 };
@@ -117,6 +129,8 @@ void WidgetOGL::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 8: _t->setAngXCam((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 9: _t->setAngYCam((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 10: _t->setAngZCam((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 11: _t->recepetionLumiereOGL((*reinterpret_cast< LumierePos(*)>(_a[1]))); break;
+        case 12: _t->changerLumiere((*reinterpret_cast< std::vector<LumierePos>(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -149,13 +163,13 @@ int WidgetOGL::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 13)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 11;
+        _id -= 13;
     }
     return _id;
 }
