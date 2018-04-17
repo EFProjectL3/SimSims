@@ -19,21 +19,43 @@ public:
     int getPosZ()
     { return _positionZ; }
 
-    float getRed()
+    int getRed()
     { return _couleurR; }
 
-    float getGreen()
+    int getGreen()
     { return _couleurG; }
 
-    float getBlue()
+    int getBlue()
     { return _couleurB; }
+
+    /* SETTER */
+    void setPosX(int px)
+    { _positionX = px; }
+
+    void setPosY(int py)
+    { _positionY = py; }
+
+    void setPosZ(int pz)
+    { _positionZ = pz; }
+
+    void setRed(int r)
+    { _couleurR = r; }
+
+    void setGreen(int g)
+    { _couleurG = g; }
+
+    void setBlue(int b)
+    { _couleurB = b; }
+
+    void getNom(std::string n)
+    { _nom = n; }
 
 private:
     std::string _nom;
     int _positionX;
     int _positionY;
     int _positionZ;
-    float _couleurR;
-    float _couleurG;
-    float _couleurB;
+    int _couleurR;
+    int _couleurG;
+    int _couleurB;
 };

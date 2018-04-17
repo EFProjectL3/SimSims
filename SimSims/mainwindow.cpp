@@ -390,6 +390,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _s_red_obj = new QSlider(Qt::Horizontal, this);
     _s_red_obj->setMinimum(0);
     _s_red_obj->setMaximum(255);
+    _s_red_obj->setValue(204);
     _red_max_obj = new QLabel("255", this);
     _l_red_obj = new QLabel("valeur : ", this);
     _sp_red_obj = new QSpinBox(this);
@@ -408,6 +409,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _s_green_obj = new QSlider(Qt::Horizontal, this);
     _s_green_obj->setMinimum(0);
     _s_green_obj->setMaximum(255);
+    _s_green_obj->setValue(204);
     _green_max_obj = new QLabel("255", this);
     _l_green_obj = new QLabel("valeur : ", this);
     _sp_green_obj = new QSpinBox(this);
@@ -426,6 +428,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _s_blue_obj = new QSlider(Qt::Horizontal, this);
     _s_blue_obj->setMinimum(0);
     _s_blue_obj->setMaximum(255);
+    _s_blue_obj->setValue(204);
     _blue_max_obj = new QLabel("255", this);
     _l_blue_obj = new QLabel("valeur : ", this);
     _sp_blue_obj = new QSpinBox(this);
@@ -650,6 +653,19 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(_s_angY_obj, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
     QObject::connect(_s_angZ_obj, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
 
+    /* De QComboBox à interface */
+    QObject::connect(_lp, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::MAJInterfaceLum);
+    //QObject::connect(_lp, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::MAJInterfaceObj);
+
+    /* De QSlider à la lumière positionnelle choisie */
+    QObject::connect(_s_red_lp, &QSlider::valueChanged, this, &MainWindow::SliderALumierePos);
+    QObject::connect(_s_green_lp, &QSlider::valueChanged, this, &MainWindow::SliderALumierePos);
+    QObject::connect(_s_blue_lp, &QSlider::valueChanged, this, &MainWindow::SliderALumierePos);
+    QObject::connect(_s_posX_lp, &QSlider::valueChanged, this, &MainWindow::SliderALumierePos);
+    QObject::connect(_s_posY_lp, &QSlider::valueChanged, this, &MainWindow::SliderALumierePos);
+    QObject::connect(_s_posZ_lp, &QSlider::valueChanged, this, &MainWindow::SliderALumierePos);
+
+
     /* Boutons */
     QObject::connect(_new_lp, &QPushButton::clicked, this, &MainWindow::PopUpLum);
     QObject::connect(_new_obj, &QPushButton::clicked, this, &MainWindow::PopUpObj);
@@ -657,7 +673,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(_delete_obj, &QPushButton::clicked, this, &MainWindow::OnClicDeleteObj);
 
 
-    /* Connexion mainwindow vers openGL */
+    /* Connexions mainwindow vers openGL */
     // Lumière ambiante
     QObject::connect(_s_red_la, &QSlider::valueChanged, _affichage, &WidgetOGL::setAmbianteR);
     QObject::connect(_s_green_la, &QSlider::valueChanged, _affichage, &WidgetOGL::setAmbianteV);
@@ -722,6 +738,74 @@ void MainWindow::SliderALineEdit(int i)
 }
 
 /**
++ * @brief MainWindow::MAJInterfaceLum
++ * Met les slider / spinbox / line edit aux bons endroits lors de la sélection d'une lumière dans le QComboBox
++ */
+void MainWindow::MAJInterfaceLum()
+{
+    for (unsigned int i(0); i < ENSEMBLE_LUM_POS.size(); i++)
+    {
+        if(ENSEMBLE_LUM_POS[i].getNom() == _lp->currentText().toStdString())
+        {
+            _s_red_lp->setValue(ENSEMBLE_LUM_POS[i].getRed());
+            _s_green_lp->setValue(ENSEMBLE_LUM_POS[i].getGreen());
+            _s_blue_lp->setValue(ENSEMBLE_LUM_POS[i].getBlue());
+            _s_posX_lp->setValue(ENSEMBLE_LUM_POS[i].getPosX());
+            _s_posY_lp->setValue(ENSEMBLE_LUM_POS[i].getPosY());
+            _s_posZ_lp->setValue(ENSEMBLE_LUM_POS[i].getPosZ());
+        }
+    }
+}
+
+/**
+ * @brief MainWindow::MAJInterfaceLum
+ * Met les slider / spinbox / line edit aux bons endroits lors de la sélection d'un objet dans le QComboBox
+ */
+/* A CHANGER ATTENTION BASTIEN A MODIFIER L'IMPLEMENTATION (faire [...].getForme.get[...] */
+/*void MainWindow::MAJInterfaceObj()
+{
+    for (unsigned int i(0); i < TOUS_LES_OBJETS.size(); i++)
+    {
+        if(TOUS_LES_OBJETS[i].getNom() == _obj->currentText().toStdString())
+        {
+            _s_red_obj->setValue(TOUS_LES_OBJETS[i].getRed());
+            _s_green_obj->setValue(TOUS_LES_OBJETS[i].getGreen());
+            _s_blue_obj->setValue(TOUS_LES_OBJETS[i].getBlue());
+            _s_posX_obj->setValue(TOUS_LES_OBJETS[i].getPosX());
+            _s_posY_obj->setValue(TOUS_LES_OBJETS[i].getPosY());
+            _s_posZ_obj->setValue(TOUS_LES_OBJETS[i].getPosZ());
+            _s_angX_obj->setValue(TOUS_LES_OBJETS[i].getAngX());
+            _s_angY_obj->setValue(TOUS_LES_OBJETS[i].getAngY());
+            _s_angZ_obj->setValue(TOUS_LES_OBJETS[i].getAngZ());
+            _le_scale_obj->setText(TOUS_LES_OBJETS[i].getScale());
+        }
+    }
+}*/
+
+void MainWindow::SliderALumierePos()
+{
+    for (unsigned int i(0); i < ENSEMBLE_LUM_POS.size(); i++)
+    {
+        if(ENSEMBLE_LUM_POS[i].getNom() == _lp->currentText().toStdString())
+        {
+            if (sender() == _s_red_lp)
+                ENSEMBLE_LUM_POS[i].setRed(_s_red_lp->value());
+            if (sender() == _s_green_lp)
+                ENSEMBLE_LUM_POS[i].setGreen(_s_green_lp->value());
+            if (sender() == _s_blue_lp)
+                ENSEMBLE_LUM_POS[i].setBlue(_s_blue_lp->value());
+            if (sender()==_s_posX_lp)
+                ENSEMBLE_LUM_POS[i].setPosX(_s_posX_lp->value());
+            if (sender()==_s_posY_lp)
+                ENSEMBLE_LUM_POS[i].setPosY(_s_posY_lp->value());
+            if (sender()==_s_posZ_lp)
+                ENSEMBLE_LUM_POS[i].setPosZ(_s_posZ_lp->value());
+        }
+    }
+}
+
+
+/**
  * @brief MainWindow::PopUpLum
  * Fait apparaître la fenêtre de création de lumières positionnelles
  */
@@ -732,8 +816,6 @@ void MainWindow::PopUpLum()
     /* On empêche de toucher à la fenêtre parent pendant que la fenêtre enfant est ouverte */
     ppl->setWindowModality(Qt::ApplicationModal);
     ppl->show();
-
-    QObject::connect(ppl->_create_lp, &QPushButton::clicked, this, &MainWindow::IncNbLum);
 
     /* Reception de la lumière émise par le pop up */
     QObject::connect(ppl, &PopUpLumiere::lumiereCreee, this, &MainWindow::receptionLumiere);
@@ -751,46 +833,7 @@ void MainWindow::PopUpObj()
     ppo->setWindowModality(Qt::ApplicationModal);
     ppo->show();
 
-    QObject::connect(ppo->_create_obj, &QPushButton::clicked, this, &MainWindow::IncNbObj);
     QObject::connect(ppo, &PopUpObjet::creationObjet, this, &MainWindow::receptionObjet);
-}
-
-/**
- * @brief MainWindow::IncNbLum
- * On vérifie le nombre de lumières positionnelles pour griser ou non les boutons de création/suppression
- */
-void MainWindow::IncNbLum()
-{
-    _nbLumierePos++;
-
-    if (_nbLumierePos == 0)
-        _delete_lp->setEnabled(false);
-    else
-        _delete_lp->setEnabled(true);
-
-    if (_nbLumierePos >= 7)
-        _new_lp->setEnabled(false);
-    else
-        _new_lp->setEnabled(true);
-}
-
-/**
- * @brief MainWindow::IncNbObj
- * On vérifie le nombre d'objets pour griser ou non les boutons de création/suppression
- */
-void MainWindow::IncNbObj()
-{
-    _nbObjet++;
-
-    if (_nbObjet == 0)
-        _delete_obj->setEnabled(false);
-    else
-        _delete_obj->setEnabled(true);
-
-    if (_nbObjet >= 100)
-        _new_obj->setEnabled(false);
-    else
-        _new_obj->setEnabled(true);
 }
 
 /**
@@ -816,6 +859,20 @@ void MainWindow::OnClicDeleteLum()
         _nbLumierePos--;
 
         if (_nbLumierePos == 0)
+        {
+            _s_posX_lp->setValue(0);
+            _s_posY_lp->setValue(0);
+            _s_posZ_lp->setValue(0);
+        }
+        else
+        {
+            _lp->setCurrentIndex(0);
+            _s_posX_lp->setValue(ENSEMBLE_LUM_POS[0].getPosX());
+            _s_posY_lp->setValue(ENSEMBLE_LUM_POS[0].getPosY());
+            _s_posZ_lp->setValue(ENSEMBLE_LUM_POS[0].getPosZ());
+        }
+
+        if (_nbLumierePos == 0)
             _delete_lp->setEnabled(false);
         else
             _delete_lp->setEnabled(true);
@@ -837,38 +894,49 @@ void MainWindow::OnClicDeleteObj()
     reply = QMessageBox::question(this, "Cancel", "Voulez-vous supprimer cet objet ?", (QMessageBox::No | QMessageBox::Yes));
     if (reply == QMessageBox::Yes)
     {
+        /* A REVOIR
+        / A compléter avec la suppression de l'objet*
         for (unsigned int i(0); i < TOUS_LES_OBJETS.size(); i++)
         {
-          /*
-           *    SUPPRESION A REVOIR
-           *
-           *  if(TOUS_LES_OBJETS[i]->getNomForme() == _obj->currentText().toStdString())
+            if(TOUS_LES_OBJETS[i].getNom() == _obj->currentText().toStdString())
             {
                 TOUS_LES_OBJETS.erase(TOUS_LES_OBJETS.begin()+i);
                 _obj->removeItem(i);
-                _affichage->supprimerForme(10000+i);    //Dans le cas ou la forme est directement dans affichage
             }
-            */
-        }
+        }*/
 
         _nbObjet--;
 
         if (_nbObjet == 0)
-            _delete_obj->setEnabled(false);
+        {
+            _s_posX_obj->setValue(0);
+            _s_posY_obj->setValue(0);
+            _s_posZ_obj->setValue(0);
+        }
         else
-            _delete_obj->setEnabled(true);
-
-        if (_nbObjet >= 100)
-            _new_obj->setEnabled(false);
-        else
-            _new_obj->setEnabled(true);
+        {
+            _obj->setCurrentIndex(0);
+            _s_posX_obj->setValue(TOUS_LES_OBJETS[0]->getPosX());
+            _s_posY_obj->setValue(TOUS_LES_OBJETS[0]->getPosY());
+            _s_posZ_obj->setValue(TOUS_LES_OBJETS[0]->getPosZ());
+        }
     }
+
+    if (_nbObjet == 0)
+        _delete_obj->setEnabled(false);
+    else
+        _delete_obj->setEnabled(true);
+
+    if (_nbObjet >= 100)
+        _new_obj->setEnabled(false);
+    else
+        _new_obj->setEnabled(true);
 }
 
 /**
  * @brief MainWindow::receptionLumiere
  * @param lp
- * Ajoute la lumière positionnelle créée dans la popup dans le mainwindow
+ * Ajoute la lumière positionnelle créée dans le popup dans le mainwindow
  */
 void MainWindow::receptionLumiere(LumierePos lp)
 {

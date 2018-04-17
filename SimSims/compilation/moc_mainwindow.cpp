@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[17];
-    char stringdata0[178];
+    char stringdata0[194];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,24 +35,25 @@ QT_MOC_LITERAL(2, 27, 0), // ""
 QT_MOC_LITERAL(3, 28, 1), // "i"
 QT_MOC_LITERAL(4, 30, 8), // "PopUpLum"
 QT_MOC_LITERAL(5, 39, 8), // "PopUpObj"
-QT_MOC_LITERAL(6, 48, 8), // "IncNbLum"
-QT_MOC_LITERAL(7, 57, 8), // "IncNbObj"
-QT_MOC_LITERAL(8, 66, 15), // "OnClicDeleteLum"
-QT_MOC_LITERAL(9, 82, 15), // "OnClicDeleteObj"
-QT_MOC_LITERAL(10, 98, 16), // "receptionLumiere"
-QT_MOC_LITERAL(11, 115, 10), // "LumierePos"
-QT_MOC_LITERAL(12, 126, 2), // "lp"
-QT_MOC_LITERAL(13, 129, 14), // "receptionObjet"
-QT_MOC_LITERAL(14, 144, 22), // "std::shared_ptr<forme>"
-QT_MOC_LITERAL(15, 167, 3), // "ptr"
-QT_MOC_LITERAL(16, 171, 6) // "parent"
+QT_MOC_LITERAL(6, 48, 15), // "OnClicDeleteLum"
+QT_MOC_LITERAL(7, 64, 15), // "OnClicDeleteObj"
+QT_MOC_LITERAL(8, 80, 15), // "MAJInterfaceLum"
+QT_MOC_LITERAL(9, 96, 17), // "SliderALumierePos"
+QT_MOC_LITERAL(10, 114, 16), // "receptionLumiere"
+QT_MOC_LITERAL(11, 131, 10), // "LumierePos"
+QT_MOC_LITERAL(12, 142, 2), // "lp"
+QT_MOC_LITERAL(13, 145, 14), // "receptionObjet"
+QT_MOC_LITERAL(14, 160, 22), // "std::shared_ptr<forme>"
+QT_MOC_LITERAL(15, 183, 3), // "ptr"
+QT_MOC_LITERAL(16, 187, 6) // "parent"
 
     },
     "MainWindow\0SliderALineEdit\0\0i\0PopUpLum\0"
-    "PopUpObj\0IncNbLum\0IncNbObj\0OnClicDeleteLum\0"
-    "OnClicDeleteObj\0receptionLumiere\0"
-    "LumierePos\0lp\0receptionObjet\0"
-    "std::shared_ptr<forme>\0ptr\0parent"
+    "PopUpObj\0OnClicDeleteLum\0OnClicDeleteObj\0"
+    "MAJInterfaceLum\0SliderALumierePos\0"
+    "receptionLumiere\0LumierePos\0lp\0"
+    "receptionObjet\0std::shared_ptr<forme>\0"
+    "ptr\0parent"
 };
 #undef QT_MOC_LITERAL
 
@@ -103,10 +104,10 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->SliderALineEdit((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 1: _t->PopUpLum(); break;
         case 2: _t->PopUpObj(); break;
-        case 3: _t->IncNbLum(); break;
-        case 4: _t->IncNbObj(); break;
-        case 5: _t->OnClicDeleteLum(); break;
-        case 6: _t->OnClicDeleteObj(); break;
+        case 3: _t->OnClicDeleteLum(); break;
+        case 4: _t->OnClicDeleteObj(); break;
+        case 5: _t->MAJInterfaceLum(); break;
+        case 6: _t->SliderALumierePos(); break;
         case 7: _t->receptionLumiere((*reinterpret_cast< LumierePos(*)>(_a[1]))); break;
         case 8: _t->receptionObjet((*reinterpret_cast< std::shared_ptr<forme>(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         default: ;
