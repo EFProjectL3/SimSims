@@ -886,7 +886,8 @@ void MainWindow::OnClicDeleteLum()
 
 /**
  * @brief MainWindow::OnClicDeleteObj
- * On vérifie le nombre d'objets pour griser ou non les boutons de création/suppression et supprimer l'objet choisi
+ * On vérifie le nombre d'objets pour griser ou non les boutons de création/suppression et supprimer l'objet choisi ainsi que ses formes filles
+ * On a choisi de supprimer tous les éléments filles d'une forme, au lieu de les remettre au milieu
  */
 void MainWindow::OnClicDeleteObj()
 {
@@ -894,16 +895,50 @@ void MainWindow::OnClicDeleteObj()
     reply = QMessageBox::question(this, "Cancel", "Voulez-vous supprimer cet objet ?", (QMessageBox::No | QMessageBox::Yes));
     if (reply == QMessageBox::Yes)
     {
-        /* A REVOIR
-        / A compléter avec la suppression de l'objet*
+        unsigned int indiceSuppression(0);
+        std::cout << "**** SUPPRESSION ****" << std::endl;
+        /* A compléter avec la suppression de l'objet*/
         for (unsigned int i(0); i < TOUS_LES_OBJETS.size(); i++)
         {
-            if(TOUS_LES_OBJETS[i].getNom() == _obj->currentText().toStdString())
+            if(TOUS_LES_OBJETS[i]->getNomForme() == _obj->currentText().toStdString())
             {
-                TOUS_LES_OBJETS.erase(TOUS_LES_OBJETS.begin()+i);
-                _obj->removeItem(i);
+                indiceSuppression = i;
             }
-        }*/
+        }
+        std::cout << "Debut de suppression de " << TOUS_LES_OBJETS[indiceSuppression]->getNomForme() << std::endl;
+        if (TOUS_LES_OBJETS[indiceSuppression]->getFilles().size()>0)   //Si l'objet a des enfants à supprimer
+        {
+            std::cout << "L'objet a " << TOUS_LES_OBJETS[indiceSuppression]->getFilles().size() << " enfant(s)." << std::endl;
+            for (unsigned int j(0); j < TOUS_LES_OBJETS[indiceSuppression]->getFilles().size(); j++)    //Pour tous les éléments filles
+            {
+                std::cout << "Enfant numero " << j << ": " << TOUS_LES_OBJETS[indiceSuppression]->getFilles()[j]->getNomForme() << std::endl;
+                for (int h(0); h <= _obj->count(); h++)
+                {
+                    std::cout << "Combobox " << h << ": " << _obj->itemText(h).toStdString() << std::endl;
+                    if (TOUS_LES_OBJETS[indiceSuppression]->getFilles()[j]->getNomForme() == _obj->itemText(h).toStdString())
+                    {
+                        std::cout << "SUPPRESSION DANS LA COMBO A L'INDICE: " << h << std::endl;
+                        _obj->removeItem(h);
+                    }
+                }
+            }
+            TOUS_LES_OBJETS[indiceSuppression]->getFilles().clear();    //On efface tous les éléments qui étaient attachés à la forme sélectionnée
+        }
+        _affichage->supprimerForme(TOUS_LES_OBJETS[indiceSuppression]->getNomForme());
+        for (int h(0); h <= _obj->count(); h++)
+        {
+            std::cout << "Combobox " << h << ": " << _obj->itemText(h).toStdString() << std::endl;
+            if (TOUS_LES_OBJETS[indiceSuppression]->getNomForme() == _obj->itemText(h).toStdString())
+            {
+                std::cout << "SUPPRESSION DANS LA COMBO A L'INDICE: " << h << std::endl;
+                _obj->removeItem(h);
+            }
+        }
+        std::cout << "Suppression de " << TOUS_LES_OBJETS[indiceSuppression]->getNomForme() << std::endl;
+        TOUS_LES_OBJETS.erase(TOUS_LES_OBJETS.begin()+indiceSuppression);
+        std::cout << "**** FIN DE SUPPRESSION ****" << std::endl;
+
+
 
         _nbObjet--;
 
@@ -921,7 +956,6 @@ void MainWindow::OnClicDeleteObj()
             _s_posZ_obj->setValue(TOUS_LES_OBJETS[0]->getPosZ());
         }
     }
-
     if (_nbObjet == 0)
         _delete_obj->setEnabled(false);
     else
@@ -967,6 +1001,7 @@ void MainWindow::receptionLumiere(LumierePos lp)
 void MainWindow::receptionObjet(std::shared_ptr<forme> ptr, QString parent)
 {
     TOUS_LES_OBJETS.push_back(ptr);
+    _nbObjet++;
     _obj->addItem(QString::fromStdString(ptr->getNomForme()));
 
     if (parent != "Aucun")  //L'objet créé a un parent, donc l'objet sera créé depuis son parent
@@ -983,4 +1018,14 @@ void MainWindow::receptionObjet(std::shared_ptr<forme> ptr, QString parent)
     {
         _affichage->ajouterForme(ptr);
     }
+
+    if (_nbObjet == 0)
+        _delete_obj->setEnabled(false);
+    else
+        _delete_obj->setEnabled(true);
+
+    if (_nbObjet >= 100)
+        _new_obj->setEnabled(false);
+    else
+        _new_obj->setEnabled(true);
 }

@@ -39,11 +39,11 @@ WidgetOGL::WidgetOGL(int fps, QWidget *parent, std::string type) : QOpenGLWidget
 WidgetOGL::~WidgetOGL()
 {}
 
-void WidgetOGL::supprimerForme(int id)
+void WidgetOGL::supprimerForme(std::string nom)
 {
     for (unsigned int i(0); i < _formesAAfficher.size(); i++)
     {
-        if(_formesAAfficher[i]->getId() == id)
+        if(_formesAAfficher[i]->getNomForme() == nom)
         {
             _formesAAfficher.erase(_formesAAfficher.begin()+i);
         }
@@ -201,6 +201,7 @@ void WidgetOGL::paintGL()
     glTranslatef(_posxcam,_posycam,_poszcam);
 
     /* Lumières */
+
     GLfloat lumiere_ambiante[4] = { _ambianteR, _ambianteV, _ambianteB, 0.0 };
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT,lumiere_ambiante);
 

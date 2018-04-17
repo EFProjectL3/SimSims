@@ -6,7 +6,7 @@
 #include "lectureDoc.h"
 #include "mainwindow.h"
 
-unsigned int PopUpObjet::idFormePopup = 10000;
+unsigned int PopUpObjet::idFormePopup = 0;
 
 PopUpObjet::PopUpObjet(std::vector<std::string> noms, std::vector<std::shared_ptr<forme>> objets) : NOM_DES_FORMES_POPUP(noms), TOUS_LES_OBJETS_POPUP(objets)
 {
@@ -183,6 +183,7 @@ void PopUpObjet::OnClicCreate()
             nomObjet = _le_name_obj->text().toStdString();
             ptrForme = creerFormesLecture(fichierDonnees,j+1,attributs);
             ptrForme->setNomForme(nomObjet);
+            ptrForme->setId(_idFPopup);
             parent = _selectParent->currentText();
             fini = true;
         }

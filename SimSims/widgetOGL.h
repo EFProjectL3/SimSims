@@ -21,7 +21,7 @@ public:
     void ajouterForme(std::shared_ptr<forme> frm)
     { _formesAAfficher.push_back(frm); }
 
-    void supprimerForme(int id);
+    void supprimerForme(std::string nom);
 
     void toutEffacer()
     { _formesAAfficher.clear(); }

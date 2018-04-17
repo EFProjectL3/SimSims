@@ -6,7 +6,7 @@
 forme::forme(int id, int nbFac, int nbSom, int nbAtt, int nbrSommetParFaceMax, int ** facCons, struct sommet * tabSom, struct face * tabFac,
              std::map<std::string,float> tabAtt) : _idForme(id), _nomForme(""), _nbrFaces(nbFac), _nbrSommets(nbSom), _nbrAttributs(nbAtt),
              _nbrSommetParFaceMax(nbrSommetParFaceMax), _faceConstruction(facCons), _sommets(tabSom), _faces(tabFac), _attributs(tabAtt),
-             _couleurR(0.8), _couleurG(0.8), _couleurB(0.8), _positionX(0), _positionY(0), _positionZ(0),
+             _couleurR(204), _couleurG(204), _couleurB(204), _positionX(0), _positionY(0), _positionZ(0),
              _angleX(0), _angleY(0), _angleZ(0), _scale(1), _FormesFille()
 {}
 
@@ -82,9 +82,9 @@ void forme::afficher_forme()
     glBegin(GL_TRIANGLES);
     {
         struct couleur coul;
-        coul.r=_couleurR;
-        coul.g=_couleurG;
-        coul.b=_couleurB;
+        coul.r=static_cast<GLfloat>(_couleurR/255);
+        coul.g=static_cast<GLfloat>(_couleurG/255);
+        coul.b=static_cast<GLfloat>(_couleurB/255);
         coul.a=1.0;
         int j;
         for (j=0; j<=_nbrFaces; j++)	//parcours des faces

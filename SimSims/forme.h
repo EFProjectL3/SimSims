@@ -120,6 +120,8 @@ public:
     { return _angleZ; }
     int getScale()
     { return _scale; }
+    std::vector<std::shared_ptr<forme>> getFilles()
+    { return _FormesFille; }
 
 private:
     int _idForme;
