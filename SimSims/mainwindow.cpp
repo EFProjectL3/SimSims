@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Obtention du vecteur avec le nom des formes (on connait donc le nombre avec sa taille)
     NOM_DES_FORMES = lireIntro(fichierDonnees);
     std::cout << "Terminé." << std::endl;
-    std::cout << "LECTURE DES TEXTURESS" << std::endl;
+    std::cout << "LECTURE DES TEXTURES" << std::endl;
     // Obtention du vecteur avec le nom des formes (on connait donc le nombre avec sa taille)
     TOUTES_LES_ADRESSE_TEXTURES = lireAdresseTextures(fichierDonnees);
     std::cout << "Terminé." << std::endl;
@@ -673,6 +673,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(_s_angY_cam, &QSlider::valueChanged, _affichage, &WidgetOGL::setAngYCam);
     QObject::connect(_s_angZ_cam, &QSlider::valueChanged, _affichage, &WidgetOGL::setAngZCam);
 
+    // Modification objet
+
+
 }
 
 MainWindow::~MainWindow()
@@ -742,7 +745,7 @@ void MainWindow::PopUpLum()
  */
 void MainWindow::PopUpObj()
 {
-    PopUpObjet * ppo = new PopUpObjet(NOM_DES_FORMES);
+    PopUpObjet * ppo = new PopUpObjet(NOM_DES_FORMES,TOUS_LES_OBJETS);
 
     /* On empêche de toucher à la fenêtre parent pendant que la fenêtre enfant est ouverte */
     ppo->setWindowModality(Qt::ApplicationModal);
@@ -801,7 +804,15 @@ void MainWindow::OnClicDeleteLum()
     reply = QMessageBox::question(this, "Cancel", "Voulez-vous supprimer cette lumière positionnelle ?", (QMessageBox::No | QMessageBox::Yes));
     if (reply == QMessageBox::Yes)
     {
-        /* A compléter avec la suppression de la lumière*/
+        for (unsigned int i(0); i < ENSEMBLE_LUM_POS.size(); i++)
+        {
+            if(ENSEMBLE_LUM_POS[i].getNom() == _lp->currentText().toStdString())
+            {
+                ENSEMBLE_LUM_POS.erase(ENSEMBLE_LUM_POS.begin()+i);
+                _lp->removeItem(i);
+            }
+        }
+
         _nbLumierePos--;
 
         if (_nbLumierePos == 0)
@@ -826,7 +837,20 @@ void MainWindow::OnClicDeleteObj()
     reply = QMessageBox::question(this, "Cancel", "Voulez-vous supprimer cet objet ?", (QMessageBox::No | QMessageBox::Yes));
     if (reply == QMessageBox::Yes)
     {
-        /* A compléter avec la suppression de l'objet*/
+        for (unsigned int i(0); i < TOUS_LES_OBJETS.size(); i++)
+        {
+          /*
+           *    SUPPRESION A REVOIR
+           *
+           *  if(TOUS_LES_OBJETS[i]->getNomForme() == _obj->currentText().toStdString())
+            {
+                TOUS_LES_OBJETS.erase(TOUS_LES_OBJETS.begin()+i);
+                _obj->removeItem(i);
+                _affichage->supprimerForme(10000+i);    //Dans le cas ou la forme est directement dans affichage
+            }
+            */
+        }
+
         _nbObjet--;
 
         if (_nbObjet == 0)
@@ -859,19 +883,36 @@ void MainWindow::receptionLumiere(LumierePos lp)
     }
 
     _nbLumierePos++;
+
+    if (_nbLumierePos == 0)
+        _delete_lp->setEnabled(false);
+    else
+        _delete_lp->setEnabled(true);
+
+    if (_nbLumierePos >= 7)
+        _new_lp->setEnabled(false);
+    else
+        _new_lp->setEnabled(true);
 }
 
 
-void MainWindow::receptionObjet(std::string nom, std::shared_ptr<forme> ptr)
+void MainWindow::receptionObjet(std::shared_ptr<forme> ptr, QString parent)
 {
-    Objet obj(nom,ptr);
-    TOUS_LES_OBJETS.push_back(obj);
+    TOUS_LES_OBJETS.push_back(ptr);
+    _obj->addItem(QString::fromStdString(ptr->getNomForme()));
 
-    std::cout << "Objets actuels:" << std::endl;
-    for (unsigned int i(0); i<TOUS_LES_OBJETS.size();i++)
-        std::cout << TOUS_LES_OBJETS[i].getNom() << " | ";
-    std::cout << std::endl;
-    std::cout << "J'ai reçu l'objet" << std::endl;
-    //_affichage->ajouterForme(obj.getForme());
-    std::cout << "J'ai envoyé la forme" << std::endl;
+    if (parent != "Aucun")  //L'objet créé a un parent, donc l'objet sera créé depuis son parent
+    {
+        for (unsigned int i(0); i<TOUS_LES_OBJETS.size();i++)
+        {
+            if (TOUS_LES_OBJETS[i]->getNomForme() == parent.toStdString())
+            {
+                TOUS_LES_OBJETS[i]->ajoutFormesFilles(ptr);
+            }
+        }
+    }
+    else    //L'objet créé n'a pas de parent, il sera donc affiché depuis 0,0,0, donc ajout immédiat dans affichage
+    {
+        _affichage->ajouterForme(ptr);
+    }
 }

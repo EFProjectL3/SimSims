@@ -3,9 +3,6 @@
 #include <QOpenGLTexture>
 #include <iostream>
 
-//extern std::vector<std::shared_ptr<forme>> TOUTES_LES_FORMES;
-//extern std::vector<QOpenGLTexture *> TOUTES_LES_TEXTURES;
-
 int angleX;
 int angleY;
 int anglePopupX;
@@ -41,6 +38,17 @@ WidgetOGL::WidgetOGL(int fps, QWidget *parent, std::string type) : QOpenGLWidget
 
 WidgetOGL::~WidgetOGL()
 {}
+
+void WidgetOGL::supprimerForme(int id)
+{
+    for (unsigned int i(0); i < _formesAAfficher.size(); i++)
+    {
+        if(_formesAAfficher[i]->getId() == id)
+        {
+            _formesAAfficher.erase(_formesAAfficher.begin()+i);
+        }
+    }
+}
 
 void WidgetOGL::setAmbianteR(int r)
 {

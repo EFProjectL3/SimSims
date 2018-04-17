@@ -8,7 +8,7 @@ class PopUpObjet:
     Q_OBJECT
 
 public:
-    PopUpObjet(std::vector<std::string> noms);
+    PopUpObjet(std::vector<std::string> noms, std::vector<std::shared_ptr<forme>> objets);
     ~PopUpObjet();
 
     QPushButton * _create_obj;
@@ -22,12 +22,15 @@ public slots:
 signals:
     void pretPourUpdate();
 
-    void creationObjet(std::string nomObj, std::shared_ptr<forme> ptr);
+    void creationObjet(std::shared_ptr<forme> ptr, QString parent);
 
 private:
     QGridLayout * _layoutPrincipal;
         QGridLayout * _layoutObjetPopup;
                 QComboBox * _selectForm;
+
+            QLabel * _name_parent;
+                QComboBox * _selectParent;
 
             QLabel * _name_obj;
                 QLineEdit * _le_name_obj;
@@ -44,7 +47,9 @@ private:
 
         WidgetOGL * _affichage_popup;
 
-        unsigned int _idFormePopup;
+        static unsigned int idFormePopup;
+        unsigned int _idFPopup;
 
         std::vector<std::string> NOM_DES_FORMES_POPUP;
+        std::vector<std::shared_ptr<forme>> TOUS_LES_OBJETS_POPUP;
 };

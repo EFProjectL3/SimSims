@@ -13,28 +13,26 @@ TEMPLATE = app
 
 QMAKE_CXXFLAGS += -std=c++11
 
-DEFINES += QT_DEPRECATED_WARNINGS
-
 SOURCES += main.cpp\
-        widgetOGL.cpp\
         mainwindow.cpp\
         forme.cpp\
         lectureDoc.cpp\
+        lumierepos.cc\
+        normale.c\
         popup_lum.cc\
         popup_obj.cc\
-        affichage.cpp\
-        lumierepos.cc\
-        objet.cc
+        ppm.c\
+        widgetOGL.cpp
 
-HEADERS  += widgetOGL.h\
-         mainwindow.h\
+HEADERS  += mainwindow.h\
          forme.h\
          lectureDoc.h\
+         lumierepos.hh\
+         normale.hh\
          popup_lum.hh\
          popup_obj.hh\
-         affichage.hh\
-         lumierepos.hh\
-         objet.hh
+         ppm.h\
+         widgetOGL.h
 
 LIBS += -lglut -lGLU
 

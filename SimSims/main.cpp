@@ -17,7 +17,6 @@
 
 int main(int argc, char *argv[])
 {
-    std::cout << "DEBUT MAIN" << std::endl;
     glutInit(&argc,argv);
 
     QApplication a(argc, argv);
@@ -28,9 +27,6 @@ int main(int argc, char *argv[])
     a.installTranslator(&qtTranslator);
 
     w.resize(640,480);
-    std::cout << "LANCEMENT AFFICHAGE" << std::endl;
     w.show();
-    std::cout << "FIN LANCEMENT AFFICHAGE" << std::endl;
-    std::cout << "FIN MAIN" << std::endl;
     return a.exec();
 }

@@ -68,7 +68,6 @@ int nombreAttributForme(char* fichierDonnees, int indice)
                     int val;
                     std::stringstream stream(ligneEnCours);
                     stream >> val;
-                    std::cout << "NOMBRE D'ATTRIBUTS DE L'ELEMENT " << indice << ": " << val << std::endl;
                     return val;
                 }
 
@@ -435,6 +434,7 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
                     somTmp[facesTabTmp[j][2]].coordonnees.z,
                     &(facTmp[j].norm));
         }
+
         auto formePtr = std::make_shared<forme>(idTmp, nbFacTmp, nbSomTmp, nbAttTmp, nbFacMax, facesTabTmp, somTmp, facTmp, attTmp);
 
         //formePtr->infoForme();

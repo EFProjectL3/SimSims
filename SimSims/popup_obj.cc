@@ -6,10 +6,11 @@
 #include "lectureDoc.h"
 #include "mainwindow.h"
 
+unsigned int PopUpObjet::idFormePopup = 10000;
 
-PopUpObjet::PopUpObjet(std::vector<std::string> noms) : NOM_DES_FORMES_POPUP(noms)
+PopUpObjet::PopUpObjet(std::vector<std::string> noms, std::vector<std::shared_ptr<forme>> objets) : NOM_DES_FORMES_POPUP(noms), TOUS_LES_OBJETS_POPUP(objets)
 {
-    _idFormePopup = 75000;
+    _idFPopup = idFormePopup++;
 
     setFixedSize(600, 250);
 
@@ -44,6 +45,14 @@ PopUpObjet::PopUpObjet(std::vector<std::string> noms) : NOM_DES_FORMES_POPUP(nom
         _selectForm->addItem(QString::fromStdString(NOM_DES_FORMES_POPUP[i]));
     _selectForm->setMaximumWidth(150);
 
+    _name_parent = new QLabel("Parent : ",this);
+    _selectParent = new QComboBox(this);
+    _selectParent->addItem("Aucun");
+    for (unsigned int i(0); i<TOUS_LES_OBJETS_POPUP.size(); i++)
+        _selectParent->addItem(QString::fromStdString(TOUS_LES_OBJETS_POPUP[i]->getNomForme()));
+    _selectParent->setMaximumWidth(150);
+
+
     _name_obj = new QLabel("Nom : ", this);
     _le_name_obj = new QLineEdit(this);
     _le_name_obj->setMaximumWidth(150);
@@ -67,10 +76,11 @@ PopUpObjet::PopUpObjet(std::vector<std::string> noms) : NOM_DES_FORMES_POPUP(nom
 
 
     _layoutObjetPopup->addWidget(_selectForm, 0, 1, 1, 3);
-    _layoutObjetPopup->addWidget(_name_obj, 1, 0, 1, 1);
-    _layoutObjetPopup->addWidget(_le_name_obj, 1, 1, 1, 2);
-    _layoutObjetPopup->addWidget(_taille_obj_popup, 2, 0, 1, 1);
-
+    _layoutObjetPopup->addWidget(_name_parent, 1, 0, 1, 1);
+    _layoutObjetPopup->addWidget(_selectParent, 1, 1, 1, 2);
+    _layoutObjetPopup->addWidget(_name_obj, 2, 0, 1, 1);
+    _layoutObjetPopup->addWidget(_le_name_obj, 2, 1, 1, 2);
+    _layoutObjetPopup->addWidget(_taille_obj_popup, 3, 0, 1, 1);
     /*
          *
          *
@@ -81,12 +91,12 @@ PopUpObjet::PopUpObjet(std::vector<std::string> noms) : NOM_DES_FORMES_POPUP(nom
          *
          *
          * */
-    _layoutObjetPopup->addWidget(_attribut1, 3, 1, 1, 1);
-    _layoutObjetPopup->addWidget(_le_attribut1, 3, 2, 1, 1);
-    _layoutObjetPopup->addWidget(_attribut2, 4, 1, 1, 1);
-    _layoutObjetPopup->addWidget(_le_attribut2, 4, 2, 1, 1);
-    _layoutObjetPopup->addWidget(_attribut3, 5, 1, 1, 1);
-    _layoutObjetPopup->addWidget(_le_attribut3, 5, 2, 1, 1);
+    _layoutObjetPopup->addWidget(_attribut1, 4, 1, 1, 1);
+    _layoutObjetPopup->addWidget(_le_attribut1, 4, 2, 1, 1);
+    _layoutObjetPopup->addWidget(_attribut2, 5, 1, 1, 1);
+    _layoutObjetPopup->addWidget(_le_attribut2, 5, 2, 1, 1);
+    _layoutObjetPopup->addWidget(_attribut3, 6, 1, 1, 1);
+    _layoutObjetPopup->addWidget(_le_attribut3, 6, 2, 1, 1);
 
 
     _layoutPrincipal->addWidget(_create_obj, 1, 0, 1, 1);
@@ -140,7 +150,6 @@ void PopUpObjet::AffichagePopup(QString text)
 
             std::shared_ptr<forme> ptrForme;
             ptrForme = creerFormesLecture(fichierDonnees,j+1,attributs);
-
             _affichage_popup->ajouterForme(ptrForme);
         }
         j++;
@@ -152,9 +161,10 @@ void PopUpObjet::OnClicCreate()
     unsigned int j(0);
     bool fini = false;
     std::string nomObjet;
+    QString parent = "Aucun";
     std::vector<float> attributs;
     std::shared_ptr<forme> ptrForme;
-    while ((j<NOM_DES_FORMES_POPUP.size()) && (fini == false))
+    while (fini == false)
     {
         if (_selectForm->currentText() == QString::fromStdString(NOM_DES_FORMES_POPUP[j]))
         {
@@ -172,9 +182,13 @@ void PopUpObjet::OnClicCreate()
 
             nomObjet = _le_name_obj->text().toStdString();
             ptrForme = creerFormesLecture(fichierDonnees,j+1,attributs);
+            ptrForme->setNomForme(nomObjet);
+            parent = _selectParent->currentText();
             fini = true;
         }
+        j++;
     }
-    emit creationObjet(nomObjet, ptrForme);
+    emit creationObjet(ptrForme, parent);
+
     this->close();
 }

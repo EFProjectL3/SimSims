@@ -54,3 +54,24 @@ Reflexion:
 Code:
 - A: Signal de la création de l'objet, celui ci s'ajoute au vector d'objet de MainWindow
 - B: Modification du fichier d'entrée et du code de lecture afin que la construction des éléments soit maintenant completement automatique à partir de la fenetre de création
+- A: Gestion de la création de la lumière
+
+Semaine 3: Finir l'affichage, gestion du parent
+	
+	//Lundi
+Reflexion:
+- Gestion de parent pour l'affichage
+
+Code:
+- B: Correction du bug qui faisait planter à la création de la dernière forme du fichier d'entrée
+=============> Sortie SimSims v0.2.5.5
+- A: Codage du lien interface-paramètre au niveau des lumières
+- B: Implémentation des parents-enfants, modification de l'implémentation de forme et objets afin que ce soit forme qui possède les données relatives à la position, couleur, angle
+- A: Codage du lien interface-paramètres au niveau des objets (en cours)
+- B: début de suppression des éléments au niveau de l'affichage (à terminer)
+
+	//Mardi
+Reflexion:
+
+Code:
+- B: suppression de la classe objet qui est devenue obsolète. Recodage de toutes les fonctions associées
