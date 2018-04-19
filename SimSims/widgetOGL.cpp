@@ -187,8 +187,8 @@ void WidgetOGL::paintGL()
     glLoadIdentity();
 
     //Placement de la caméra
-    glRotatef(_angxcam, 1, 0, 0);
-    glRotatef(_angycam, 0, 1, 0);
+    glRotatef(_angxcam, 0, 1, 0);
+    glRotatef(_angycam, 1, 0, 0);
     glRotatef(_angzcam, 0, 0, 1);
     glTranslatef(_posxcam,_posycam,_poszcam);
 

@@ -159,38 +159,50 @@ void PopUpObjet::AffichagePopup(QString text)
 
 void PopUpObjet::OnClicCreate()
 {
-    unsigned int j(0);
-    bool fini = false;
-    std::string nomObjet;
-    QString parent = "Aucun";
-    std::vector<float> attributs;
-    std::shared_ptr<forme> ptrForme;
-    while (fini == false)
+    bool okX;
+    int X = _le_attribut1->text().toFloat(&okX);
+    bool okY;
+    int Y = _le_attribut2->text().toFloat(&okY);
+    bool okZ;
+    int Z = _le_attribut3->text().toFloat(&okZ);
+
+    if (okX && okY && okZ && X >= 0 && Y >= 0 && Z >= 0 && Z <= 10 && !_le_attribut1->text().isEmpty() && !_le_attribut2->text().isEmpty() && !_le_attribut3->text().isEmpty() && !_le_name_obj->text().isEmpty())
     {
-        if (_selectForm->currentText() == QString::fromStdString(NOM_DES_FORMES_POPUP[j]))
+        unsigned int j(0);
+        bool fini = false;
+        std::string nomObjet;
+        QString parent = "Aucun";
+        std::vector<float> attributs;
+        std::shared_ptr<forme> ptrForme;
+        while (fini == false)
         {
-            char * fichierDonnees = "./FICHIER_DE_DONNEES";
-
-            for (int i(0); i<nombreAttributForme(fichierDonnees,j+1); i+=3)
+            if (_selectForm->currentText() == QString::fromStdString(NOM_DES_FORMES_POPUP[j]))
             {
-                float longueur = _le_attribut1->text().toFloat();
-                float largeur = _le_attribut2->text().toFloat();
-                float hauteur = _le_attribut3->text().toFloat();
-                attributs.push_back(longueur);
-                attributs.push_back(hauteur);
-                attributs.push_back(largeur);
+                char * fichierDonnees = "./FICHIER_DE_DONNEES";
+
+                for (int i(0); i<nombreAttributForme(fichierDonnees,j+1); i+=3)
+                {
+                    float longueur = _le_attribut1->text().toFloat();
+                    float largeur = _le_attribut2->text().toFloat();
+                    float hauteur = _le_attribut3->text().toFloat();
+                    attributs.push_back(longueur);
+                    attributs.push_back(hauteur);
+                    attributs.push_back(largeur);
+                }
+
+                nomObjet = _le_name_obj->text().toStdString();
+                ptrForme = creerFormesLecture(fichierDonnees,j+1,attributs);
+                ptrForme->setNomForme(nomObjet);
+                ptrForme->setId(_idFPopup);
+                parent = _selectParent->currentText();
+                fini = true;
             }
-
-            nomObjet = _le_name_obj->text().toStdString();
-            ptrForme = creerFormesLecture(fichierDonnees,j+1,attributs);
-            ptrForme->setNomForme(nomObjet);
-            ptrForme->setId(_idFPopup);
-            parent = _selectParent->currentText();
-            fini = true;
+            j++;
         }
-        j++;
-    }
-    emit creationObjet(ptrForme, parent);
+        emit creationObjet(ptrForme, parent);
 
-    this->close();
+        this->close();
+    }
+    else
+        QMessageBox::warning(this, "Error", "Une ou plusieurs des valeurs entrées n'est pas du bon type, mal renseignée ou excède les bornes autorisées. Veuillez recommencer.");
 }

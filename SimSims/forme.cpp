@@ -5,9 +5,9 @@
 
 forme::forme(int id, int nbFac, int nbSom, int nbAtt, int nbrSommetParFaceMax, int ** facCons, struct sommet * tabSom, struct face * tabFac,
              std::map<std::string,float> tabAtt) : _idForme(id), _nomForme(""), _nbrFaces(nbFac), _nbrSommets(nbSom), _nbrAttributs(nbAtt),
-             _nbrSommetParFaceMax(nbrSommetParFaceMax), _faceConstruction(facCons), _sommets(tabSom), _faces(tabFac), _attributs(tabAtt),
-             _couleurR(204), _couleurG(204), _couleurB(204), _positionX(0), _positionY(0), _positionZ(0),
-             _angleX(0), _angleY(0), _angleZ(0), _scale(1), _FormesFille()
+    _nbrSommetParFaceMax(nbrSommetParFaceMax), _faceConstruction(facCons), _sommets(tabSom), _faces(tabFac), _attributs(tabAtt),
+    _couleurR(204), _couleurG(204), _couleurB(204), _positionX(0), _positionY(0), _positionZ(0),
+    _angleX(0), _angleY(0), _angleZ(0), _scale(1), _FormesFille()
 {}
 
 /*
@@ -51,7 +51,7 @@ void forme::infoForme()
     for (int i(0); i<_nbrFaces; i++)
         for (int j(0); j<3; j++)
             std::cout << "Initiale[" << i << "][" << j << "] : " << getFaceConstruction()[i][j] << std::endl;
-            //std::cout << "Initiale[" << i << "][" << j << "] : " << _faceConstruction[i][j] << std::endl;
+    //std::cout << "Initiale[" << i << "][" << j << "] : " << _faceConstruction[i][j] << std::endl;
     std::cout << std::endl;
 
     std::cout << "Tableau des sommets (coordonnées)" << std::endl;
@@ -79,41 +79,46 @@ void forme::afficher_forme()
     glRotatef(_angleX,1,0,0);
     glRotatef(_angleY,0,1,0);
     glRotatef(_angleZ,0,0,1);
-    glBegin(GL_TRIANGLES);
+    glPushMatrix();
     {
-        struct couleur coul;
-        coul.r=static_cast<GLfloat>(_couleurR/255);
-        coul.g=static_cast<GLfloat>(_couleurG/255);
-        coul.b=static_cast<GLfloat>(_couleurB/255);
-        coul.a=1.0;
-        int j;
-        for (j=0; j<=_nbrFaces; j++)	//parcours des faces
+        glScalef(_scale,_scale,_scale);
+        glBegin(GL_TRIANGLES);
         {
-            glColor3f(coul.r,coul.g,coul.b);
-            int i;
-            for (i=0; i<=2; i++)	// on parcours les 3 sommets de chaque face
+            struct couleur coul;
+            coul.r=static_cast<GLfloat>(_couleurR/255);
+            coul.g=static_cast<GLfloat>(_couleurG/255);
+            coul.b=static_cast<GLfloat>(_couleurB/255);
+            coul.a=1.0;
+            int j;
+            for (j=0; j<=_nbrFaces; j++)	//parcours des faces
             {
-                glVertex3f(
-                        _sommets[_faceConstruction[j][i]].coordonnees.x,
-                        _sommets[_faceConstruction[j][i]].coordonnees.y,
-                        _sommets[_faceConstruction[j][i]].coordonnees.z
-                        );
-            }
+                glColor3f(coul.r,coul.g,coul.b);
+                int i;
+                for (i=0; i<=2; i++)	// on parcours les 3 sommets de chaque face
+                {
+                    glVertex3f(
+                                _sommets[_faceConstruction[j][i]].coordonnees.x,
+                            _sommets[_faceConstruction[j][i]].coordonnees.y,
+                            _sommets[_faceConstruction[j][i]].coordonnees.z
+                            );
+                }
 
+            }
         }
-    }
-    glEnd();
-    //Pour voir la normale "physiquement"
-    glBegin(GL_LINES);
-    {
-        int j;
-        for (j=0;j<=_nbrFaces;j++)
+        glEnd();
+        //Pour voir la normale "physiquement"
+        glBegin(GL_LINES);
         {
-            glVertex3f(_faces[j].centre.x, _faces[j].centre.y, _faces[j].centre.z);
-            glVertex3f(_faces[j].centre.x+_faces[j].norm.x, _faces[j].centre.y+_faces[j].norm.y, _faces[j].centre.z+_faces[j].norm.z);
+            int j;
+            for (j=0;j<=_nbrFaces;j++)
+            {
+                glVertex3f(_faces[j].centre.x, _faces[j].centre.y, _faces[j].centre.z);
+                glVertex3f(_faces[j].centre.x+_faces[j].norm.x, _faces[j].centre.y+_faces[j].norm.y, _faces[j].centre.z+_faces[j].norm.z);
+            }
         }
+        glEnd();
     }
-    glEnd();
+    glPopMatrix();
     for (unsigned int i(0); i<_FormesFille.size(); i++) //Pour que l'affichage de la forme se face par rapport à la forme parent
         _FormesFille[i]->afficher_forme();
     glPopMatrix();
