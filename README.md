@@ -1,7 +1,7 @@
 # SimSims
 Projet SimSims L3 Informatique Angers
 
-SimSims v0.3
+SimSims v0.4
 
 Elements implémentés
 - Lecture du fichier d'entrée
