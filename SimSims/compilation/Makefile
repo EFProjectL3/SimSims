@@ -346,8 +346,8 @@ compiler_moc_header_clean:
 moc_mainwindow.cpp: ../widgetOGL.h \
 		../forme.h \
 		../normale.hh \
-		../popup_lum.hh \
 		../lumierepos.hh \
+		../popup_lum.hh \
 		../popup_obj.hh \
 		../mainwindow.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/prozengan/Bureau/SimSims-SimSims-v0.3.x-encours/SimSims -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../mainwindow.h -o moc_mainwindow.cpp
@@ -359,11 +359,13 @@ moc_popup_lum.cpp: ../lumierepos.hh \
 moc_popup_obj.cpp: ../widgetOGL.h \
 		../forme.h \
 		../normale.hh \
+		../lumierepos.hh \
 		../popup_obj.hh
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/prozengan/Bureau/SimSims-SimSims-v0.3.x-encours/SimSims -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../popup_obj.hh -o moc_popup_obj.cpp
 
 moc_widgetOGL.cpp: ../forme.h \
 		../normale.hh \
+		../lumierepos.hh \
 		../widgetOGL.h
 	/usr/lib/x86_64-linux-gnu/qt5/bin/moc $(DEFINES) -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++-64 -I/home/prozengan/Bureau/SimSims-SimSims-v0.3.x-encours/SimSims -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtOpenGL -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/5 -I/usr/include/x86_64-linux-gnu/c++/5 -I/usr/include/c++/5/backward -I/usr/lib/gcc/x86_64-linux-gnu/5/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../widgetOGL.h -o moc_widgetOGL.cpp
 
@@ -386,8 +388,8 @@ main.o: ../main.cpp ../forme.h \
 		../lectureDoc.h \
 		../mainwindow.h \
 		../widgetOGL.h \
-		../popup_lum.hh \
 		../lumierepos.hh \
+		../popup_lum.hh \
 		../popup_obj.hh
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../main.cpp
 
@@ -395,8 +397,8 @@ mainwindow.o: ../mainwindow.cpp ../mainwindow.h \
 		../widgetOGL.h \
 		../forme.h \
 		../normale.hh \
-		../popup_lum.hh \
 		../lumierepos.hh \
+		../popup_lum.hh \
 		../popup_obj.hh \
 		../lectureDoc.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../mainwindow.cpp
@@ -424,10 +426,10 @@ popup_obj.o: ../popup_obj.cc ../popup_obj.hh \
 		../widgetOGL.h \
 		../forme.h \
 		../normale.hh \
+		../lumierepos.hh \
 		../lectureDoc.h \
 		../mainwindow.h \
-		../popup_lum.hh \
-		../lumierepos.hh
+		../popup_lum.hh
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o popup_obj.o ../popup_obj.cc
 
 ppm.o: ../ppm.c ../ppm.h
@@ -435,7 +437,8 @@ ppm.o: ../ppm.c ../ppm.h
 
 widgetOGL.o: ../widgetOGL.cpp ../widgetOGL.h \
 		../forme.h \
-		../normale.hh
+		../normale.hh \
+		../lumierepos.hh
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o widgetOGL.o ../widgetOGL.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 

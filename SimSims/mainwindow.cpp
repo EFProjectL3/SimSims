@@ -245,11 +245,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* Position X */
     _posX_cam = new QLabel("PosX : ", this);
-    _posX_min_cam = new QLabel("-10", this);
+    _posX_min_cam = new QLabel("-30", this);
     _s_posX_cam = new QSlider(Qt::Horizontal, this);
-    _s_posX_cam->setMinimum(-10);
-    _s_posX_cam->setMaximum(10);
-    _posX_max_cam = new QLabel("10", this);
+    _s_posX_cam->setMinimum(-30);
+    _s_posX_cam->setMaximum(30);
+    _posX_max_cam = new QLabel("30", this);
     _l_posX_cam = new QLabel("valeur : ", this);
     _le_posX_cam = new QLineEdit("0", this);
     _le_posX_cam->setFixedSize(40, 26);
@@ -264,11 +264,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* Position Y */
     _posY_cam = new QLabel("PosY : ", this);
-    _posY_min_cam = new QLabel("-10", this);
+    _posY_min_cam = new QLabel("-30", this);
     _s_posY_cam = new QSlider(Qt::Horizontal, this);
-    _s_posY_cam->setMinimum(-10);
-    _s_posY_cam->setMaximum(10);
-    _posY_max_cam = new QLabel("10", this);
+    _s_posY_cam->setMinimum(-30);
+    _s_posY_cam->setMaximum(30);
+    _posY_max_cam = new QLabel("30", this);
     _l_posY_cam = new QLabel("valeur : ", this);
     _le_posY_cam = new QLineEdit("0", this);
     _le_posY_cam->setFixedSize(40, 26);
@@ -283,13 +283,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* Position Z */
     _posZ_cam = new QLabel("PosZ : ", this);
-    _posZ_min_cam = new QLabel("-10", this);
+    _posZ_min_cam = new QLabel("-30", this);
     _s_posZ_cam = new QSlider(Qt::Horizontal, this);
-    _s_posZ_cam->setMinimum(-10);
-    _s_posZ_cam->setMaximum(10);
-    _posZ_max_cam = new QLabel("10", this);
+    _s_posZ_cam->setMinimum(-30);
+    _s_posZ_cam->setMaximum(30);
+    _s_posZ_cam->setValue(-10);
+    _posZ_max_cam = new QLabel("30", this);
     _l_posZ_cam = new QLabel("valeur : ", this);
-    _le_posZ_cam = new QLineEdit("0", this);
+    _le_posZ_cam = new QLineEdit("-10", this);
     _le_posZ_cam->setFixedSize(40, 26);
     _le_posZ_cam->setReadOnly(true);
 
@@ -307,11 +308,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* Angle X */
     _angX_cam = new QLabel("AngX : ", this);
-    _angX_min_cam = new QLabel("0", this);
+    _angX_min_cam = new QLabel("-180", this);
     _s_angX_cam = new QSlider(Qt::Horizontal, this);
-    _s_angX_cam->setMinimum(0);
-    _s_angX_cam->setMaximum(360);
-    _angX_max_cam = new QLabel("360", this);
+    _s_angX_cam->setMinimum(-180);
+    _s_angX_cam->setMaximum(180);
+    _angX_max_cam = new QLabel("180", this);
     _l_angX_cam = new QLabel("valeur : ", this);
     _le_angX_cam = new QLineEdit("0", this);
     _le_angX_cam->setFixedSize(40, 26);
@@ -328,11 +329,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* Angle Y */
     _angY_cam = new QLabel("AngY : ", this);
-    _angY_min_cam = new QLabel("0", this);
+    _angY_min_cam = new QLabel("-180", this);
     _s_angY_cam = new QSlider(Qt::Horizontal, this);
-    _s_angY_cam->setMinimum(0);
-    _s_angY_cam->setMaximum(360);
-    _angY_max_cam = new QLabel("360", this);
+    _s_angY_cam->setMinimum(-180);
+    _s_angY_cam->setMaximum(180);
+    _angY_max_cam = new QLabel("180", this);
     _l_angY_cam = new QLabel("valeur : ", this);
     _le_angY_cam = new QLineEdit("0", this);
     _le_angY_cam->setFixedSize(40, 26);
@@ -349,11 +350,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* Angle Z */
     _angZ_cam = new QLabel("AngZ : ", this);
-    _angZ_min_cam = new QLabel("0", this);
+    _angZ_min_cam = new QLabel("-180", this);
     _s_angZ_cam = new QSlider(Qt::Horizontal, this);
-    _s_angZ_cam->setMinimum(0);
-    _s_angZ_cam->setMaximum(360);
-    _angZ_max_cam = new QLabel("360", this);
+    _s_angZ_cam->setMinimum(-180);
+    _s_angZ_cam->setMaximum(180);
+    _angZ_max_cam = new QLabel("180", this);
     _l_angZ_cam = new QLabel("valeur : ", this);
     _le_angZ_cam = new QLineEdit("0", this);
     _le_angZ_cam->setFixedSize(40, 26);
@@ -655,7 +656,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* De QComboBox à interface */
     QObject::connect(_lp, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::MAJInterfaceLum);
-    //QObject::connect(_lp, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::MAJInterfaceObj);
+    QObject::connect(_obj, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::MAJInterfaceObj);
 
     /* De QSlider à la lumière positionnelle choisie */
     QObject::connect(_s_red_lp, &QSlider::valueChanged, this, &MainWindow::SliderALumierePos);
@@ -960,16 +961,12 @@ void MainWindow::OnClicDeleteObj()
         std::cout << "Debut de suppression de " << TOUS_LES_OBJETS[indiceSuppression]->getNomForme() << std::endl;
         if (TOUS_LES_OBJETS[indiceSuppression]->getFilles().size()>0)   //Si l'objet a des enfants à supprimer
         {
-            std::cout << "L'objet a " << TOUS_LES_OBJETS[indiceSuppression]->getFilles().size() << " enfant(s)." << std::endl;
             for (unsigned int j(0); j < TOUS_LES_OBJETS[indiceSuppression]->getFilles().size(); j++)    //Pour tous les éléments filles
             {
-                std::cout << "Enfant numero " << j << ": " << TOUS_LES_OBJETS[indiceSuppression]->getFilles()[j]->getNomForme() << std::endl;
                 for (int h(0); h <= _obj->count(); h++)
                 {
-                    std::cout << "Combobox " << h << ": " << _obj->itemText(h).toStdString() << std::endl;
                     if (TOUS_LES_OBJETS[indiceSuppression]->getFilles()[j]->getNomForme() == _obj->itemText(h).toStdString())
                     {
-                        std::cout << "SUPPRESSION DANS LA COMBO A L'INDICE: " << h << std::endl;
                         _obj->removeItem(h);
                     }
                 }
@@ -979,10 +976,8 @@ void MainWindow::OnClicDeleteObj()
         _affichage->supprimerForme(TOUS_LES_OBJETS[indiceSuppression]->getNomForme());
         for (int h(0); h <= _obj->count(); h++)
         {
-            std::cout << "Combobox " << h << ": " << _obj->itemText(h).toStdString() << std::endl;
             if (TOUS_LES_OBJETS[indiceSuppression]->getNomForme() == _obj->itemText(h).toStdString())
             {
-                std::cout << "SUPPRESSION DANS LA COMBO A L'INDICE: " << h << std::endl;
                 _obj->removeItem(h);
             }
         }

@@ -25,12 +25,10 @@ void LumierePos::afficher_lumiere(int i)
     GLfloat posY = static_cast<GLfloat>(_positionY);
     GLfloat posZ = static_cast<GLfloat>(_positionZ);
     GLfloat position[] = {posX,posY,posZ,LUMIERE_POSITIONNELLE};
-    std::cout << "Position: " << posX << "," << posY << "," << posZ << std::endl;
 
     switch (i)
     {
     case 0:
-        std::cout << "Lumière 0" << std::endl;
         glLightfv(GL_LIGHT0, GL_AMBIENT,ambiante);
         glLightfv(GL_LIGHT0,GL_DIFFUSE, diffuse);
         glLightfv(GL_LIGHT0,GL_SPECULAR,speculaire);
@@ -38,7 +36,6 @@ void LumierePos::afficher_lumiere(int i)
         glEnable(GL_LIGHT0);
         break;
     case 1:
-        std::cout << "Lumière 1" << std::endl;
         glLightfv(GL_LIGHT1, GL_AMBIENT,ambiante);
         glLightfv(GL_LIGHT1,GL_DIFFUSE, diffuse);
         glLightfv(GL_LIGHT1,GL_SPECULAR,speculaire);
@@ -46,7 +43,6 @@ void LumierePos::afficher_lumiere(int i)
         glEnable(GL_LIGHT1);
         break;
     case 2:
-        std::cout << "Lumière 2" << std::endl;
         glLightfv(GL_LIGHT2, GL_AMBIENT,ambiante);
         glLightfv(GL_LIGHT2,GL_DIFFUSE, diffuse);
         glLightfv(GL_LIGHT2,GL_SPECULAR,speculaire);

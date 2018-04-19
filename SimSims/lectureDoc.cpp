@@ -234,7 +234,9 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
         getline(fichier, ligneEnCours);
         while(getline(fichier, ligneEnCours))  // tant que l'on peut mettre la ligne dans "contenu"
         {
-
+            std::cout << "***** Ligne: " << ligneEnCours << std::endl;
+            if (coeffAttribut)
+                std::cout << "***** Coeff en attente" << std::endl;
             /* Pour debug. Affichage de ce qui est lu */
             //nbLigne++;
             //std::cout << "Lignes lues: " << nbLigne << std::endl;
@@ -286,13 +288,13 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
 
                 if (etape == 2 && ligneEnCours != "/-TABSOMMETS")   //Lecture du tableau de création de sommets
                 {
-                    int i = 0;
                     int j = 0;
+                    std::vector<std::string> res = explode(ligneEnCours, ' ');
                     while (j<3)
                     {
-                        int val = ligneEnCours[i] - '0';
+                        std::string chaine = res[j];
+                        int val = std::stoi(chaine);
                         somTabTmp[iSommetCons][j] = val;
-                        i=i+2;
                         j++;
                     }
                     iSommetCons++;
@@ -301,12 +303,21 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
                 if (etape == 3 && ligneEnCours != "/-ATTRIBUTS") //Lecture des attributs, et on les relie à leur valeur
                 {
                     if (coeffAttribut)
+                        std::cout << "ETAPE 3, coeff en attente, il doit être lu" << std::endl;
+                    if (!coeffAttribut)
+                        std::cout << "ETAPE 3, coeff lu, on va mettre l'attribut" << std::endl;
+
+                    if (coeffAttribut)
                     {
                         std::stringstream stream(ligneEnCours);
                         stream >> valeurCoeff;
+
+                        std::cout << "Lecture du coeff: " << valeurCoeff << std::endl;
                     }
                     else
                     {
+                        std::cout << "Attribut: " << ligneEnCours << std::endl;
+                        std::cout << "Valeur: " << att[iAtt]*valeurCoeff << std::endl;
                         attTmp.insert(std::make_pair(ligneEnCours,att[iAtt]*valeurCoeff));
                         iAtt++;
                     }
@@ -436,7 +447,6 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
         }
 
         auto formePtr = std::make_shared<forme>(idTmp, nbFacTmp, nbSomTmp, nbAttTmp, nbFacMax, facesTabTmp, somTmp, facTmp, attTmp);
-
         //formePtr->infoForme();
 
         return formePtr;

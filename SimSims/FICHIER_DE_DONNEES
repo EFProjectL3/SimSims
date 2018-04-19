@@ -1,8 +1,9 @@
 /-NOMBREFORME
-2
+3
 /-NOMFORME
 GROSTRUC
 PAVE
+PYRAMIDE
 
 //NOUVELLEFORME
 /-NOMBREFACE
@@ -534,6 +535,96 @@ demi_taille_largeur
 quart_taille_longueur
 -demi_taille_largeur
 quart_taille_hauteur
+/---CREATIONFORME
+
+//NOUVELLEFORME
+/-NOMBREFACE
+6
+/-NOMBRESOMMETS
+5
+/-NOMBREATTRIBUTS
+9
+/-FACEMAX
+3
+/-TABFACES
+0 1 2
+1 3 2
+3 4 2
+4 0 2
+4 3 0
+0 3 1
+/-TABSOMMETS
+0 3 4
+0 1 4
+0 1 2
+1 2 4
+2 3 5
+0 0 0
+/-ATTRIBUTS
+1
+longueur
+1
+largeur
+1
+hauteur
+0.5
+demi_longueur
+0.5
+demi_largeur
+0.5
+demi_hauteur
+0.25
+quart_longueur
+0.25
+quart_largeur
+0.25
+quart_hauteur
+/-FONCTIONCREATIONFORME
+//
+demi_longueur
+-demi_hauteur
+demi_largeur
+//
+demi_longueur
+-demi_hauteur
+demi_largeur
+//
+0
+hauteur
+0
+//
+demi_longueur
+-demi_hauteur
+-demi_largeur
+//
+-demi_longueur
+-demi_hauteur
+-demi_largeur
+//	
+//
+0
+0
+quart_largeur
+//
+quart_longueur
+0
+0
+//
+0
+0
+-quart_largeur
+//
+-quart_longueur
+0
+0
+//
+quart_longueur
+-demi_hauteur
+quart_largeur
+//
+-quart_longueur
+-demi_hauteur
+-quart_largeur
 /---CREATIONFORME
 
 /---TEXTURES

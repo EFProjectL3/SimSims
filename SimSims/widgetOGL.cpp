@@ -27,7 +27,7 @@ WidgetOGL::WidgetOGL(int fps, QWidget *parent, std::string type, std::vector<Lum
     _posxcam = 0;
     _posycam = 0;
     if (_type == "main")
-        _poszcam = -5;
+        _poszcam = -10;
     else
         _poszcam = -8;
     /* Lumières */

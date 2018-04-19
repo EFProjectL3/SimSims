@@ -82,4 +82,16 @@ Code:
 - B: Implémenation de le suppression des formes et de leur filles (on a fait le choix de supprimer toutes les formes filles d'une forme lors de la suppression de leur mère)
 - A et B: Lumières semble-t-il fonctionnelles
 
+	//Mercredi
+Maladie
+
+	//Jeudi
+Reflexion:
+- B : debut décriture du rapport
+Code:
+- B : fixation du bug des lumières
+- A : fixation des bugs des sliders ne se mettant pas à jour
+- B : Tentative de correction d'un problème au niveau de la caméra ne se comportant pas comme prévu
+- B : Implantation de la pyramide en forme sélectionnable, gros problème au niveau des attributs d'origine inconnue. Correction temporaire en ajoutant un sommet. La pyramide ne s'affiche pas entièrement
+=============> Sortie SimSims v0.4
 

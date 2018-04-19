@@ -5,19 +5,20 @@ SimSims v0.3
 
 Elements implémentés
 - Lecture du fichier d'entrée
-- Popup de création fonctionnel
-- Signaux et slots de l'interface quasiment terminée
+- Popup de création (lumière et objets) fonctionnels
+- Signaux et slots de l'interface terminés
 - Widgets OpenGL fonctionnels (quelques erreurs à corriger)
-- Creation des lumières
-- Creation des objets
-- Affichage des objets
-- Connexion des modifications des lumières
+- Creation, modification, suppression des lumières
+- Creation, modification, suppression des objets
 - Gestion du parent des objets
-- Suppression des objets
-- Modification des objets (à terminer)
+
 
 Idées et implémentations à venir
 - Shared libraries pour une lecture dynamique des fichiers
-- Modification finale des lumières
-- Affichage de la lumière
+- Selection du parent dans le menu de modification
 - Effets (type brouillard, ombre par ex)
+- Construction d'objets avancé (colonnes par ex)
+
+Bugs connus:
+- La caméra ne se déplace pas correctement
+- La pyramide ne se construit pas correctement

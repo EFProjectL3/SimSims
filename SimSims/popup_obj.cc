@@ -165,8 +165,18 @@ void PopUpObjet::OnClicCreate()
     int Y = _le_attribut2->text().toFloat(&okY);
     bool okZ;
     int Z = _le_attribut3->text().toFloat(&okZ);
+    bool okNom = true;
+    unsigned int i(0);
+    if (_le_name_obj->text().isEmpty()) //en premier on vérifier que le nom n'est pas vide
+        okNom = false;
+    while (okNom == true && i<TOUS_LES_OBJETS_POPUP.size())  //Si ce n'est pas le cas, on vérifie que le nom n'est pas déjà pris
+    {
+        if (TOUS_LES_OBJETS_POPUP[i]->getNomForme() ==  _le_name_obj->text().toStdString())
+            okNom = false;
+        i++;
+    }
 
-    if (okX && okY && okZ && X >= 0 && Y >= 0 && Z >= 0 && Z <= 10 && !_le_attribut1->text().isEmpty() && !_le_attribut2->text().isEmpty() && !_le_attribut3->text().isEmpty() && !_le_name_obj->text().isEmpty())
+    if (okX && okY && okZ && okNom && X >= 0 && Y >= 0 && Z >= 0 && Z <= 10 && !_le_attribut1->text().isEmpty() && !_le_attribut2->text().isEmpty() && !_le_attribut3->text().isEmpty())
     {
         unsigned int j(0);
         bool fini = false;
@@ -199,6 +209,7 @@ void PopUpObjet::OnClicCreate()
             }
             j++;
         }
+        ptrForme->infoForme();
         emit creationObjet(ptrForme, parent);
 
         this->close();
