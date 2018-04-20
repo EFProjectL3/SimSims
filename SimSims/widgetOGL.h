@@ -27,9 +27,6 @@ public:
     void toutEffacer()
     { _formesAAfficher.clear(); }
 
-    std::vector<std::shared_ptr<forme>> getFormeAfficher()
-    { return _formesAAfficher; }
-
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
     void paintGL() Q_DECL_OVERRIDE;

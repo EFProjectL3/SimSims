@@ -7,10 +7,17 @@ forme::forme(int id, int nbFac, int nbSom, int nbAtt, int nbrSommetParFaceMax, i
              std::map<std::string,float> tabAtt) : _idForme(id), _nomForme(""), _nbrFaces(nbFac), _nbrSommets(nbSom), _nbrAttributs(nbAtt),
     _nbrSommetParFaceMax(nbrSommetParFaceMax), _faceConstruction(facCons), _sommets(tabSom), _faces(tabFac), _attributs(tabAtt),
     _couleurR(204), _couleurG(204), _couleurB(204), _positionX(0), _positionY(0), _positionZ(0),
-    _angleX(0), _angleY(0), _angleZ(0), _scale(1), _FormesFille(), _parent(0)
+    _angleX(0), _angleY(0), _angleZ(0), _scale(1), _FormesFille()
 {}
 
-forme::~forme(){}
+/*
+void forme::setFormeFille()
+{
+    _FormesFille.clear();
+    for (unsigned int i(0); i<_objetsFils.size(); i++)
+        _FormesFille.push_back( ajoutFormesFilles(_objetsFils[i].getForme());
+}
+*/
 
 void forme::setAttribut(std::vector<float> valeursAtt)
 {
@@ -22,16 +29,7 @@ void forme::setAttribut(std::vector<float> valeursAtt)
     }
 }
 
-void forme::supprimerFille(std::string nom)
-{
-    for (unsigned int i(0); i<_FormesFille.size(); i++)
-    {
-        if (_FormesFille[i]->getNomForme() == nom)
-            _FormesFille.erase(_FormesFille.begin() + i);
-    }
-}
-
-
+forme::~forme(){}
 
 
 void forme::infoForme()

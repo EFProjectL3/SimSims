@@ -628,8 +628,8 @@ quart_largeur
 /---CREATIONFORME
 
 /---TEXTURES
-./Images/damier.ppm
-./Images/moquete.ppm
-./Images/murs.ppm
-./Images/plafond.ppm
-./Images/table.ppm
+"./Images/damier.ppm"
+"./Images/moquete.ppm"
+"./Images/murs.ppm"
+"./Images/plafond.ppm"
+"./Images/table.ppm"

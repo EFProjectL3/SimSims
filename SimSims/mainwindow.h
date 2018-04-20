@@ -44,8 +44,6 @@ public slots:
     void receptionLumiere(LumierePos lp);
     void receptionObjet(std::shared_ptr<forme> ptr, QString parent);
 
-    void changementParent(QString nomParent);
-
 private:
     QGridLayout * _layoutprincipal;
     WidgetOGL * _affichage;
@@ -126,6 +124,8 @@ private:
     QPushButton * _delete_lp;
     QPushButton * _new_lp;
 
+    int _nbLumierePos;
+
 
 
 
@@ -188,9 +188,6 @@ private:
     QGridLayout * _layoutObjet;
 
     QComboBox * _obj;
-
-    QLabel * _choixParent;
-    QComboBox * _parent;
 
     QLabel * _couleurObj;
     QLabel * _red_obj;
@@ -269,8 +266,19 @@ private:
     QPushButton * _delete_obj;
     QPushButton * _new_obj;
 
-    int _nbLumierePos;
     int _nbObjet;
+
+
+
+
+
+    /* Textures */
+    QGridLayout * _layoutTextures;
+
+    QPushButton * _loadText;
+
+
+
 
     std::vector<std::shared_ptr<forme>> TOUS_LES_OBJETS;
     std::vector<std::string> TOUTES_LES_ADRESSE_TEXTURES;
