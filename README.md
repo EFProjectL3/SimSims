@@ -14,6 +14,7 @@ Elements implémentés
 
 
 Idées et implémentations à venir
+- Load and save
 - Gestion des textures
 - Shared libraries pour une lecture dynamique des fichiers
 - Selection du parent dans le menu de modification
