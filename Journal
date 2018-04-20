@@ -95,3 +95,11 @@ Code:
 - B : Implantation de la pyramide en forme sélectionnable, gros problème au niveau des attributs d'origine inconnue. Correction temporaire en ajoutant un sommet. La pyramide ne s'affiche pas entièrement
 =============> Sortie SimSims v0.4
 
+	//Vendredi
+Reflexion:
+- Vu avec Igor Stephan:
+Load/Save : générer le makefile avec les fichiers cpp créés (faire compilateur?)
+
+Code:
+- B : Permission à l'utilisateur de changer le parent à la volée. Gestion de la suppression et de l'ajout parent/fille (EN COURS)
+- A : Permission à l'utilisateur de changer les textures à la volée. (EN COURS)

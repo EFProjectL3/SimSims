@@ -48,7 +48,6 @@ std::vector<std::string> lireIntro(char* fichierDonnees)
 int nombreAttributForme(char* fichierDonnees, int indice)
 {
     int idForme = 0;
-    bool trouve = false;
     std::ifstream fichier(fichierDonnees, std::ios::in);  // on ouvre le fichier en lecture
 
     if(fichier)  // si l'ouverture a réussi
@@ -234,9 +233,6 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
         getline(fichier, ligneEnCours);
         while(getline(fichier, ligneEnCours))  // tant que l'on peut mettre la ligne dans "contenu"
         {
-            std::cout << "***** Ligne: " << ligneEnCours << std::endl;
-            if (coeffAttribut)
-                std::cout << "***** Coeff en attente" << std::endl;
             /* Pour debug. Affichage de ce qui est lu */
             //nbLigne++;
             //std::cout << "Lignes lues: " << nbLigne << std::endl;
@@ -303,21 +299,12 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
                 if (etape == 3 && ligneEnCours != "/-ATTRIBUTS") //Lecture des attributs, et on les relie à leur valeur
                 {
                     if (coeffAttribut)
-                        std::cout << "ETAPE 3, coeff en attente, il doit être lu" << std::endl;
-                    if (!coeffAttribut)
-                        std::cout << "ETAPE 3, coeff lu, on va mettre l'attribut" << std::endl;
-
-                    if (coeffAttribut)
                     {
                         std::stringstream stream(ligneEnCours);
                         stream >> valeurCoeff;
-
-                        std::cout << "Lecture du coeff: " << valeurCoeff << std::endl;
                     }
                     else
                     {
-                        std::cout << "Attribut: " << ligneEnCours << std::endl;
-                        std::cout << "Valeur: " << att[iAtt]*valeurCoeff << std::endl;
                         attTmp.insert(std::make_pair(ligneEnCours,att[iAtt]*valeurCoeff));
                         iAtt++;
                     }

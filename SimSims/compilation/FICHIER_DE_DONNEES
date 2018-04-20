@@ -629,7 +629,7 @@ quart_largeur
 
 /---TEXTURES
 ./Images/damier.ppm
-./Images/moquete.ppm
+./Images/moquette.ppm
 ./Images/murs.ppm
 ./Images/plafond.ppm
 ./Images/table.ppm
