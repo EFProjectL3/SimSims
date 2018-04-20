@@ -44,6 +44,8 @@ public slots:
     void receptionLumiere(LumierePos lp);
     void receptionObjet(std::shared_ptr<forme> ptr, QString parent);
 
+    void changementParent(QString nomParent);
+
 private:
     QGridLayout * _layoutprincipal;
     WidgetOGL * _affichage;
@@ -186,6 +188,9 @@ private:
     QGridLayout * _layoutObjet;
 
     QComboBox * _obj;
+
+    QLabel * _choixParent;
+    QComboBox * _parent;
 
     QLabel * _couleurObj;
     QLabel * _red_obj;

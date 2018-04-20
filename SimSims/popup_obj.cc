@@ -209,7 +209,7 @@ void PopUpObjet::OnClicCreate()
             }
             j++;
         }
-        ptrForme->infoForme();
+        //Debug: ptrForme->infoForme();
         emit creationObjet(ptrForme, parent);
 
         this->close();

@@ -380,10 +380,18 @@ MainWindow::MainWindow(QWidget *parent) :
     _obj = new QComboBox(this);
     _layoutObjet->addWidget(_obj, 0, 0, 1, 4);
 
+    /* Parent */
+    _choixParent = new QLabel("Parent", this);
+    _parent = new QComboBox(this);
+    _parent->addItem("Aucun");
+    _parent->setEnabled(false);
+    _layoutObjet->addWidget(_choixParent,1,0,1,1);
+    _layoutObjet->addWidget(_parent,1,2,1,4);
+
     /* Couleur */
     _couleurObj = new QLabel("Couleur", this);
     _couleurObj->setFixedSize(150, 25);
-    _layoutObjet->addWidget(_couleurObj, 1, 0, 1, 5);
+    _layoutObjet->addWidget(_couleurObj, 2, 0, 1, 5);
 
     /* Rouge */
     _red_obj = new QLabel("Rouge : ", this);
@@ -397,12 +405,12 @@ MainWindow::MainWindow(QWidget *parent) :
     _sp_red_obj = new QSpinBox(this);
     _sp_red_obj->setMaximum(255);
 
-    _layoutObjet->addWidget(_red_obj, 2, 1, 1, 1);
-    _layoutObjet->addWidget(_red_min_obj, 2, 2, 1, 1);
-    _layoutObjet->addWidget(_s_red_obj, 2, 3, 1, 5);
-    _layoutObjet->addWidget(_red_max_obj, 2, 9, 1, 1);
-    _layoutObjet->addWidget(_l_red_obj, 2, 10, 1, 1);
-    _layoutObjet->addWidget(_sp_red_obj, 2, 11, 1, 1);
+    _layoutObjet->addWidget(_red_obj, 3, 1, 1, 1);
+    _layoutObjet->addWidget(_red_min_obj, 3, 2, 1, 1);
+    _layoutObjet->addWidget(_s_red_obj, 3, 3, 1, 5);
+    _layoutObjet->addWidget(_red_max_obj, 3, 9, 1, 1);
+    _layoutObjet->addWidget(_l_red_obj, 3, 10, 1, 1);
+    _layoutObjet->addWidget(_sp_red_obj, 3, 11, 1, 1);
 
     /* Vert */
     _green_obj = new QLabel("Vert : ", this);
@@ -416,12 +424,12 @@ MainWindow::MainWindow(QWidget *parent) :
     _sp_green_obj = new QSpinBox(this);
     _sp_green_obj->setMaximum(255);
 
-    _layoutObjet->addWidget(_green_obj, 3, 1, 1, 1);
-    _layoutObjet->addWidget(_green_min_obj, 3, 2, 1, 1);
-    _layoutObjet->addWidget(_s_green_obj, 3, 3, 1, 5);
-    _layoutObjet->addWidget(_green_max_obj, 3, 9, 1, 1);
-    _layoutObjet->addWidget(_l_green_obj, 3, 10, 1, 1);
-    _layoutObjet->addWidget(_sp_green_obj, 3, 11, 1, 1);
+    _layoutObjet->addWidget(_green_obj, 4, 1, 1, 1);
+    _layoutObjet->addWidget(_green_min_obj, 4, 2, 1, 1);
+    _layoutObjet->addWidget(_s_green_obj, 4, 3, 1, 5);
+    _layoutObjet->addWidget(_green_max_obj, 4, 9, 1, 1);
+    _layoutObjet->addWidget(_l_green_obj, 4, 10, 1, 1);
+    _layoutObjet->addWidget(_sp_green_obj, 4, 11, 1, 1);
 
     /* Bleu */
     _blue_obj = new QLabel("Bleu : ", this);
@@ -435,17 +443,17 @@ MainWindow::MainWindow(QWidget *parent) :
     _sp_blue_obj = new QSpinBox(this);
     _sp_blue_obj->setMaximum(255);
 
-    _layoutObjet->addWidget(_blue_obj, 4, 1, 1, 1);
-    _layoutObjet->addWidget(_blue_min_obj, 4, 2, 1, 1);
-    _layoutObjet->addWidget(_s_blue_obj, 4, 3, 1, 5);
-    _layoutObjet->addWidget(_blue_max_obj, 4, 9, 1, 1);
-    _layoutObjet->addWidget(_l_blue_obj, 4, 10, 1, 1);
-    _layoutObjet->addWidget(_sp_blue_obj, 4, 11, 1, 1);
+    _layoutObjet->addWidget(_blue_obj, 5, 1, 1, 1);
+    _layoutObjet->addWidget(_blue_min_obj, 5, 2, 1, 1);
+    _layoutObjet->addWidget(_s_blue_obj, 5, 3, 1, 5);
+    _layoutObjet->addWidget(_blue_max_obj, 5, 9, 1, 1);
+    _layoutObjet->addWidget(_l_blue_obj, 5, 10, 1, 1);
+    _layoutObjet->addWidget(_sp_blue_obj, 5, 11, 1, 1);
 
     /* Position */
     _positionObj = new QLabel("Position", this);
     _positionObj->setFixedSize(150, 25);
-    _layoutObjet->addWidget(_positionObj, 5, 0, 1, 2);
+    _layoutObjet->addWidget(_positionObj, 6, 0, 1, 2);
 
     /* Position X */
     _posX_obj = new QLabel("PosX : ", this);
@@ -459,12 +467,12 @@ MainWindow::MainWindow(QWidget *parent) :
     _le_posX_obj->setFixedSize(40, 26);
     _le_posX_obj->setReadOnly(true);
 
-    _layoutObjet->addWidget(_posX_obj, 6, 1, 1, 1);
-    _layoutObjet->addWidget(_posX_min_obj, 6, 2, 1, 1);
-    _layoutObjet->addWidget(_s_posX_obj, 6, 3, 1, 5);
-    _layoutObjet->addWidget(_posX_max_obj, 6, 9, 1, 1);
-    _layoutObjet->addWidget(_l_posX_obj, 6, 10, 1, 1);
-    _layoutObjet->addWidget(_le_posX_obj, 6, 11, 1, 1);
+    _layoutObjet->addWidget(_posX_obj, 7, 1, 1, 1);
+    _layoutObjet->addWidget(_posX_min_obj, 7, 2, 1, 1);
+    _layoutObjet->addWidget(_s_posX_obj, 7, 3, 1, 5);
+    _layoutObjet->addWidget(_posX_max_obj, 7, 9, 1, 1);
+    _layoutObjet->addWidget(_l_posX_obj, 7, 10, 1, 1);
+    _layoutObjet->addWidget(_le_posX_obj, 7, 11, 1, 1);
 
     /* Position Y */
     _posY_obj = new QLabel("PosY : ", this);
@@ -478,12 +486,12 @@ MainWindow::MainWindow(QWidget *parent) :
     _le_posY_obj->setFixedSize(40, 26);
     _le_posY_obj->setReadOnly(true);
 
-    _layoutObjet->addWidget(_posY_obj, 7, 1, 1, 1);
-    _layoutObjet->addWidget(_posY_min_obj, 7, 2, 1, 1);
-    _layoutObjet->addWidget(_s_posY_obj, 7, 3, 1, 5);
-    _layoutObjet->addWidget(_posY_max_obj, 7, 9, 1, 1);
-    _layoutObjet->addWidget(_l_posY_obj, 7, 10, 1, 1);
-    _layoutObjet->addWidget(_le_posY_obj, 7, 11, 1, 1);
+    _layoutObjet->addWidget(_posY_obj, 8, 1, 1, 1);
+    _layoutObjet->addWidget(_posY_min_obj, 8, 2, 1, 1);
+    _layoutObjet->addWidget(_s_posY_obj, 8, 3, 1, 5);
+    _layoutObjet->addWidget(_posY_max_obj, 8, 9, 1, 1);
+    _layoutObjet->addWidget(_l_posY_obj, 8, 10, 1, 1);
+    _layoutObjet->addWidget(_le_posY_obj, 8, 11, 1, 1);
 
     /* Position Z */
     _posZ_obj = new QLabel("PosZ : ", this);
@@ -497,18 +505,18 @@ MainWindow::MainWindow(QWidget *parent) :
     _le_posZ_obj->setFixedSize(40, 26);
     _le_posZ_obj->setReadOnly(true);
 
-    _layoutObjet->addWidget(_posZ_obj, 8, 1, 1, 1);
-    _layoutObjet->addWidget(_posZ_min_obj, 8, 2, 1, 1);
-    _layoutObjet->addWidget(_s_posZ_obj, 8, 3, 1, 5);
-    _layoutObjet->addWidget(_posZ_max_obj, 8, 9, 1, 1);
-    _layoutObjet->addWidget(_l_posZ_obj, 8, 10, 1, 1);
-    _layoutObjet->addWidget(_le_posZ_obj, 8, 11, 1, 1);
+    _layoutObjet->addWidget(_posZ_obj, 9, 1, 1, 1);
+    _layoutObjet->addWidget(_posZ_min_obj, 9, 2, 1, 1);
+    _layoutObjet->addWidget(_s_posZ_obj, 9, 3, 1, 5);
+    _layoutObjet->addWidget(_posZ_max_obj, 9, 9, 1, 1);
+    _layoutObjet->addWidget(_l_posZ_obj, 9, 10, 1, 1);
+    _layoutObjet->addWidget(_le_posZ_obj, 9, 11, 1, 1);
 
 
     /* Angle */
     _angleObj = new QLabel("Angle", this);
     _angleObj->setFixedSize(150, 25);
-    _layoutObjet->addWidget(_angleObj, 9, 0, 1, 2);
+    _layoutObjet->addWidget(_angleObj, 10, 0, 1, 2);
 
     /* Angle X */
     _angX_obj = new QLabel("AngX : ", this);
@@ -523,13 +531,13 @@ MainWindow::MainWindow(QWidget *parent) :
     _le_angX_obj->setReadOnly(true);
     _ldeg_angX_obj = new QLabel("°", this);
 
-    _layoutObjet->addWidget(_angX_obj, 10, 1, 1, 1);
-    _layoutObjet->addWidget(_angX_min_obj, 10, 2, 1, 1);
-    _layoutObjet->addWidget(_s_angX_obj, 10, 3, 1, 5);
-    _layoutObjet->addWidget(_angX_max_obj, 10, 9, 1, 1);
-    _layoutObjet->addWidget(_l_angX_obj, 10, 10, 1, 1);
-    _layoutObjet->addWidget(_le_angX_obj, 10, 11, 1, 1);
-    _layoutObjet->addWidget(_ldeg_angX_obj, 10, 12, 1, 1);
+    _layoutObjet->addWidget(_angX_obj, 11, 1, 1, 1);
+    _layoutObjet->addWidget(_angX_min_obj, 11, 2, 1, 1);
+    _layoutObjet->addWidget(_s_angX_obj, 11, 3, 1, 5);
+    _layoutObjet->addWidget(_angX_max_obj, 11, 9, 1, 1);
+    _layoutObjet->addWidget(_l_angX_obj, 11, 10, 1, 1);
+    _layoutObjet->addWidget(_le_angX_obj, 11, 11, 1, 1);
+    _layoutObjet->addWidget(_ldeg_angX_obj, 11, 12, 1, 1);
 
     /* Angle Y */
     _angY_obj = new QLabel("AngY : ", this);
@@ -544,13 +552,13 @@ MainWindow::MainWindow(QWidget *parent) :
     _le_angY_obj->setReadOnly(true);
     _ldeg_angY_obj = new QLabel("°", this);
 
-    _layoutObjet->addWidget(_angY_obj, 11, 1, 1, 1);
-    _layoutObjet->addWidget(_angY_min_obj, 11, 2, 1, 1);
-    _layoutObjet->addWidget(_s_angY_obj, 11, 3, 1, 5);
-    _layoutObjet->addWidget(_angY_max_obj, 11, 9, 1, 1);
-    _layoutObjet->addWidget(_l_angY_obj, 11, 10, 1, 1);
-    _layoutObjet->addWidget(_le_angY_obj, 11, 11, 1, 1);
-    _layoutObjet->addWidget(_ldeg_angY_obj, 11, 12, 1, 1);
+    _layoutObjet->addWidget(_angY_obj, 12, 1, 1, 1);
+    _layoutObjet->addWidget(_angY_min_obj, 12, 2, 1, 1);
+    _layoutObjet->addWidget(_s_angY_obj, 12, 3, 1, 5);
+    _layoutObjet->addWidget(_angY_max_obj, 12, 9, 1, 1);
+    _layoutObjet->addWidget(_l_angY_obj, 12, 10, 1, 1);
+    _layoutObjet->addWidget(_le_angY_obj, 12, 11, 1, 1);
+    _layoutObjet->addWidget(_ldeg_angY_obj, 12, 12, 1, 1);
 
     /* Angle Z */
     _angZ_obj = new QLabel("AngZ : ", this);
@@ -565,26 +573,26 @@ MainWindow::MainWindow(QWidget *parent) :
     _le_angZ_obj->setReadOnly(true);
     _ldeg_angZ_obj = new QLabel("°", this);
 
-    _layoutObjet->addWidget(_angZ_obj, 12, 1, 1, 1);
-    _layoutObjet->addWidget(_angZ_min_obj, 12, 2, 1, 1);
-    _layoutObjet->addWidget(_s_angZ_obj, 12, 3, 1, 5);
-    _layoutObjet->addWidget(_angZ_max_obj, 12, 9, 1, 1);
-    _layoutObjet->addWidget(_l_angZ_obj, 12, 10, 1, 1);
-    _layoutObjet->addWidget(_le_angZ_obj, 12, 11, 1, 1);
-    _layoutObjet->addWidget(_ldeg_angZ_obj, 12, 12, 1, 1);
+    _layoutObjet->addWidget(_angZ_obj, 13, 1, 1, 1);
+    _layoutObjet->addWidget(_angZ_min_obj, 13, 2, 1, 1);
+    _layoutObjet->addWidget(_s_angZ_obj, 13, 3, 1, 5);
+    _layoutObjet->addWidget(_angZ_max_obj, 13, 9, 1, 1);
+    _layoutObjet->addWidget(_l_angZ_obj, 13, 10, 1, 1);
+    _layoutObjet->addWidget(_le_angZ_obj, 13, 11, 1, 1);
+    _layoutObjet->addWidget(_ldeg_angZ_obj, 13, 12, 1, 1);
 
     /* Taille */
     _tailleObj = new QLabel("Taille", this);
     _tailleObj->setFixedSize(150, 25);
-    _layoutObjet->addWidget(_tailleObj, 13, 0, 1, 2);
+    _layoutObjet->addWidget(_tailleObj, 14, 0, 1, 2);
 
     /* Scale */
     _scale_obj = new QLabel("Scale : ", this);
     _le_scale_obj = new QLineEdit("1", this);
     _le_scale_obj->setFixedSize(80, 26);
 
-    _layoutObjet->addWidget(_scale_obj, 14, 1, 1, 1);
-    _layoutObjet->addWidget(_le_scale_obj, 14, 5, 1, 1);
+    _layoutObjet->addWidget(_scale_obj, 15, 1, 1, 1);
+    _layoutObjet->addWidget(_le_scale_obj, 15, 5, 1, 1);
 
     /* Boutons */
     _delete_obj = new QPushButton("Supp.", this);
@@ -593,8 +601,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _new_obj = new QPushButton("Nouv.", this);
     _new_obj->setMaximumWidth(50);
 
-    _layoutObjet->addWidget(_delete_obj, 15, 11, 1, 1);
-    _layoutObjet->addWidget(_new_obj, 15, 12, 1, 1);
+    _layoutObjet->addWidget(_delete_obj, 16, 11, 1, 1);
+    _layoutObjet->addWidget(_new_obj, 16, 12, 1, 1);
 
 
 
@@ -676,6 +684,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(_s_angX_obj, &QSlider::valueChanged, this, &MainWindow::SliderAObjet);
     QObject::connect(_s_angY_obj, &QSlider::valueChanged, this, &MainWindow::SliderAObjet);
     QObject::connect(_s_angZ_obj, &QSlider::valueChanged, this, &MainWindow::SliderAObjet);
+    QObject::connect(_le_scale_obj, &QLineEdit::textChanged, this, &MainWindow::SliderAObjet);
 
 
     /* Boutons */
@@ -684,6 +693,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(_delete_lp, &QPushButton::clicked, this, &MainWindow::OnClicDeleteLum);
     QObject::connect(_delete_obj, &QPushButton::clicked, this, &MainWindow::OnClicDeleteObj);
 
+    /* Parent objet */
+    QObject::connect(_parent, &QComboBox::currentTextChanged, this, &MainWindow::changementParent);
 
     /* Connexions mainwindow vers openGL */
     // Lumière ambiante
@@ -777,10 +788,24 @@ void MainWindow::MAJInterfaceLum()
  */
 void MainWindow::MAJInterfaceObj()
 {
+    _parent->clear();
+    _parent->addItem("Aucun");
     for (unsigned int i(0); i < TOUS_LES_OBJETS.size(); i++)
     {
+        if(TOUS_LES_OBJETS[i]->getNomForme() != _obj->currentText().toStdString())
+        {
+            _parent->addItem(QString::fromStdString(TOUS_LES_OBJETS[i]->getNomForme()));
+        }
         if(TOUS_LES_OBJETS[i]->getNomForme() == _obj->currentText().toStdString())
         {
+            for (int h(0); h <= _parent->count(); h++)
+            {
+                if (TOUS_LES_OBJETS[i]->getParent() != 0)
+                {
+                    if (TOUS_LES_OBJETS[i]->getParent()->getNomForme() == _parent->itemText(h).toStdString())
+                        _parent->setCurrentIndex(h);
+                }
+            }
             _s_red_obj->setValue(TOUS_LES_OBJETS[i]->getRed());
             _s_green_obj->setValue(TOUS_LES_OBJETS[i]->getGreen());
             _s_blue_obj->setValue(TOUS_LES_OBJETS[i]->getBlue());
@@ -851,11 +876,11 @@ void MainWindow::SliderAObjet()
             if (sender()==_s_angZ_obj)
                 TOUS_LES_OBJETS[i]->setPosZ(_s_angZ_obj->value());
             if (sender()==_le_scale_obj)
-                TOUS_LES_OBJETS[i]->setScale(_le_scale_obj->text().toInt());
-
+                TOUS_LES_OBJETS[i]->setScale(_le_scale_obj->text().toFloat());
         }
     }
 }
+
 
 /**
  * @brief MainWindow::PopUpLum
@@ -1056,6 +1081,15 @@ void MainWindow::receptionObjet(std::shared_ptr<forme> ptr, QString parent)
     TOUS_LES_OBJETS.push_back(ptr);
     _nbObjet++;
     _obj->addItem(QString::fromStdString(ptr->getNomForme()));
+    _parent->clear();
+    _parent->addItem("Aucun");
+    for (unsigned int i(0); i < TOUS_LES_OBJETS.size(); i++)
+    {
+        if(TOUS_LES_OBJETS[i]->getNomForme() != _obj->currentText().toStdString())
+        {
+            _parent->addItem(QString::fromStdString(TOUS_LES_OBJETS[i]->getNomForme()));
+        }
+    }
 
     if (parent != "Aucun")  //L'objet créé a un parent, donc l'objet sera créé depuis son parent
     {
@@ -1064,6 +1098,7 @@ void MainWindow::receptionObjet(std::shared_ptr<forme> ptr, QString parent)
             if (TOUS_LES_OBJETS[i]->getNomForme() == parent.toStdString())
             {
                 TOUS_LES_OBJETS[i]->ajoutFormesFilles(ptr);
+                ptr->setParent(TOUS_LES_OBJETS[i]);
             }
         }
     }
@@ -1081,4 +1116,73 @@ void MainWindow::receptionObjet(std::shared_ptr<forme> ptr, QString parent)
         _new_obj->setEnabled(false);
     else
         _new_obj->setEnabled(true);
+}
+
+
+void MainWindow::changementParent(QString nomParent)
+{
+    /* EN COURS D'IMPLEMENTATION */
+    /*
+    for (unsigned int i(0); i<TOUS_LES_OBJETS.size(); i++)
+    {
+        if (TOUS_LES_OBJETS[i]->getNomForme() == _obj->currentText().toStdString())   //On est sur l'objet en cours
+        {
+            for (unsigned int j(0); j<TOUS_LES_OBJETS.size(); j++)
+            {
+                if (TOUS_LES_OBJETS[i]->getParent() != 0)   //Si l'objet en cours a déjà un parent
+                {
+                    //Changement du parent actuel (si celui ci est différent du nouveau)
+                    if (TOUS_LES_OBJETS[i]->getParent()->getNomForme() != nomParent.toStdString())
+                    {
+                        std::cout << "Changement de parent. L'ancien parent était: " << TOUS_LES_OBJETS[i]->getParent()->getNomForme() << std::endl;
+                        //Effacement du parent actuel
+                        TOUS_LES_OBJETS[i]->getParent()->supprimerFille(TOUS_LES_OBJETS[i]->getNomForme());
+
+                        if (nomParent != "Aucun")
+                        {
+                            //Ajout dans le nouveau parent
+                            if (TOUS_LES_OBJETS[j]->getNomForme() == nomParent.toStdString())  //On est sur l'objet parent
+                            {
+                                std::cout << "Le nouveau parent est: " << TOUS_LES_OBJETS[j]->getNomForme() << std::endl;
+                                std::cout << "L'objet " <<  TOUS_LES_OBJETS[i]->getNomForme() << " a été ajouté à " <<  TOUS_LES_OBJETS[j]->getNomForme() << std::endl;
+                                std::cout << "*******************************" << std::endl;
+                                TOUS_LES_OBJETS[j]->ajoutFormesFilles(TOUS_LES_OBJETS[i]);  //Ajout de l'objet au parent
+                                TOUS_LES_OBJETS[i]->setParent(TOUS_LES_OBJETS[j]);  //Ajout du parent à l'objet
+                            }
+                        }
+                    }
+                    else
+                    {
+                        std::cout << "**************************" << std::endl;
+                        std::cout << "Pas de changement effectué" << std::endl;
+                        std::cout << "**************************" << std::endl;
+                    }
+                }
+                else    //L'objet n'avait pas de parent avant
+                {
+                    if (nomParent != "Aucun")   //On vérifie qu'on veut bien lui mettre un parent
+                    {
+                        //Ajout dans le nouveau parent uniquement
+                        std::cout << "Cet objet n'avait pas de parent. Un nouveau va lui être assigné." << std::endl;
+                        if (TOUS_LES_OBJETS[j]->getNomForme() == nomParent.toStdString())  //On est sur l'objet parent
+                        {
+                            for (unsigned int k(0); k<_affichage->getFormeAfficher().size();k++)
+                            {
+                                if (TOUS_LES_OBJETS[i]->getNomForme() == _affichage->getFormeAfficher()[k]->getNomForme())
+                                {
+                                    std::cout << "On supprimer de l'affichage de base la forme: " << _affichage->getFormeAfficher()[i]->getNomForme() << std::endl;
+                                    _affichage->getFormeAfficher().erase(_affichage->getFormeAfficher().begin()+i);
+
+                                }
+                            }
+                            std::cout << "Ajout de l'objet " << TOUS_LES_OBJETS[i]->getNomForme() << " comme enfant de " << TOUS_LES_OBJETS[j] << std::endl;
+                            std::cout << "Ajout de " << TOUS_LES_OBJETS[j] << " en tant que parent de " << TOUS_LES_OBJETS[i] << std::endl;
+                            TOUS_LES_OBJETS[j]->ajoutFormesFilles(TOUS_LES_OBJETS[i]);  //Ajout de l'objet au parent
+                            TOUS_LES_OBJETS[i]->setParent(TOUS_LES_OBJETS[j]);  //Ajout du parent à l'objet
+                        }
+                    }
+                }
+            }
+        }
+    }*/
 }
