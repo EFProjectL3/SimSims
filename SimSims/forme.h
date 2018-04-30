@@ -43,6 +43,8 @@ public:
 
     void infoForme();
 
+    bool checkNomFilles(std::string s);
+
     /* Setters */
     void setAttribut(std::vector<float> valeursAtt);
 
@@ -79,14 +81,22 @@ public:
     void setAngZ(GLfloat z)
     { _angleZ = z; }
 
-    void setScale(int s)
+    void setScale(float s)
     { _scale = s; }
 
     void clearFormesFilles()
     { _FormesFille.clear(); }
+
+    void supprimerFille(std::string nom);
+
     void ajoutFormesFilles(std::shared_ptr<forme> f)
     { _FormesFille.push_back(f); }
 
+    void setParent(std::shared_ptr<forme> p)
+    { _parent = p; }
+
+    void setTexture(int numTX)
+    { _idTexture = numTX; }
 
     /* Getters */
     int getId()
@@ -128,10 +138,13 @@ public:
     { return _angleY; }
     GLfloat getAngZ()
     { return _angleZ; }
-    int getScale()
+    GLfloat getScale()
     { return _scale; }
     std::vector<std::shared_ptr<forme>> getFilles()
     { return _FormesFille; }
+
+    std::shared_ptr<forme> getParent()
+    { return _parent; }
 
 private:
     int _idForme;
@@ -156,9 +169,12 @@ private:
     GLfloat _angleX;
     GLfloat _angleY;
     GLfloat _angleZ;
-    int _scale;
+    GLfloat _scale;
+
+    int _idTexture; //-1 si aucune texture n'est appliquée
 
     std::vector<std::shared_ptr<forme>> _FormesFille;
+    std::shared_ptr<forme> _parent;
 };
 
 void lireFormes(char* fichier, int numeroObjet);

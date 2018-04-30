@@ -2,13 +2,18 @@
 #include <GL/glut.h>
 #include <QOpenGLTexture>
 #include <iostream>
+#include "ppm.h"
+
+#define NOMBRE_TEXTURE 50
 
 int angleX;
 int angleY;
 int anglePopupX;
 int anglePopupY;
 
-WidgetOGL::WidgetOGL(int fps, QWidget *parent, std::string type, std::vector<LumierePos> ptr_lum) : QOpenGLWidget(parent), _type(type), _formesAAfficher(), _ensemble_lumiere(ptr_lum)
+GLuint textures[NOMBRE_TEXTURE];
+
+WidgetOGL::WidgetOGL(int fps, QWidget *parent, std::string type, std::vector<LumierePos> ptr_lum, std::vector<std::string> adr) : QOpenGLWidget(parent), _type(type), _formesAAfficher(), _ensemble_lumiere(ptr_lum), _adressesTX(adr)
 {
     setFocusPolicy(Qt::StrongFocus);
 
@@ -30,6 +35,10 @@ WidgetOGL::WidgetOGL(int fps, QWidget *parent, std::string type, std::vector<Lum
         _poszcam = -10;
     else
         _poszcam = -8;
+    _angxcam = 0;
+    _angycam = 0;
+    _angzcam = 0;
+
     /* Lumières */
     _ambianteR = 0.8;
     _ambianteV = 0.8;
@@ -41,10 +50,12 @@ WidgetOGL::~WidgetOGL()
 
 void WidgetOGL::supprimerForme(std::string nom)
 {
+    std::cout << "******************** SUPPRIMER FORME *************************" << std::endl;
     for (unsigned int i(0); i < _formesAAfficher.size(); i++)
     {
         if(_formesAAfficher[i]->getNomForme() == nom)
         {
+            std::cout << "On supprime de l'affichage de base la forme: " << _formesAAfficher[i]->getNomForme() << std::endl;
             _formesAAfficher.erase(_formesAAfficher.begin()+i);
         }
     }
@@ -130,19 +141,27 @@ void WidgetOGL::initializeGL()
     /*****************/
 
     /********** TEXTURES ************/
-    /*glGenTextures(47,textures);
+    if (_type == "main")
+    {
+        glGenTextures(NOMBRE_TEXTURE,textures);
+        for (unsigned int i(0); i<_adressesTX.size();i++)
+        {
+            char * adrChar = new char[_adressesTX[i].size() + 1];
+            std::copy(_adressesTX[i].begin(), _adressesTX[i].end(), adrChar);
+            adrChar[_adressesTX[i].size()] = '\0';
 
+            TEXTURE_STRUCT * TX = readPpm(adrChar);
+            glBindTexture(GL_TEXTURE_2D,textures[i]);
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+            glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,TX->width,TX->height,0,GL_RGB,GL_UNSIGNED_BYTE,TX->data);
 
-    //Murs en papier peint
-    TEXTURE_STRUCT * TXpapierP = readPpm("./Images/murs.ppm");
-    glBindTexture(GL_TEXTURE_2D,textures[1]);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,TXpapierP->width,TXpapierP->height,0,GL_RGB,GL_UNSIGNED_BYTE,TXpapierP->data);
-
-    glEnable(GL_TEXTURE_2D);		*/
+            delete[] adrChar;
+        }
+        glEnable(GL_TEXTURE_2D);
+    }
     /*********************************/
 }
 
@@ -198,16 +217,15 @@ void WidgetOGL::paintGL()
     for (unsigned int i(0); i<_ensemble_lumiere.size(); i++)
         _ensemble_lumiere[i].afficher_lumiere(i);
 
-
-    //C'est ici qu'il faudra lire le fichier des données à afficher
-
     if (_type == "main")   //affichage de toutes les formes
     {
         glRotatef(angleX,0,1,0);
         glRotatef(angleY,1,0,0);
 
         for (unsigned int i(0); i<_formesAAfficher.size(); i++)
+        {
             _formesAAfficher[i]->afficher_forme();
+        }
     }
     else if (_type == "popup")  //affichage type popu
     {

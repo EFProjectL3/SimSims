@@ -18,11 +18,12 @@ SOURCES += main.cpp\
         forme.cpp\
         lectureDoc.cpp\
         lumierepos.cc\
-        normale.c\
+        normale.cc\
         popup_lum.cc\
         popup_obj.cc\
-        ppm.c\
-        widgetOGL.cpp
+        ppm.cc\
+        widgetOGL.cpp\
+        labelClic.cc
 
 HEADERS  += mainwindow.h\
          forme.h\
@@ -32,7 +33,8 @@ HEADERS  += mainwindow.h\
          popup_lum.hh\
          popup_obj.hh\
          ppm.h\
-         widgetOGL.h
+         widgetOGL.h\
+         labelClic.hh
 
 LIBS += -lglut -lGLU
 

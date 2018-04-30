@@ -14,7 +14,7 @@ class WidgetOGL : public QOpenGLWidget, protected QOpenGLFunctions
     Q_OBJECT
 
 public:
-    explicit WidgetOGL(int fps = 0, QWidget *parent = 0, std::string type = "main", std::vector<LumierePos> ptr_lum = std::vector<LumierePos>());
+    explicit WidgetOGL(int fps = 0, QWidget *parent = 0, std::string type = "main", std::vector<LumierePos> ptr_lum = std::vector<LumierePos>(), std::vector<std::string> adr = std::vector<std::string>());
     ~WidgetOGL();
 
     void chargerTexture(std::string nomTexture);
@@ -26,6 +26,9 @@ public:
 
     void toutEffacer()
     { _formesAAfficher.clear(); }
+
+    std::vector<std::shared_ptr<forme>> getFormeAfficher()
+    { return _formesAAfficher; }
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
@@ -76,4 +79,5 @@ private:
 
     std::vector<std::shared_ptr<forme>> _formesAAfficher;
     std::vector<LumierePos> _ensemble_lumiere;
+    std::vector<std::string> _adressesTX;
 };

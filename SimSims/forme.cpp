@@ -2,22 +2,16 @@
 #include <math.h>
 #include <iostream>
 
+#define NB_TEXTURE 50
 
 forme::forme(int id, int nbFac, int nbSom, int nbAtt, int nbrSommetParFaceMax, int ** facCons, struct sommet * tabSom, struct face * tabFac,
              std::map<std::string,float> tabAtt) : _idForme(id), _nomForme(""), _nbrFaces(nbFac), _nbrSommets(nbSom), _nbrAttributs(nbAtt),
     _nbrSommetParFaceMax(nbrSommetParFaceMax), _faceConstruction(facCons), _sommets(tabSom), _faces(tabFac), _attributs(tabAtt),
     _couleurR(204), _couleurG(204), _couleurB(204), _positionX(0), _positionY(0), _positionZ(0),
-    _angleX(0), _angleY(0), _angleZ(0), _scale(1), _FormesFille()
+    _angleX(0), _angleY(0), _angleZ(0), _scale(1), _idTexture(-1), _FormesFille(), _parent(0)
 {}
 
-/*
-void forme::setFormeFille()
-{
-    _FormesFille.clear();
-    for (unsigned int i(0); i<_objetsFils.size(); i++)
-        _FormesFille.push_back( ajoutFormesFilles(_objetsFils[i].getForme());
-}
-*/
+forme::~forme(){}
 
 void forme::setAttribut(std::vector<float> valeursAtt)
 {
@@ -29,8 +23,40 @@ void forme::setAttribut(std::vector<float> valeursAtt)
     }
 }
 
-forme::~forme(){}
+void forme::supprimerFille(std::string nom)
+{
+    for (unsigned int i(0); i<_FormesFille.size(); i++)
+    {
+        if (_FormesFille[i]->getNomForme() == nom)
+            _FormesFille.erase(_FormesFille.begin() + i);
+    }
+}
 
+/**
+ * @brief forme::checkNom
+ * @param s
+ * @return
+ * Renvoie vrai si le nom donné en paramètre ne correspond ni au nom de la forme ni au nom de toutes ses filles
+ */
+bool forme::checkNomFilles(std::string s)
+{
+    bool chk = true;
+    if (s == _nomForme)
+    {
+        chk = false;
+        return chk;
+    }
+    if (_FormesFille.size() > 0)
+    {
+        unsigned int i(0);
+        while (i<_FormesFille.size() && chk)
+        {
+            chk = _FormesFille[i]->checkNomFilles(s);
+            i++;
+        }
+    }
+    return chk;
+}
 
 void forme::infoForme()
 {
@@ -51,7 +77,6 @@ void forme::infoForme()
     for (int i(0); i<_nbrFaces; i++)
         for (int j(0); j<3; j++)
             std::cout << "Initiale[" << i << "][" << j << "] : " << getFaceConstruction()[i][j] << std::endl;
-    //std::cout << "Initiale[" << i << "][" << j << "] : " << _faceConstruction[i][j] << std::endl;
     std::cout << std::endl;
 
     std::cout << "Tableau des sommets (coordonnées)" << std::endl;
@@ -72,6 +97,8 @@ void forme::infoForme()
     std::cout << std::endl;
 }
 
+extern GLuint textures[NB_TEXTURE];
+
 void forme::afficher_forme()
 {
     glPushMatrix();
@@ -82,6 +109,8 @@ void forme::afficher_forme()
     glPushMatrix();
     {
         glScalef(_scale,_scale,_scale);
+        if (_idTexture != -1)
+            glBindTexture(GL_TEXTURE_2D,textures[_idTexture]);
         glBegin(GL_TRIANGLES);
         {
             struct couleur coul;
@@ -93,9 +122,17 @@ void forme::afficher_forme()
             for (j=0; j<=_nbrFaces; j++)	//parcours des faces
             {
                 glColor3f(coul.r,coul.g,coul.b);
-                int i;
-                for (i=0; i<=2; i++)	// on parcours les 3 sommets de chaque face
+                for (int i(0); i<=2; i++)	// on parcours les 3 sommets de chaque face
                 {
+                    if (_idTexture !=-1)
+                    {
+                        if (i==0)
+                            glTexCoord2f(1.0,0.0);
+                        if (i==1)
+                            glTexCoord2f(0.0,1.0);
+                        if (i==2)
+                            glTexCoord2f(1.0,1.0);
+                    }
                     glVertex3f(
                                 _sommets[_faceConstruction[j][i]].coordonnees.x,
                             _sommets[_faceConstruction[j][i]].coordonnees.y,

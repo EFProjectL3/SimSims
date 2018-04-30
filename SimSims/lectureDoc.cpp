@@ -1,4 +1,5 @@
 #include "lectureDoc.h"
+#include "normale.hh"
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
@@ -48,7 +49,6 @@ std::vector<std::string> lireIntro(char* fichierDonnees)
 int nombreAttributForme(char* fichierDonnees, int indice)
 {
     int idForme = 0;
-    bool trouve = false;
     std::ifstream fichier(fichierDonnees, std::ios::in);  // on ouvre le fichier en lecture
 
     if(fichier)  // si l'ouverture a réussi
@@ -128,38 +128,6 @@ std::vector<std::string> explode(std::string const & s, char delim)
 /***************************************/
 
 /**
- * @brief calcul_normale
- * @param s0x
- * @param s0y
- * @param s0z
- * @param s1x
- * @param s1y
- * @param s1z
- * @param s2x
- * @param s2y
- * @param s2z
- * @param normale
- *
- * Calcul les normales aux faces
- */
-void calcul_normale(float s0x, float s0y, float s0z, float s1x, float s1y, float s1z, float s2x, float s2y, float s2z, struct normale * normale) {
-    float v0x = s2x - s1x;
-    float v0y = s2y - s1y;
-    float v0z = s2z - s1z;
-    float v1x = s0x - s1x;
-    float v1y = s0y - s1y;
-    float v1z = s0z - s1z;
-    normale->x = (v0y * v1z) - (v0z *v1y);
-    normale->y = (v0z * v1x) - (v0x *v1z);
-    normale->z = (v0x * v1y) - (v0y *v1x);
-    float norme = sqrtf(normale->x * normale->x + normale->y * normale->y + normale->z * normale->z);
-    normale->x = normale->x / norme;
-    normale->y = normale->y / norme;
-    normale->z = normale->z / norme;
-}
-
-
-/**
  * @brief creerFormesLecture
  * @param fichierDonnees
  * @param numeroObjet
@@ -234,9 +202,6 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
         getline(fichier, ligneEnCours);
         while(getline(fichier, ligneEnCours))  // tant que l'on peut mettre la ligne dans "contenu"
         {
-            std::cout << "***** Ligne: " << ligneEnCours << std::endl;
-            if (coeffAttribut)
-                std::cout << "***** Coeff en attente" << std::endl;
             /* Pour debug. Affichage de ce qui est lu */
             //nbLigne++;
             //std::cout << "Lignes lues: " << nbLigne << std::endl;
@@ -303,21 +268,12 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
                 if (etape == 3 && ligneEnCours != "/-ATTRIBUTS") //Lecture des attributs, et on les relie à leur valeur
                 {
                     if (coeffAttribut)
-                        std::cout << "ETAPE 3, coeff en attente, il doit être lu" << std::endl;
-                    if (!coeffAttribut)
-                        std::cout << "ETAPE 3, coeff lu, on va mettre l'attribut" << std::endl;
-
-                    if (coeffAttribut)
                     {
                         std::stringstream stream(ligneEnCours);
                         stream >> valeurCoeff;
-
-                        std::cout << "Lecture du coeff: " << valeurCoeff << std::endl;
                     }
                     else
                     {
-                        std::cout << "Attribut: " << ligneEnCours << std::endl;
-                        std::cout << "Valeur: " << att[iAtt]*valeurCoeff << std::endl;
                         attTmp.insert(std::make_pair(ligneEnCours,att[iAtt]*valeurCoeff));
                         iAtt++;
                     }

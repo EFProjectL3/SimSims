@@ -95,3 +95,55 @@ Code:
 - B : Implantation de la pyramide en forme sélectionnable, gros problème au niveau des attributs d'origine inconnue. Correction temporaire en ajoutant un sommet. La pyramide ne s'affiche pas entièrement
 =============> Sortie SimSims v0.4
 
+	//Vendredi
+Reflexion:
+- Vu avec Igor Stephan:
+Load/Save : générer le makefile avec les fichiers cpp créés (faire compilateur?)
+
+Code:
+- B : Permission à l'utilisateur de changer le parent à la volée. Gestion de la suppression et de l'ajout parent/fille (non fonctionnel)
+- A : Permission à l'utilisateur de changer les textures à la volée. (non fonctionnel)
+
+
+Semaine 4: Finir la gestion de la caméra, tenter de finir la modification du parent, finir la gestion des textures, commencer les ajouts non "basiques"
+
+	//Lundi
+Reflexion:
+
+Code:
+- B : Correction de la caméra
+- A : Poursuite des textures
+
+	//Mardi
+Reflexion:
+
+Code:
+- A : Correction d'un des problèmes de sélection du parent. Poursuite de l'implémentation
+- B : Affichage des textures sur les éléments. Poursuite de l'implémentation
+- A et B : correction du double free dans la selection du parent
+
+	//Mercredi
+---- Maladie
+
+	//Jeudi
+Code:
+- B: Mise en commun des éléments fait jusqu'ici. Apparition d'un bug d'affichage d'origine inconnue, recherche de l'origine
+
+	//Vendredi
+---- Maladie
+
+SEMAINE 5:
+	Fin de mise en commun, 
+	Recherche des derniers bugs,
+	Début d'implémentations d'éléments bonus,
+	Ajout de contenu (formes, textures)
+
+	//Lundi
+---- A encore malade
+Relfexion:
+- Lecture sur les ombrages
+Code:
+- B: Ré-implémentation des label clicable à partir de zéro (bug d'origine inconnue sur la précédente version). Les textures sont maintenant changées correctement
+- B: Origine du bug d'affichage dans les popup corrigé
+- B: Origine des bugs concernant le changement des parents corrigé
+=============> Sortie SimSims v0.5

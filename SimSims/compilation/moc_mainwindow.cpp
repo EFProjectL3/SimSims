@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../mainwindow.h"
+#include "../../../SimSims-v0.4-encours/SimSims/mainwindow.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[20];
-    char stringdata0[239];
+    QByteArrayData data[25];
+    char stringdata0[306];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,7 +48,12 @@ QT_MOC_LITERAL(15, 173, 16), // "receptionLumiere"
 QT_MOC_LITERAL(16, 190, 14), // "receptionObjet"
 QT_MOC_LITERAL(17, 205, 22), // "std::shared_ptr<forme>"
 QT_MOC_LITERAL(18, 228, 3), // "ptr"
-QT_MOC_LITERAL(19, 232, 6) // "parent"
+QT_MOC_LITERAL(19, 232, 6), // "parent"
+QT_MOC_LITERAL(20, 239, 16), // "changementParent"
+QT_MOC_LITERAL(21, 256, 9), // "nomParent"
+QT_MOC_LITERAL(22, 266, 17), // "changementTexture"
+QT_MOC_LITERAL(23, 284, 4), // "idTX"
+QT_MOC_LITERAL(24, 289, 16) // "supprimerTexture"
 
     },
     "MainWindow\0envoiLumiereOGL\0\0LumierePos\0"
@@ -57,7 +62,9 @@ QT_MOC_LITERAL(19, 232, 6) // "parent"
     "MAJInterfaceLum\0MAJInterfaceObj\0"
     "SliderALumierePos\0SliderAObjet\0"
     "receptionLumiere\0receptionObjet\0"
-    "std::shared_ptr<forme>\0ptr\0parent"
+    "std::shared_ptr<forme>\0ptr\0parent\0"
+    "changementParent\0nomParent\0changementTexture\0"
+    "idTX\0supprimerTexture"
 };
 #undef QT_MOC_LITERAL
 
@@ -67,7 +74,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      15,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -75,20 +82,23 @@ static const uint qt_meta_data_MainWindow[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   74,    2, 0x06 /* Public */,
+       1,    1,   89,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    1,   77,    2, 0x0a /* Public */,
-       7,    0,   80,    2, 0x0a /* Public */,
-       8,    0,   81,    2, 0x0a /* Public */,
-       9,    0,   82,    2, 0x0a /* Public */,
-      10,    0,   83,    2, 0x0a /* Public */,
-      11,    0,   84,    2, 0x0a /* Public */,
-      12,    0,   85,    2, 0x0a /* Public */,
-      13,    0,   86,    2, 0x0a /* Public */,
-      14,    0,   87,    2, 0x0a /* Public */,
-      15,    1,   88,    2, 0x0a /* Public */,
-      16,    2,   91,    2, 0x0a /* Public */,
+       5,    1,   92,    2, 0x0a /* Public */,
+       7,    0,   95,    2, 0x0a /* Public */,
+       8,    0,   96,    2, 0x0a /* Public */,
+       9,    0,   97,    2, 0x0a /* Public */,
+      10,    0,   98,    2, 0x0a /* Public */,
+      11,    0,   99,    2, 0x0a /* Public */,
+      12,    0,  100,    2, 0x0a /* Public */,
+      13,    0,  101,    2, 0x0a /* Public */,
+      14,    0,  102,    2, 0x0a /* Public */,
+      15,    1,  103,    2, 0x0a /* Public */,
+      16,    2,  106,    2, 0x0a /* Public */,
+      20,    1,  111,    2, 0x0a /* Public */,
+      22,    1,  114,    2, 0x0a /* Public */,
+      24,    0,  117,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -105,6 +115,9 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 3,    4,
     QMetaType::Void, 0x80000000 | 17, QMetaType::QString,   18,   19,
+    QMetaType::Void, QMetaType::QString,   21,
+    QMetaType::Void, QMetaType::UInt,   23,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -127,6 +140,9 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 9: _t->SliderAObjet(); break;
         case 10: _t->receptionLumiere((*reinterpret_cast< LumierePos(*)>(_a[1]))); break;
         case 11: _t->receptionObjet((*reinterpret_cast< std::shared_ptr<forme>(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 12: _t->changementParent((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 13: _t->changementTexture((*reinterpret_cast< uint(*)>(_a[1]))); break;
+        case 14: _t->supprimerTexture(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -166,13 +182,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 15;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 12)
+        if (_id < 15)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 12;
+        _id -= 15;
     }
     return _id;
 }
