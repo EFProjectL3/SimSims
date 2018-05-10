@@ -23,7 +23,8 @@ SOURCES += main.cpp\
         popup_obj.cc\
         ppm.cc\
         widgetOGL.cpp\
-        labelClic.cc
+        labelClic.cc\
+        environnement.cc
 
 HEADERS  += mainwindow.h\
          forme.h\
@@ -34,7 +35,8 @@ HEADERS  += mainwindow.h\
          popup_obj.hh\
          ppm.h\
          widgetOGL.h\
-         labelClic.hh
+         labelClic.hh\
+         environnement.hh
 
 LIBS += -lglut -lGLU
 

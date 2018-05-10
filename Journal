@@ -147,3 +147,28 @@ Code:
 - B: Origine du bug d'affichage dans les popup corrigé
 - B: Origine des bugs concernant le changement des parents corrigé
 =============> Sortie SimSims v0.5
+
+	//Mardi à jeudi
+- A et B: Recherche de l'origine des bugs concernant les derniers éléments de bases du programme, afin d'avoir une base totalement clean avant de rajouter des fonctionnalités avancées. Infructeux pour la plupart. Poursuite.
+	
+	//Vendredi
+Reflexion: 
+-Test du programme de la part d'une totale novice en programmation/utilisation de logiciel. Nous a permis d'avoir une idée de l'ergonomie de l'application.
+-> Nombreux éléments à modifier: disposition des boutons, des onglets
+
+Code:
+- A : modificaiton de la disposition des éléments
+- B : Toujours la recherche des origines de bugs
+
+Semaine 6:
+	// Lundi Mardi
+-- Pont --
+
+	//Mercredi
+Code:
+- B : Creation du décor de base. Puis recherche de construction différente pour les arbres (ref au tp sur les colonnes)
+- B : correction du bug de rotation des objets (c'était juste un appel à la mauvaise fonction...)
+
+	//Jeudi
+Code:
+- B : Load and save (début)

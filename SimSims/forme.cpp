@@ -4,6 +4,12 @@
 
 #define NB_TEXTURE 50
 
+struct coordonnees face::getCentre()
+{
+    return centre;
+}
+
+
 forme::forme(int id, int nbFac, int nbSom, int nbAtt, int nbrSommetParFaceMax, int ** facCons, struct sommet * tabSom, struct face * tabFac,
              std::map<std::string,float> tabAtt) : _idForme(id), _nomForme(""), _nbrFaces(nbFac), _nbrSommets(nbSom), _nbrAttributs(nbAtt),
     _nbrSommetParFaceMax(nbrSommetParFaceMax), _faceConstruction(facCons), _sommets(tabSom), _faces(tabFac), _attributs(tabAtt),
@@ -102,61 +108,64 @@ extern GLuint textures[NB_TEXTURE];
 void forme::afficher_forme()
 {
     glPushMatrix();
-    glTranslatef(_positionX,_positionY,_positionZ);
-    glRotatef(_angleX,1,0,0);
-    glRotatef(_angleY,0,1,0);
-    glRotatef(_angleZ,0,0,1);
-    glPushMatrix();
     {
-        glScalef(_scale,_scale,_scale);
-        if (_idTexture != -1)
-            glBindTexture(GL_TEXTURE_2D,textures[_idTexture]);
-        glBegin(GL_TRIANGLES);
-        {
-            struct couleur coul;
-            coul.r=static_cast<GLfloat>(_couleurR/255);
-            coul.g=static_cast<GLfloat>(_couleurG/255);
-            coul.b=static_cast<GLfloat>(_couleurB/255);
-            coul.a=1.0;
-            int j;
-            for (j=0; j<=_nbrFaces; j++)	//parcours des faces
-            {
-                glColor3f(coul.r,coul.g,coul.b);
-                for (int i(0); i<=2; i++)	// on parcours les 3 sommets de chaque face
-                {
-                    if (_idTexture !=-1)
-                    {
-                        if (i==0)
-                            glTexCoord2f(1.0,0.0);
-                        if (i==1)
-                            glTexCoord2f(0.0,1.0);
-                        if (i==2)
-                            glTexCoord2f(1.0,1.0);
-                    }
-                    glVertex3f(
-                                _sommets[_faceConstruction[j][i]].coordonnees.x,
-                            _sommets[_faceConstruction[j][i]].coordonnees.y,
-                            _sommets[_faceConstruction[j][i]].coordonnees.z
-                            );
-                }
 
-            }
-        }
-        glEnd();
-        //Pour voir la normale "physiquement"
-        glBegin(GL_LINES);
+        glTranslatef(_positionX,_positionY,_positionZ);
+        glPushMatrix();
         {
-            int j;
-            for (j=0;j<=_nbrFaces;j++)
+            glRotatef(_angleX,1,0,0);
+            glRotatef(_angleY,0,1,0);
+            glRotatef(_angleZ,0,0,1);
+            glScalef(_scale,_scale,_scale);
+            if (_idTexture != -1)
+                glBindTexture(GL_TEXTURE_2D,textures[_idTexture]);
+            glBegin(GL_TRIANGLES);
             {
-                glVertex3f(_faces[j].centre.x, _faces[j].centre.y, _faces[j].centre.z);
-                glVertex3f(_faces[j].centre.x+_faces[j].norm.x, _faces[j].centre.y+_faces[j].norm.y, _faces[j].centre.z+_faces[j].norm.z);
+                struct couleur coul;
+                coul.r=static_cast<GLfloat>(_couleurR/255);
+                coul.g=static_cast<GLfloat>(_couleurG/255);
+                coul.b=static_cast<GLfloat>(_couleurB/255);
+                coul.a=1.0;
+                int j;
+                for (j=0; j<=_nbrFaces; j++)	//parcours des faces
+                {
+                    glColor3f(coul.r,coul.g,coul.b);
+                    for (int i(0); i<=2; i++)	// on parcours les 3 sommets de chaque face
+                    {
+                        if (_idTexture !=-1)
+                        {
+                            if (i==0)
+                                glTexCoord2f(1.0,0.0);
+                            if (i==1)
+                                glTexCoord2f(0.0,1.0);
+                            if (i==2)
+                                glTexCoord2f(1.0,1.0);
+                        }
+                        glVertex3f(
+                                    _sommets[_faceConstruction[j][i]].coordonnees.x,
+                                _sommets[_faceConstruction[j][i]].coordonnees.y,
+                                _sommets[_faceConstruction[j][i]].coordonnees.z
+                                );
+                    }
+
+                }
             }
+            glEnd();
+            //Pour voir la normale "physiquement"
+            glBegin(GL_LINES);
+            {
+                int j;
+                for (j=0;j<=_nbrFaces;j++)
+                {
+                    glVertex3f(_faces[j].centre.x, _faces[j].centre.y, _faces[j].centre.z);
+                    glVertex3f(_faces[j].centre.x+_faces[j].norm.x, _faces[j].centre.y+_faces[j].norm.y, _faces[j].centre.z+_faces[j].norm.z);
+                }
+            }
+            glEnd();
         }
-        glEnd();
+        glPopMatrix();
+        for (unsigned int i(0); i<_FormesFille.size(); i++) //Pour que l'affichage de la forme se face par rapport à la forme parent
+            _FormesFille[i]->afficher_forme();
     }
-    glPopMatrix();
-    for (unsigned int i(0); i<_FormesFille.size(); i++) //Pour que l'affichage de la forme se face par rapport à la forme parent
-        _FormesFille[i]->afficher_forme();
     glPopMatrix();
 }

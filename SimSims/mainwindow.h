@@ -270,6 +270,7 @@ private:
 
     QPushButton * _delete_obj;
     QPushButton * _new_obj;
+    QPushButton * _sauvegarde_obj;
 
     int _nbObjet;
 

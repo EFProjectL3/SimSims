@@ -43,6 +43,8 @@ public slots:
     void setAmbianteR(int r);
     void setAmbianteV(int v);
     void setAmbianteB(int b);
+    void sauvegardeScene();
+    void chargementScene(std::string nomFichier);
 
 
     /* Camera */

@@ -1,9 +1,10 @@
 #include "widgetOGL.h"
 #include <GL/glut.h>
 #include <QOpenGLTexture>
+#include <fstream>
 #include <iostream>
 #include "ppm.h"
-
+#include "environnement.hh"
 #define NOMBRE_TEXTURE 50
 
 int angleX;
@@ -144,6 +145,23 @@ void WidgetOGL::initializeGL()
     if (_type == "main")
     {
         glGenTextures(NOMBRE_TEXTURE,textures);
+        //Ciel
+        TEXTURE_STRUCT * TXCiel = readPpm("./Images/Ciel.ppm");
+        glBindTexture(GL_TEXTURE_2D,textures[0]);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,TXCiel->width,TXCiel->height,0,GL_RGB,GL_UNSIGNED_BYTE,TXCiel->data);
+        //Herbe
+        TEXTURE_STRUCT * TXHerbe = readPpm("./Images/Herbe.ppm");
+        glBindTexture(GL_TEXTURE_2D,textures[1]);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexImage2D(GL_TEXTURE_2D,0,GL_RGB,TXHerbe->width,TXHerbe->height,0,GL_RGB,GL_UNSIGNED_BYTE,TXHerbe->data);
+        //Autre
         for (unsigned int i(0); i<_adressesTX.size();i++)
         {
             char * adrChar = new char[_adressesTX[i].size() + 1];
@@ -151,7 +169,7 @@ void WidgetOGL::initializeGL()
             adrChar[_adressesTX[i].size()] = '\0';
 
             TEXTURE_STRUCT * TX = readPpm(adrChar);
-            glBindTexture(GL_TEXTURE_2D,textures[i]);
+            glBindTexture(GL_TEXTURE_2D,textures[i+2]);
             glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -219,6 +237,8 @@ void WidgetOGL::paintGL()
 
     if (_type == "main")   //affichage de toutes les formes
     {
+        creerEnvironnement();
+
         glRotatef(angleX,0,1,0);
         glRotatef(angleY,1,0,0);
 
@@ -260,4 +280,70 @@ void WidgetOGL::resizeGL(int Width, int Height)
     gluPerspective(45.0f,(GLfloat)Width/(GLfloat)Height,0.1f, 100.0f);
     //sélectionne la matrice de visualisation-modélisation (avec glMatrixMode).
     update();
+}
+
+
+/*
+ * Sauvegarde et chargement
+ */
+
+void WidgetOGL::sauvegardeScene()
+{
+    std::cout << "***** DEBUT DE SAUVEGARDE DE SCENE *****" << std::endl;
+
+    std::string nomFichier;
+    //std::cout << "Entrer non du fichier" << std::endl;
+    //std::cin >> nomFichier;
+    nomFichier = "fichierTest";
+    nomFichier = "./" + nomFichier;
+    std::ofstream fichier(nomFichier.c_str(), std::ios::out);
+    if(fichier)  // si l'ouverture a réussi
+    {
+        for (unsigned int i(0); i<_formesAAfficher.size();i++)
+        {
+            fichier << "//FORME" << std::endl;
+            fichier << _formesAAfficher[i]->getId() << std::endl;
+            fichier << _formesAAfficher[i]->getNomForme() << std::endl;
+            fichier << _formesAAfficher[i]->getNbrFace() << std::endl;
+            fichier << _formesAAfficher[i]->getNbrSommet() << std::endl;
+            fichier << _formesAAfficher[i]->getNbrAtt() << std::endl;
+            fichier << _formesAAfficher[i]->getnbrSommetsParFaceMax() << std::endl;
+            //fichier << _formesAAfficher[i]->getAttributs().to_string() << std::endl;
+            fichier << _formesAAfficher[i]->getRed() << std::endl;
+            fichier << _formesAAfficher[i]->getGreen() << std::endl;
+            fichier << _formesAAfficher[i]->getBlue() << std::endl;
+            fichier << _formesAAfficher[i]->getPosX() << std::endl;
+            fichier << _formesAAfficher[i]->getPosY() << std::endl;
+            fichier << _formesAAfficher[i]->getPosZ() << std::endl;
+            fichier << _formesAAfficher[i]->getAngX() << std::endl;
+            fichier << _formesAAfficher[i]->getAngY() << std::endl;
+            fichier << _formesAAfficher[i]->getAngZ() << std::endl;
+            fichier << _formesAAfficher[i]->getScale() << std::endl;
+            fichier << "//TABFACECONS" << std::endl;
+            for (int j(0); j< _formesAAfficher[i]->getNbrFace(); j++)
+                for (int k(0); k<3; k++)
+                    fichier << j << " " << k << _formesAAfficher[i]->getFaceConstruction()[j][k] << std::endl;
+            fichier << "//TABFACES" << std::endl;
+            for (int j(0); j<_formesAAfficher[i]->getNbrFace(); j++)
+            {
+                //fichier << "" << _formesAAfficher[i]->getFaces()[j].getCentre().x << " " << _formesAAfficher[i]->getFaces[j].getCentre().y << " " << _formesAAfficher[i]->getFaces[j].getCentre().z << std::endl;
+            }
+            fichier << "//TABSOMMETS" << std::endl;
+            for (int j(0); j<_formesAAfficher[i]->getNbrSommet(); j++)
+            {
+                //fichier << "" << _formesAAfficher[i]->getSommets()[j].coordonnees.x << " " << _formesAAfficher[i]->getSommets()[j]->coordonnees.y << " " << _formesAAfficher[i]->getSommets()->coordonnees.z << std::endl;
+            }
+        }
+
+        fichier.close();  // je referme le fichier
+
+        std::cout << "***** FIN DE SAUVEGARDE DE SCENE *****" << std::endl;
+    }
+    else  // sinon
+        std::cerr << "Erreur à l'ouverture !" << std::endl;
+}
+
+void WidgetOGL::chargementScene(std::string nomFichier)
+{
+
 }

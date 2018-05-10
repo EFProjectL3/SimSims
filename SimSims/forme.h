@@ -27,6 +27,8 @@ struct face {
     struct couleur coul;
     struct normale norm;
     struct coordonnees centre;
+
+    struct coordonnees getCentre();
 };
 /*******************************************/
 
@@ -72,7 +74,7 @@ public:
     void setPosZ(GLfloat z)
     { _positionZ = z; }
 
-    void setAng(GLfloat x)
+    void setAngX(GLfloat x)
     { _angleX = x; }
 
     void setAngY(GLfloat y)
@@ -96,7 +98,7 @@ public:
     { _parent = p; }
 
     void setTexture(int numTX)
-    { _idTexture = numTX; }
+    { _idTexture = numTX+2; }
 
     /* Getters */
     int getId()

@@ -601,9 +601,12 @@ MainWindow::MainWindow(QWidget *parent) :
     _delete_obj->setEnabled(false);
     _new_obj = new QPushButton("Nouv.", this);
     _new_obj->setMaximumWidth(50);
+    _sauvegarde_obj = new QPushButton("Sauvegarde", this);
+    _sauvegarde_obj->setMaximumHeight(300);
 
     _layoutObjet->addWidget(_delete_obj, 16, 11, 1, 1);
     _layoutObjet->addWidget(_new_obj, 16, 12, 1, 1);
+    _layoutObjet->addWidget(_sauvegarde_obj, 17, 3, 1, 5);
 
 
     /* -------------------- TEXTURES -------------------- */
@@ -717,6 +720,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(_new_obj, &QPushButton::clicked, this, &MainWindow::PopUpObj);
     QObject::connect(_delete_lp, &QPushButton::clicked, this, &MainWindow::OnClicDeleteLum);
     QObject::connect(_delete_obj, &QPushButton::clicked, this, &MainWindow::OnClicDeleteObj);
+    QObject::connect(_sauvegarde_obj, &QPushButton::clicked, _affichage, &WidgetOGL::sauvegardeScene);
 
     /* Parent objet */
     QObject::connect(_parent, static_cast<void(QComboBox::*)(const QString&)>(&QComboBox::activated), this, &MainWindow::changementParent);
@@ -903,11 +907,11 @@ void MainWindow::SliderAObjet()
             if (sender()==_s_posZ_obj)
                 TOUS_LES_OBJETS[i]->setPosZ(_s_posZ_obj->value());
             if (sender()==_s_angX_obj)
-                TOUS_LES_OBJETS[i]->setPosX(_s_angX_obj->value());
+                TOUS_LES_OBJETS[i]->setAngX(_s_angX_obj->value());
             if (sender()==_s_angY_obj)
-                TOUS_LES_OBJETS[i]->setPosY(_s_angY_obj->value());
+                TOUS_LES_OBJETS[i]->setAngY(_s_angY_obj->value());
             if (sender()==_s_angZ_obj)
-                TOUS_LES_OBJETS[i]->setPosZ(_s_angZ_obj->value());
+                TOUS_LES_OBJETS[i]->setAngZ(_s_angZ_obj->value());
             if (sender()==_le_scale_obj)
                 TOUS_LES_OBJETS[i]->setScale(_le_scale_obj->text().toFloat());
         }
