@@ -1,0 +1,210 @@
+Semaine 1:
+Réflexion:
+- Choix de la façon dont on lit le fichier
+- Choix de base par rapport à l'aspect de l'interface
+	- Coordination entre l'interface et la lecture du fichier
+	- Consultation des possibilités sur la doc Qt
+Code:
+- Anaïs s'est occupée de l'implémentation initiale de l'interface
+	- mainwindwow
+	- popus
+- Bastien s'est occupé de la lecture du fichier
+- A et B: Implémentation de l'openGl dans le programme de base
+
+
+Semaine 2: Objectif de mise en commun, affichage d'un élément lorsque l'on veut,
+		modification de ses propriétés
+		
+	//Lundi
+Réflexion:
+Code:
+- Lecture initiale terminée
+- Signaux et slots de l'interface
+
+	//Mardi
+Code:
+- Lecture de deux formes différentes (normales à revoir)
+- Mise en commun des deux aspects
+
+	//Mercredi
+Reflexion:
+- Choix de la façon dont on affiche les éléments. Modification en temps réel (avec les shared libraries) si le temps le permet
+- Idée du save and load si on peut le faire (sauvegarde de l'affichage en cours pour repartir de ça
+- Drag and drop des textures à terme
+
+Code:
+- Affichage des éléments dans le popup objet (beaucoup de temps perdu)
+	
+	//Jeudi
+Reflexion:
+- Case à cocher pour afficher une sphère au niveau de l'origine de la lumière positionnelle
+- Pour le moment dans le popup les attributs ne sont pas entièrement automatique, à voir si ça peut être réglé
+- Idée du zoom avec la molette sur la partie openGL du popup objet
+- Utilisation de std::stringstream pour les transformation float/chaine
+
+Code:
+- B: Affichage finalement réussi. Signaux et slot pour attributs quasi automatiques (manque les attributs dépendants d'autre attributs) et rendu en temps réel
+- A: Classe lumière et gestion du popup lumière	ainsi que du stockage de celles ci dans le mainwindow
+- B: Modification de l'implémentation: les extern ont été rendus obsolètes
+=============> Sortie SimSims v0.2
+
+	//Vendredi
+Reflexion:
+
+Code:
+- A: Signal de la création de l'objet, celui ci s'ajoute au vector d'objet de MainWindow
+- B: Modification du fichier d'entrée et du code de lecture afin que la construction des éléments soit maintenant completement automatique à partir de la fenetre de création
+- A: Gestion de la création de la lumière
+
+
+Semaine 3: Finir l'affichage, gestion du parent
+	
+	//Lundi
+Reflexion:
+- Gestion de parent pour l'affichage
+
+Code:
+- B: Correction du bug qui faisait planter à la création de la dernière forme du fichier d'entrée
+=============> Sortie SimSims v0.2.5.5
+- A: Codage du lien interface-paramètre au niveau des lumières
+- B: Implémentation des parents-enfants, modification de l'implémentation de forme et objets afin que ce soit forme qui possède les données relatives à la position, couleur, angle
+- A: Codage du lien interface-paramètres au niveau des objets (en cours)
+- B: début de suppression des éléments au niveau de l'affichage (à terminer)
+
+	//Mardi
+Reflexion:
+
+Code:
+- B: suppression de la classe objet qui est devenue obsolète. Recodage de toutes les fonctions associées
+=============> Sortie SimSims v0.3
+- A: Mise en relation des lumières avec l'interface (modifications)
+- A: Mise en relation des objets avec l'interface (modifications)
+- B: Implémenation de le suppression des formes et de leur filles (on a fait le choix de supprimer toutes les formes filles d'une forme lors de la suppression de leur mère)
+- A et B: Lumières semble-t-il fonctionnelles
+
+	//Mercredi
+Maladie
+
+	//Jeudi
+Reflexion:
+- B : debut décriture du rapport
+Code:
+- B : fixation du bug des lumières
+- A : fixation des bugs des sliders ne se mettant pas à jour
+- B : Tentative de correction d'un problème au niveau de la caméra ne se comportant pas comme prévu
+- B : Implantation de la pyramide en forme sélectionnable, gros problème au niveau des attributs d'origine inconnue. Correction temporaire en ajoutant un sommet. La pyramide ne s'affiche pas entièrement
+=============> Sortie SimSims v0.4
+
+	//Vendredi
+Reflexion:
+- Vu avec Igor Stephan:
+Load/Save : générer le makefile avec les fichiers cpp créés (faire compilateur?)
+
+Code:
+- B : Permission à l'utilisateur de changer le parent à la volée. Gestion de la suppression et de l'ajout parent/fille (non fonctionnel)
+- A : Permission à l'utilisateur de changer les textures à la volée. (non fonctionnel)
+
+
+Semaine 4: Finir la gestion de la caméra, tenter de finir la modification du parent, finir la gestion des textures, commencer les ajouts non "basiques"
+
+	//Lundi
+Reflexion:
+
+Code:
+- B : Correction de la caméra
+- A : Poursuite des textures
+
+	//Mardi
+Reflexion:
+
+Code:
+- A : Correction d'un des problèmes de sélection du parent. Poursuite de l'implémentation
+- B : Affichage des textures sur les éléments. Poursuite de l'implémentation
+- A et B : correction du double free dans la selection du parent
+
+	//Mercredi
+---- Maladie
+
+	//Jeudi
+Code:
+- B: Mise en commun des éléments fait jusqu'ici. Apparition d'un bug d'affichage d'origine inconnue, recherche de l'origine
+
+	//Vendredi
+---- Maladie
+
+SEMAINE 5:
+	Fin de mise en commun, 
+	Recherche des derniers bugs,
+	Début d'implémentations d'éléments bonus,
+	Ajout de contenu (formes, textures)
+
+	//Lundi
+---- A encore malade
+Relfexion:
+- Lecture sur les ombrages
+Code:
+- B: Ré-implémentation des label clicable à partir de zéro (bug d'origine inconnue sur la précédente version). Les textures sont maintenant changées correctement
+- B: Origine du bug d'affichage dans les popup corrigé
+- B: Origine des bugs concernant le changement des parents corrigé
+=============> Sortie SimSims v0.5
+
+	//Mardi à jeudi
+- A et B: Recherche de l'origine des bugs concernant les derniers éléments de bases du programme, afin d'avoir une base totalement clean avant de rajouter des fonctionnalités avancées. Infructeux pour la plupart. Poursuite.
+	
+	//Vendredi
+Reflexion: 
+-Test du programme de la part d'une totale novice en programmation/utilisation de logiciel. Nous a permis d'avoir une idée de l'ergonomie de l'application.
+-> Nombreux éléments à modifier: disposition des boutons, des onglets
+
+Code:
+- A : modificaiton de la disposition des éléments
+- B : Toujours la recherche des origines de bugs
+
+Semaine 6:
+	// Lundi Mardi
+-- Pont --
+
+	//Mercredi
+Code:
+- B : Creation du décor de base. Puis recherche de construction différente pour les arbres (ref au tp sur les colonnes)
+- B : correction du bug de rotation des objets (c'était juste un appel à la mauvaise fonction...)
+
+	//Jeudi
+Code:
+- B : Load and save (début)
+
+	//Vendredi
+Code:
+- B : Poursuite de l'implémentation du load and save
+- A : Implémentation des menus et popup permettant le lancement du load and save 
+=> GROSSE perte de temps le temps de comprendre que la toolbar ne s'affichait pas au niveau de la fenêtre mais au contraire en haut de l'écran, tout fonctionnait depuis le début
+
+	//Samedi
+Code:
+- B : Implémentation du load and save réussi. Utilisation de vecteurs pour permettre à la boucle de s'éxécuter sans perte de données
+
+	//Dimanche
+Code:
+- A : Mise en commun des deux aspects
+- B : modification de la fonction load and save pour gérer les erreurs potentielles
+
+
+Semaine 7
+	//Lundi
+Code:
+- A : bug de suppression fixé
+- A : implémentation du choix de nom de fichier
+- B : implémentation des formes complèxes (GL_TRIANGLE_STRIP) en cours
+
+	//Mardi
+-- Dossiers Master --
+
+	//Mercredi
+- B : "forêt" implantée, les arbres sont de formes aléatoires, mais toujours placés aux mêmes endroits
+
+	//Vendredi
+- A : Ajout de la lumière directionnelle et modification de l'interface en conséquence
+- A : Ajout d'un popup d'information au début
+- A : Correction du triangle (deux normales non opérationnelles -> a tenter de terminer)
+- A : Correction de la grosse forme au niveau des normales (à tenter de terminer)
+- B : Poursuite du rapport
