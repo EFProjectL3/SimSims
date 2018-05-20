@@ -58,6 +58,9 @@ public slots:
 
     void switchPosDir();
 
+    void infoCrea();
+    void infoTuto();
+
 private:
     QGridLayout * _layoutprincipal;
     WidgetOGL * _affichage;

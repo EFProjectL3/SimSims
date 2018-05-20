@@ -5,12 +5,26 @@
 #include "iostream"
 #include <sstream>
 #include <QInputDialog>
+#include <fstream>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),TOUS_LES_OBJETS(),TOUTES_LES_ADRESSE_TEXTURES(), NOM_DES_FORMES(), ENSEMBLE_LUM_POS()
 {
-    /* Chargement initial des informations */
+    //Verification que les fichiers de données sont présents, sinon on quitte
     char * fichierDonnees = "./FICHIER_DE_DONNEES";
+    std::ifstream fichier(fichierDonnees, std::ios::in);  // on ouvre le fichier en lecture
+    QDir dir("./Images/");
+
+    if (!dir.exists() || !fichier)
+    {
+
+        QMessageBox::StandardButton info;
+        info = QMessageBox::information(this, "Information", "Veuillez placer le contenu du dossier \"Fichiers\" dans le dossier de compilation.\n"
+                                                             "L'application va fermer.");
+        exit(1);
+    }
+
+    /* Chargement initial des informations */
     std::cout << "LECTURE DU NOM DES FORMES" << std::endl;
     // Obtention du vecteur avec le nom des formes (on connait donc le nombre avec sa taille)
     NOM_DES_FORMES = lireIntro(fichierDonnees);
@@ -21,8 +35,6 @@ MainWindow::MainWindow(QWidget *parent) :
     std::cout << "Terminé." << std::endl;
     /***************************************/
 
-    QMessageBox::StandardButton info;
-    info = QMessageBox::information(this, "Information", "Veuillez déplacer le contenu du dossier \"Fichiers\" dans le dossier de compilation.");
 
     resize(1200, 600);
 
@@ -743,7 +755,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this, &MainWindow::envoiLumiereOGL, _affichage, &WidgetOGL::recepetionLumiereOGL);
 
     /* Switch lumièrePos/LumiereDir */
-     QObject::connect(_lp, static_cast<void(QComboBox::*)(const QString&)>(&QComboBox::activated), this, &MainWindow::switchPosDir);
+    QObject::connect(_lp, static_cast<void(QComboBox::*)(const QString&)>(&QComboBox::activated), this, &MainWindow::switchPosDir);
 }
 
 MainWindow::~MainWindow()
@@ -1348,12 +1360,12 @@ void MainWindow::createActions()
 
     _aboutUs = new QAction("&Nous concernant", this);
     _aboutUs->setStatusTip("Affiche les créateurs de l'application");
-    // A REMPLIR
+    QObject::connect(_aboutUs,&QAction::triggered,this,&MainWindow::infoCrea);
 
     _howToUse = new QAction("&Comment ça marche ?", this);
     _howToUse->setShortcuts(QKeySequence::WhatsThis);
     _howToUse->setStatusTip("Affiche un tutoriel pour utiliser l'application");
-    // A REMPLIR
+    QObject::connect(_howToUse,&QAction::triggered,this,&MainWindow::infoTuto);
 }
 
 /**
@@ -1412,10 +1424,10 @@ void MainWindow::switchPosDir()
         {
             if (ENSEMBLE_LUM_POS[i].getType() == true)
             {
-               _positionnelle->setText("Positionnelle");
-               _posX_lp->setText("PosX");
-               _posY_lp->setText("PosY");
-               _posZ_lp->setText("PosZ");
+                _positionnelle->setText("Positionnelle");
+                _posX_lp->setText("PosX");
+                _posY_lp->setText("PosY");
+                _posZ_lp->setText("PosZ");
             }
             else
             {
@@ -1426,4 +1438,43 @@ void MainWindow::switchPosDir()
             }
         }
     }
+}
+
+void MainWindow::infoCrea()
+{
+    QMessageBox::StandardButton info;
+    info = QMessageBox::information(this, "Information", "Programme créé par Anaïs MOHR et Bastien PIGACHE\n"
+                                                         "sous la direction de Monsieur Igor STEPHAN dans le\n"
+                                                         "cadre du projet de fin d'année de Licence 3 informatique.");
+}
+
+void MainWindow::infoTuto()
+{
+    QMessageBox::StandardButton info;
+    info = QMessageBox::information(this, "Information", "  *** Onglet objet ***\n"
+                                                         "Dans l'onglet objet, commencez par cliquer sur Nouv. Dans le popup qui va apparaitre, "
+                                                         "sélectionnez une forme de base, et modifiez la à votre convenance. Une fois fait, cliquez "
+                                                         "sur OK. Vous pouvez répétez cela jusqu'à 100 fois.\n"
+                                                         "Dans le menu d'objet, vous pouvez modifier la position, la rotation et la taille globale de "
+                                                         "vos objets. Vous pouvez aussi les lier via le menu déroulant parent. Un objet lié à un autre "
+                                                         "objet parent va dépendre de lui, notamment au niveau de la position.\n"
+                                                         "En cliquant sur le bouton texture, vous faites apparaitre un popup. Il vous suffira de cliquer "
+                                                         "sur l'image que vous souhaitez afin d'appliquer la texture sur l'objet séléectionné dans le menu "
+                                                         "déroulant.\n"
+                                                         "\n"
+                                                         "  *** Onglet lumière ***\n"
+                                                         "Vous pouvez créer jusqu'à 8 lumières, qu'elles soient directionnelles ou positionnelle. Vous "
+                                                         "pouvez aussi modifier la lumière ambiante existante.\n"
+                                                         "Lorsque vous avez séléctionné une des lumières que vous avez créé dans le menu déroulant, vous "
+                                                         "pouvez modifier ses propriétés.\n"
+                                                         "\n"
+                                                         "  *** Onglet caméra ***\n"
+                                                         "Vous pouvez modifier la position et l'angle de la caméra dans cet onglet.\n"
+                                                         "\n"
+                                                         "  *** Sauvegarde et chargement ***\n"
+                                                         "Vous pouvez à tout moment sauvegarder une scène en cliquant dans le menu ou avec le raccourci "
+                                                         "Ctrl+S. De même, vous pouvez à tout moment charger une scène en cliquant dans le menu ou avec "
+                                                         "Ctrl+O.\n"
+                                                         "Note: Seules les formes sont sauvegardées. La lumière et les angles de caméra ne le sont pas.\n");
+
 }
