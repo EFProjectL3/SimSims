@@ -208,3 +208,9 @@ Code:
 - A : Correction du triangle (deux normales non opérationnelles -> a tenter de terminer)
 - A : Correction de la grosse forme au niveau des normales (à tenter de terminer)
 - B : Poursuite du rapport
+
+Semaine 8:
+	//Lundi
+- B : Poursuite du rapport
+- B : Correction d'un bug sur les parents (retour à une ancienne version fonctionnelle mais moins performante)
+- A : Changement de certaines parties de l'interface pour permettre à l'utilisateur de modifier directement les valeurs (A FAIRE)

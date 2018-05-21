@@ -60,21 +60,12 @@ WidgetOGL::~WidgetOGL()
 void WidgetOGL::supprimerForme(std::string nom)
 {
     std::cout << "******************** SUPPRIMER FORME *************************" << std::endl;
-    bool trouve = false;    //Evites de faire trop d'itérations si possible
-    int i(0);
-    while (trouve == false)
+    for (unsigned int i(0); i < _formesAAfficher.size(); i++)
     {
-        //La forme est sans parent
         if(_formesAAfficher[i]->getNomForme() == nom)
         {
+            std::cout << "On supprime de l'affichage de base la forme: " << _formesAAfficher[i]->getNomForme() << std::endl;
             _formesAAfficher.erase(_formesAAfficher.begin()+i);
-            trouve = true;
-        }
-        else
-            //On test les enfants de la forme en cours
-        {
-            for (unsigned int j(0); j<_formesAAfficher[i]->getFilles().size(); j++)
-                trouve = _formesAAfficher[i]->supprimerFille(nom);
         }
     }
 }
