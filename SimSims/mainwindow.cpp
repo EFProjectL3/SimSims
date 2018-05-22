@@ -8,7 +8,7 @@
 #include <fstream>
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),TOUS_LES_OBJETS(),TOUTES_LES_ADRESSE_TEXTURES(), NOM_DES_FORMES(), ENSEMBLE_LUM_POS()
+    QMainWindow(parent),TOUS_LES_OBJETS(),TOUTES_LES_ADRESSE_TEXTURES(), NOM_DES_FORMES(), ENSEMBLE_LUM_POSDIR()
 {
     //Verification que les fichiers de données sont présents, sinon on quitte
     char * fichierDonnees = "./FICHIER_DE_DONNEES";
@@ -40,13 +40,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     _layoutprincipal = new QGridLayout();
 
-    _affichage = new WidgetOGL(60,this, "main", ENSEMBLE_LUM_POS, TOUTES_LES_ADRESSE_TEXTURES);
+    _affichage = new WidgetOGL(60,this, "main", ENSEMBLE_LUM_POSDIR, TOUTES_LES_ADRESSE_TEXTURES);
     _affichage->setMinimumWidth(600);
 
     _tabs = new QTabWidget(this);
 
 
-    _nbLumierePos = 0;
+    _nbLumierePosDir = 0;
     _nbObjet = 0;
 
     /* -------------------- ONGLET OBJETS -------------------- */
@@ -81,6 +81,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _l_red_obj = new QLabel("valeur : ", this);
     _sp_red_obj = new QSpinBox(this);
     _sp_red_obj->setMaximum(255);
+    _sp_red_obj->setValue(204);
 
     _layoutObjet->addWidget(_red_obj, 3, 1, 1, 1);
     _layoutObjet->addWidget(_red_min_obj, 3, 2, 1, 1);
@@ -100,6 +101,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _l_green_obj = new QLabel("valeur : ", this);
     _sp_green_obj = new QSpinBox(this);
     _sp_green_obj->setMaximum(255);
+    _sp_green_obj->setValue(204);
 
     _layoutObjet->addWidget(_green_obj, 4, 1, 1, 1);
     _layoutObjet->addWidget(_green_min_obj, 4, 2, 1, 1);
@@ -119,6 +121,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _l_blue_obj = new QLabel("valeur : ", this);
     _sp_blue_obj = new QSpinBox(this);
     _sp_blue_obj->setMaximum(255);
+    _sp_blue_obj->setValue(204);
 
     _layoutObjet->addWidget(_blue_obj, 5, 1, 1, 1);
     _layoutObjet->addWidget(_blue_min_obj, 5, 2, 1, 1);
@@ -140,16 +143,16 @@ MainWindow::MainWindow(QWidget *parent) :
     _s_posX_obj->setMaximum(10);
     _posX_max_obj = new QLabel("10", this);
     _l_posX_obj = new QLabel("valeur : ", this);
-    _le_posX_obj = new QLineEdit("0", this);
-    _le_posX_obj->setFixedSize(40, 26);
-    _le_posX_obj->setReadOnly(true);
+    _sp_posX_obj = new QSpinBox(this);
+    _sp_posX_obj->setMinimum(-10);
+    _sp_posX_obj->setMaximum(10);
 
     _layoutObjet->addWidget(_posX_obj, 7, 1, 1, 1);
     _layoutObjet->addWidget(_posX_min_obj, 7, 2, 1, 1);
     _layoutObjet->addWidget(_s_posX_obj, 7, 3, 1, 5);
     _layoutObjet->addWidget(_posX_max_obj, 7, 9, 1, 1);
     _layoutObjet->addWidget(_l_posX_obj, 7, 10, 1, 1);
-    _layoutObjet->addWidget(_le_posX_obj, 7, 11, 1, 1);
+    _layoutObjet->addWidget(_sp_posX_obj, 7, 11, 1, 1);
 
     /* Position Y */
     _posY_obj = new QLabel("PosY : ", this);
@@ -159,16 +162,16 @@ MainWindow::MainWindow(QWidget *parent) :
     _s_posY_obj->setMaximum(10);
     _posY_max_obj = new QLabel("10", this);
     _l_posY_obj = new QLabel("valeur : ", this);
-    _le_posY_obj = new QLineEdit("0", this);
-    _le_posY_obj->setFixedSize(40, 26);
-    _le_posY_obj->setReadOnly(true);
+    _sp_posY_obj = new QSpinBox(this);
+    _sp_posY_obj->setMinimum(-10);
+    _sp_posY_obj->setMaximum(10);
 
     _layoutObjet->addWidget(_posY_obj, 8, 1, 1, 1);
     _layoutObjet->addWidget(_posY_min_obj, 8, 2, 1, 1);
     _layoutObjet->addWidget(_s_posY_obj, 8, 3, 1, 5);
     _layoutObjet->addWidget(_posY_max_obj, 8, 9, 1, 1);
     _layoutObjet->addWidget(_l_posY_obj, 8, 10, 1, 1);
-    _layoutObjet->addWidget(_le_posY_obj, 8, 11, 1, 1);
+    _layoutObjet->addWidget(_sp_posY_obj, 8, 11, 1, 1);
 
     /* Position Z */
     _posZ_obj = new QLabel("PosZ : ", this);
@@ -178,16 +181,16 @@ MainWindow::MainWindow(QWidget *parent) :
     _s_posZ_obj->setMaximum(10);
     _posZ_max_obj = new QLabel("10", this);
     _l_posZ_obj = new QLabel("valeur : ", this);
-    _le_posZ_obj = new QLineEdit("0", this);
-    _le_posZ_obj->setFixedSize(40, 26);
-    _le_posZ_obj->setReadOnly(true);
+    _sp_posZ_obj = new QSpinBox(this);
+    _sp_posZ_obj->setMinimum(-10);
+    _sp_posZ_obj->setMaximum(10);
 
     _layoutObjet->addWidget(_posZ_obj, 9, 1, 1, 1);
     _layoutObjet->addWidget(_posZ_min_obj, 9, 2, 1, 1);
     _layoutObjet->addWidget(_s_posZ_obj, 9, 3, 1, 5);
     _layoutObjet->addWidget(_posZ_max_obj, 9, 9, 1, 1);
     _layoutObjet->addWidget(_l_posZ_obj, 9, 10, 1, 1);
-    _layoutObjet->addWidget(_le_posZ_obj, 9, 11, 1, 1);
+    _layoutObjet->addWidget(_sp_posZ_obj, 9, 11, 1, 1);
 
 
     /* Angle */
@@ -203,9 +206,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _s_angX_obj->setMaximum(360);
     _angX_max_obj = new QLabel("360", this);
     _l_angX_obj = new QLabel("valeur : ", this);
-    _le_angX_obj = new QLineEdit("0", this);
-    _le_angX_obj->setFixedSize(40, 26);
-    _le_angX_obj->setReadOnly(true);
+    _sp_angX_obj = new QSpinBox(this);
+    _sp_angX_obj->setMaximum(360);
     _ldeg_angX_obj = new QLabel("°", this);
 
     _layoutObjet->addWidget(_angX_obj, 11, 1, 1, 1);
@@ -213,7 +215,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _layoutObjet->addWidget(_s_angX_obj, 11, 3, 1, 5);
     _layoutObjet->addWidget(_angX_max_obj, 11, 9, 1, 1);
     _layoutObjet->addWidget(_l_angX_obj, 11, 10, 1, 1);
-    _layoutObjet->addWidget(_le_angX_obj, 11, 11, 1, 1);
+    _layoutObjet->addWidget(_sp_angX_obj, 11, 11, 1, 1);
     _layoutObjet->addWidget(_ldeg_angX_obj, 11, 12, 1, 1);
 
     /* Angle Y */
@@ -224,9 +226,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _s_angY_obj->setMaximum(360);
     _angY_max_obj = new QLabel("360", this);
     _l_angY_obj = new QLabel("valeur : ", this);
-    _le_angY_obj = new QLineEdit("0", this);
-    _le_angY_obj->setFixedSize(40, 26);
-    _le_angY_obj->setReadOnly(true);
+    _sp_angY_obj = new QSpinBox(this);
+    _sp_angY_obj->setMaximum(360);
     _ldeg_angY_obj = new QLabel("°", this);
 
     _layoutObjet->addWidget(_angY_obj, 12, 1, 1, 1);
@@ -234,7 +235,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _layoutObjet->addWidget(_s_angY_obj, 12, 3, 1, 5);
     _layoutObjet->addWidget(_angY_max_obj, 12, 9, 1, 1);
     _layoutObjet->addWidget(_l_angY_obj, 12, 10, 1, 1);
-    _layoutObjet->addWidget(_le_angY_obj, 12, 11, 1, 1);
+    _layoutObjet->addWidget(_sp_angY_obj, 12, 11, 1, 1);
     _layoutObjet->addWidget(_ldeg_angY_obj, 12, 12, 1, 1);
 
     /* Angle Z */
@@ -245,9 +246,8 @@ MainWindow::MainWindow(QWidget *parent) :
     _s_angZ_obj->setMaximum(360);
     _angZ_max_obj = new QLabel("360", this);
     _l_angZ_obj = new QLabel("valeur : ", this);
-    _le_angZ_obj = new QLineEdit("0", this);
-    _le_angZ_obj->setFixedSize(40, 26);
-    _le_angZ_obj->setReadOnly(true);
+    _sp_angZ_obj = new QSpinBox(this);
+    _sp_angZ_obj->setMaximum(360);
     _ldeg_angZ_obj = new QLabel("°", this);
 
     _layoutObjet->addWidget(_angZ_obj, 13, 1, 1, 1);
@@ -255,7 +255,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _layoutObjet->addWidget(_s_angZ_obj, 13, 3, 1, 5);
     _layoutObjet->addWidget(_angZ_max_obj, 13, 9, 1, 1);
     _layoutObjet->addWidget(_l_angZ_obj, 13, 10, 1, 1);
-    _layoutObjet->addWidget(_le_angZ_obj, 13, 11, 1, 1);
+    _layoutObjet->addWidget(_sp_angZ_obj, 13, 11, 1, 1);
     _layoutObjet->addWidget(_ldeg_angZ_obj, 13, 12, 1, 1);
 
     /* Taille */
@@ -358,135 +358,135 @@ MainWindow::MainWindow(QWidget *parent) :
     _layoutLumiere->addWidget(_sp_blue_la, 3, 11, 1, 1);
 
 
-    /* Positionnelle */
-    _positionnelle = new QLabel("Positionnelle", this);
-    _positionnelle->setFixedSize(150, 25);
-    _layoutLumiere->addWidget(_positionnelle, 4, 0, 1, 2);
+    /* Positionnelle ou Directionnelle */
+    _positionnelleDirectionnelle = new QLabel("Positionnelle", this);
+    _positionnelleDirectionnelle->setFixedSize(150, 25);
+    _layoutLumiere->addWidget(_positionnelleDirectionnelle, 4, 0, 1, 2);
 
-    _lp = new QComboBox(this);
-    _layoutLumiere->addWidget(_lp, 4, 2, 1, 4);
+    _lpd = new QComboBox(this);
+    _layoutLumiere->addWidget(_lpd, 4, 2, 1, 4);
 
     /* Rouge */
-    _red_lp = new QLabel("Rouge : ", this);
-    _red_min_lp = new QLabel("0", this);
-    _s_red_lp = new QSlider(Qt::Horizontal, this);
-    _s_red_lp->setMinimum(0);
-    _s_red_lp->setMaximum(255);
-    _red_max_lp = new QLabel("255", this);
-    _l_red_lp = new QLabel("valeur : ", this);
-    _sp_red_lp = new QSpinBox(this);
-    _sp_red_lp->setMaximum(255);
+    _red_lpd = new QLabel("Rouge : ", this);
+    _red_min_lpd = new QLabel("0", this);
+    _s_red_lpd = new QSlider(Qt::Horizontal, this);
+    _s_red_lpd->setMinimum(0);
+    _s_red_lpd->setMaximum(255);
+    _red_max_lpd = new QLabel("255", this);
+    _l_red_lpd = new QLabel("valeur : ", this);
+    _sp_red_lpd = new QSpinBox(this);
+    _sp_red_lpd->setMaximum(255);
 
-    _layoutLumiere->addWidget(_red_lp, 5, 1, 1, 1);
-    _layoutLumiere->addWidget(_red_min_lp, 5, 2, 1, 1);
-    _layoutLumiere->addWidget(_s_red_lp, 5, 3, 1, 5);
-    _layoutLumiere->addWidget(_red_max_lp, 5, 9, 1, 1);
-    _layoutLumiere->addWidget(_l_red_lp, 5, 10, 1, 1);
-    _layoutLumiere->addWidget(_sp_red_lp, 5, 11, 1, 1);
+    _layoutLumiere->addWidget(_red_lpd, 5, 1, 1, 1);
+    _layoutLumiere->addWidget(_red_min_lpd, 5, 2, 1, 1);
+    _layoutLumiere->addWidget(_s_red_lpd, 5, 3, 1, 5);
+    _layoutLumiere->addWidget(_red_max_lpd, 5, 9, 1, 1);
+    _layoutLumiere->addWidget(_l_red_lpd, 5, 10, 1, 1);
+    _layoutLumiere->addWidget(_sp_red_lpd, 5, 11, 1, 1);
 
     /* Vert */
-    _green_lp = new QLabel("Vert : ", this);
-    _green_min_lp = new QLabel("0", this);
-    _s_green_lp = new QSlider(Qt::Horizontal, this);
-    _s_green_lp->setMinimum(0);
-    _s_green_lp->setMaximum(255);
-    _green_max_lp = new QLabel("255", this);
-    _l_green_lp = new QLabel("valeur : ", this);
-    _sp_green_lp = new QSpinBox(this);
-    _sp_green_lp->setMaximum(255);
+    _green_lpd = new QLabel("Vert : ", this);
+    _green_min_lpd = new QLabel("0", this);
+    _s_green_lpd = new QSlider(Qt::Horizontal, this);
+    _s_green_lpd->setMinimum(0);
+    _s_green_lpd->setMaximum(255);
+    _green_max_lpd = new QLabel("255", this);
+    _l_green_lpd = new QLabel("valeur : ", this);
+    _sp_green_lpd = new QSpinBox(this);
+    _sp_green_lpd->setMaximum(255);
 
-    _layoutLumiere->addWidget(_green_lp, 6, 1, 1, 1);
-    _layoutLumiere->addWidget(_green_min_lp, 6, 2, 1, 1);
-    _layoutLumiere->addWidget(_s_green_lp, 6, 3, 1, 5);
-    _layoutLumiere->addWidget(_green_max_lp, 6, 9, 1, 1);
-    _layoutLumiere->addWidget(_l_green_lp, 6, 10, 1, 1);
-    _layoutLumiere->addWidget(_sp_green_lp, 6, 11, 1, 1);
+    _layoutLumiere->addWidget(_green_lpd, 6, 1, 1, 1);
+    _layoutLumiere->addWidget(_green_min_lpd, 6, 2, 1, 1);
+    _layoutLumiere->addWidget(_s_green_lpd, 6, 3, 1, 5);
+    _layoutLumiere->addWidget(_green_max_lpd, 6, 9, 1, 1);
+    _layoutLumiere->addWidget(_l_green_lpd, 6, 10, 1, 1);
+    _layoutLumiere->addWidget(_sp_green_lpd, 6, 11, 1, 1);
 
     /* Bleu */
-    _blue_lp = new QLabel("Bleu : ", this);
-    _blue_min_lp = new QLabel("0", this);
-    _s_blue_lp = new QSlider(Qt::Horizontal, this);
-    _s_blue_lp->setMinimum(0);
-    _s_blue_lp->setMaximum(255);
-    _blue_max_lp = new QLabel("255", this);
-    _l_blue_lp = new QLabel("valeur : ", this);
-    _sp_blue_lp = new QSpinBox(this);
-    _sp_blue_lp->setMaximum(255);
+    _blue_lpd = new QLabel("Bleu : ", this);
+    _blue_min_lpd = new QLabel("0", this);
+    _s_blue_lpd = new QSlider(Qt::Horizontal, this);
+    _s_blue_lpd->setMinimum(0);
+    _s_blue_lpd->setMaximum(255);
+    _blue_max_lpd = new QLabel("255", this);
+    _l_blue_lpd = new QLabel("valeur : ", this);
+    _sp_blue_lpd = new QSpinBox(this);
+    _sp_blue_lpd->setMaximum(255);
 
-    _layoutLumiere->addWidget(_blue_lp, 7, 1, 1, 1);
-    _layoutLumiere->addWidget(_blue_min_lp, 7, 2, 1, 1);
-    _layoutLumiere->addWidget(_s_blue_lp, 7, 3, 1, 5);
-    _layoutLumiere->addWidget(_blue_max_lp, 7, 9, 1, 1);
-    _layoutLumiere->addWidget(_l_blue_lp, 7, 10, 1, 1);
-    _layoutLumiere->addWidget(_sp_blue_lp, 7, 11, 1, 1);
+    _layoutLumiere->addWidget(_blue_lpd, 7, 1, 1, 1);
+    _layoutLumiere->addWidget(_blue_min_lpd, 7, 2, 1, 1);
+    _layoutLumiere->addWidget(_s_blue_lpd, 7, 3, 1, 5);
+    _layoutLumiere->addWidget(_blue_max_lpd, 7, 9, 1, 1);
+    _layoutLumiere->addWidget(_l_blue_lpd, 7, 10, 1, 1);
+    _layoutLumiere->addWidget(_sp_blue_lpd, 7, 11, 1, 1);
 
 
-    /* Position X */
-    _posX_lp = new QLabel("PosX : ", this);
-    _posX_min_lp = new QLabel("-10", this);
-    _s_posX_lp = new QSlider(Qt::Horizontal, this);
-    _s_posX_lp->setMinimum(-10);
-    _s_posX_lp->setMaximum(10);
-    _posX_max_lp = new QLabel("10", this);
-    _l_posX_lp = new QLabel("valeur : ", this);
-    _le_posX_lp = new QLineEdit("0", this);
-    _le_posX_lp->setFixedSize(40, 26);
-    _le_posX_lp->setReadOnly(true);
+    /* Position X  ou Direction X */
+    _posDirX_lpd = new QLabel("PosX : ", this);
+    _posDirX_min_lpd = new QLabel("-10", this);
+    _s_posDirX_lpd = new QSlider(Qt::Horizontal, this);
+    _s_posDirX_lpd->setMinimum(-10);
+    _s_posDirX_lpd->setMaximum(10);
+    _posDirX_max_lpd = new QLabel("10", this);
+    _l_posDirX_lpd = new QLabel("valeur : ", this);
+    _sp_posDirX_lpd = new QSpinBox(this);
+    _sp_posDirX_lpd->setMinimum(-10);
+    _sp_posDirX_lpd->setMaximum(10);
 
-    _layoutLumiere->addWidget(_posX_lp, 8, 1, 1, 1);
-    _layoutLumiere->addWidget(_posX_min_lp, 8, 2, 1, 1);
-    _layoutLumiere->addWidget(_s_posX_lp, 8, 3, 1, 5);
-    _layoutLumiere->addWidget(_posX_max_lp, 8, 9, 1, 1);
-    _layoutLumiere->addWidget(_l_posX_lp, 8, 10, 1, 1);
-    _layoutLumiere->addWidget(_le_posX_lp, 8, 11, 1, 1);
+    _layoutLumiere->addWidget(_posDirX_lpd, 8, 1, 1, 1);
+    _layoutLumiere->addWidget(_posDirX_min_lpd, 8, 2, 1, 1);
+    _layoutLumiere->addWidget(_s_posDirX_lpd, 8, 3, 1, 5);
+    _layoutLumiere->addWidget(_posDirX_max_lpd, 8, 9, 1, 1);
+    _layoutLumiere->addWidget(_l_posDirX_lpd, 8, 10, 1, 1);
+    _layoutLumiere->addWidget(_sp_posDirX_lpd, 8, 11, 1, 1);
 
-    /* Position Y */
-    _posY_lp = new QLabel("PosY : ", this);
-    _posY_min_lp = new QLabel("-10", this);
-    _s_posY_lp = new QSlider(Qt::Horizontal, this);
-    _s_posY_lp->setMinimum(-10);
-    _s_posY_lp->setMaximum(10);
-    _posY_max_lp = new QLabel("10", this);
-    _l_posY_lp = new QLabel("valeur : ", this);
-    _le_posY_lp = new QLineEdit("0", this);
-    _le_posY_lp->setFixedSize(40, 26);
-    _le_posY_lp->setReadOnly(true);
+    /* Position Y ou Direction Y */
+    _posDirY_lpd = new QLabel("PosY : ", this);
+    _posDirY_min_lpd = new QLabel("-10", this);
+    _s_posDirY_lpd = new QSlider(Qt::Horizontal, this);
+    _s_posDirY_lpd->setMinimum(-10);
+    _s_posDirY_lpd->setMaximum(10);
+    _posDirY_max_lpd = new QLabel("10", this);
+    _l_posDirY_lpd = new QLabel("valeur : ", this);
+    _sp_posDirY_lpd = new QSpinBox(this);
+    _sp_posDirY_lpd->setMinimum(-10);
+    _sp_posDirY_lpd->setMaximum(10);
 
-    _layoutLumiere->addWidget(_posY_lp, 9, 1, 1, 1);
-    _layoutLumiere->addWidget(_posY_min_lp, 9, 2, 1, 1);
-    _layoutLumiere->addWidget(_s_posY_lp, 9, 3, 1, 5);
-    _layoutLumiere->addWidget(_posY_max_lp, 9, 9, 1, 1);
-    _layoutLumiere->addWidget(_l_posY_lp, 9, 10, 1, 1);
-    _layoutLumiere->addWidget(_le_posY_lp, 9, 11, 1, 1);
+    _layoutLumiere->addWidget(_posDirY_lpd, 9, 1, 1, 1);
+    _layoutLumiere->addWidget(_posDirY_min_lpd, 9, 2, 1, 1);
+    _layoutLumiere->addWidget(_s_posDirY_lpd, 9, 3, 1, 5);
+    _layoutLumiere->addWidget(_posDirY_max_lpd, 9, 9, 1, 1);
+    _layoutLumiere->addWidget(_l_posDirY_lpd, 9, 10, 1, 1);
+    _layoutLumiere->addWidget(_sp_posDirY_lpd, 9, 11, 1, 1);
 
-    /* Position Z */
-    _posZ_lp = new QLabel("PosZ : ", this);
-    _posZ_min_lp = new QLabel("-10", this);
-    _s_posZ_lp = new QSlider(Qt::Horizontal, this);
-    _s_posZ_lp->setMinimum(-10);
-    _s_posZ_lp->setMaximum(10);
-    _posZ_max_lp = new QLabel("10", this);
-    _l_posZ_lp = new QLabel("valeur : ", this);
-    _le_posZ_lp = new QLineEdit("0", this);
-    _le_posZ_lp->setFixedSize(40, 26);
-    _le_posZ_lp->setReadOnly(true);
+    /* Position Z ou Direction Z */
+    _posDirZ_lpd = new QLabel("PosZ : ", this);
+    _posDirZ_min_lpd = new QLabel("-10", this);
+    _s_posDirZ_lpd = new QSlider(Qt::Horizontal, this);
+    _s_posDirZ_lpd->setMinimum(-10);
+    _s_posDirZ_lpd->setMaximum(10);
+    _posDirZ_max_lpd = new QLabel("10", this);
+    _l_posDirZ_lpd = new QLabel("valeur : ", this);
+    _sp_posDirZ_lpd = new QSpinBox(this);
+    _sp_posDirZ_lpd->setMinimum(-10);
+    _sp_posDirZ_lpd->setMaximum(10);
 
-    _layoutLumiere->addWidget(_posZ_lp, 10, 1, 1, 1);
-    _layoutLumiere->addWidget(_posZ_min_lp, 10, 2, 1, 1);
-    _layoutLumiere->addWidget(_s_posZ_lp, 10, 3, 1, 5);
-    _layoutLumiere->addWidget(_posZ_max_lp, 10, 9, 1, 1);
-    _layoutLumiere->addWidget(_l_posZ_lp, 10, 10, 1, 1);
-    _layoutLumiere->addWidget(_le_posZ_lp, 10, 11, 1, 1);
+    _layoutLumiere->addWidget(_posDirZ_lpd, 10, 1, 1, 1);
+    _layoutLumiere->addWidget(_posDirZ_min_lpd, 10, 2, 1, 1);
+    _layoutLumiere->addWidget(_s_posDirZ_lpd, 10, 3, 1, 5);
+    _layoutLumiere->addWidget(_posDirZ_max_lpd, 10, 9, 1, 1);
+    _layoutLumiere->addWidget(_l_posDirZ_lpd, 10, 10, 1, 1);
+    _layoutLumiere->addWidget(_sp_posDirZ_lpd, 10, 11, 1, 1);
 
     /* Boutons */
-    _delete_lp = new QPushButton("Supp.", this);
-    _delete_lp->setMaximumWidth(50);
-    _delete_lp->setEnabled(false);
-    _new_lp = new QPushButton("Nouv.", this);
-    _new_lp->setMaximumWidth(50);
+    _delete_lpd = new QPushButton("Supp.", this);
+    _delete_lpd->setMaximumWidth(50);
+    _delete_lpd->setEnabled(false);
+    _new_lpd = new QPushButton("Nouv.", this);
+    _new_lpd->setMaximumWidth(50);
 
-    _layoutLumiere->addWidget(_delete_lp, 11, 10, 1, 1);
-    _layoutLumiere->addWidget(_new_lp, 11, 11, 1, 1);
+    _layoutLumiere->addWidget(_delete_lpd, 11, 10, 1, 1);
+    _layoutLumiere->addWidget(_new_lpd, 11, 11, 1, 1);
 
 
     /* -------------------- ONGLET CAMERA -------------------- */
@@ -507,16 +507,16 @@ MainWindow::MainWindow(QWidget *parent) :
     _s_posX_cam->setMaximum(30);
     _posX_max_cam = new QLabel("30", this);
     _l_posX_cam = new QLabel("valeur : ", this);
-    _le_posX_cam = new QLineEdit("0", this);
-    _le_posX_cam->setFixedSize(40, 26);
-    _le_posX_cam->setReadOnly(true);
+    _sp_posX_cam = new QSpinBox(this);
+    _sp_posX_cam->setMinimum(-30);
+    _sp_posX_cam->setMaximum(30);
 
     _layoutCamera->addWidget(_posX_cam, 1, 1, 1, 1);
     _layoutCamera->addWidget(_posX_min_cam, 1, 2, 1, 1);
     _layoutCamera->addWidget(_s_posX_cam, 1, 3, 1, 5);
     _layoutCamera->addWidget(_posX_max_cam, 1, 9, 1, 1);
     _layoutCamera->addWidget(_l_posX_cam, 1, 10, 1, 1);
-    _layoutCamera->addWidget(_le_posX_cam, 1, 11, 1, 1);
+    _layoutCamera->addWidget(_sp_posX_cam, 1, 11, 1, 1);
 
     /* Position Y */
     _posY_cam = new QLabel("PosY : ", this);
@@ -526,16 +526,16 @@ MainWindow::MainWindow(QWidget *parent) :
     _s_posY_cam->setMaximum(30);
     _posY_max_cam = new QLabel("30", this);
     _l_posY_cam = new QLabel("valeur : ", this);
-    _le_posY_cam = new QLineEdit("0", this);
-    _le_posY_cam->setFixedSize(40, 26);
-    _le_posY_cam->setReadOnly(true);
+    _sp_posY_cam = new QSpinBox(this);
+    _sp_posY_cam->setMinimum(-30);
+    _sp_posY_cam->setMaximum(30);
 
     _layoutCamera->addWidget(_posY_cam, 2, 1, 1, 1);
     _layoutCamera->addWidget(_posY_min_cam, 2, 2, 1, 1);
     _layoutCamera->addWidget(_s_posY_cam, 2, 3, 1, 5);
     _layoutCamera->addWidget(_posY_max_cam, 2, 9, 1, 1);
     _layoutCamera->addWidget(_l_posY_cam, 2, 10, 1, 1);
-    _layoutCamera->addWidget(_le_posY_cam, 2, 11, 1, 1);
+    _layoutCamera->addWidget(_sp_posY_cam, 2, 11, 1, 1);
 
     /* Position Z */
     _posZ_cam = new QLabel("PosZ : ", this);
@@ -546,16 +546,17 @@ MainWindow::MainWindow(QWidget *parent) :
     _s_posZ_cam->setValue(-10);
     _posZ_max_cam = new QLabel("30", this);
     _l_posZ_cam = new QLabel("valeur : ", this);
-    _le_posZ_cam = new QLineEdit("-10", this);
-    _le_posZ_cam->setFixedSize(40, 26);
-    _le_posZ_cam->setReadOnly(true);
+    _sp_posZ_cam = new QSpinBox(this);
+    _sp_posZ_cam->setMinimum(-30);
+    _sp_posZ_cam->setMaximum(30);
+    _sp_posZ_cam->setValue(-10);
 
     _layoutCamera->addWidget(_posZ_cam, 3, 1, 1, 1);
     _layoutCamera->addWidget(_posZ_min_cam, 3, 2, 1, 1);
     _layoutCamera->addWidget(_s_posZ_cam, 3, 3, 1, 5);
     _layoutCamera->addWidget(_posZ_max_cam, 3, 9, 1, 1);
     _layoutCamera->addWidget(_l_posZ_cam, 3, 10, 1, 1);
-    _layoutCamera->addWidget(_le_posZ_cam, 3, 11, 1, 1);
+    _layoutCamera->addWidget(_sp_posZ_cam, 3, 11, 1, 1);
 
     /* Angle */
     _angleCam = new QLabel("Rotation", this);
@@ -570,9 +571,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _s_angX_cam->setMaximum(180);
     _angX_max_cam = new QLabel("180", this);
     _l_angX_cam = new QLabel("valeur : ", this);
-    _le_angX_cam = new QLineEdit("0", this);
-    _le_angX_cam->setFixedSize(40, 26);
-    _le_angX_cam->setReadOnly(true);
+    _sp_angX_cam = new QSpinBox(this);
+    _sp_angX_cam->setMinimum(-180);
+    _sp_angX_cam->setMaximum(180);
     _ldeg_angX_cam = new QLabel("°", this);
 
     _layoutCamera->addWidget(_angX_cam, 5, 1, 1, 1);
@@ -580,7 +581,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _layoutCamera->addWidget(_s_angX_cam, 5, 3, 1, 5);
     _layoutCamera->addWidget(_angX_max_cam, 5, 9, 1, 1);
     _layoutCamera->addWidget(_l_angX_cam, 5, 10, 1, 1);
-    _layoutCamera->addWidget(_le_angX_cam, 5, 11, 1, 1);
+    _layoutCamera->addWidget(_sp_angX_cam, 5, 11, 1, 1);
     _layoutCamera->addWidget(_ldeg_angX_cam, 5, 12, 1, 1);
 
     /* Angle Y */
@@ -591,9 +592,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _s_angY_cam->setMaximum(180);
     _angY_max_cam = new QLabel("180", this);
     _l_angY_cam = new QLabel("valeur : ", this);
-    _le_angY_cam = new QLineEdit("0", this);
-    _le_angY_cam->setFixedSize(40, 26);
-    _le_angY_cam->setReadOnly(true);
+    _sp_angY_cam = new QSpinBox(this);
+    _sp_angY_cam->setMinimum(-180);
+    _sp_angY_cam->setMaximum(180);
     _ldeg_angY_cam = new QLabel("°", this);
 
     _layoutCamera->addWidget(_angY_cam, 6, 1, 1, 1);
@@ -601,7 +602,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _layoutCamera->addWidget(_s_angY_cam, 6, 3, 1, 5);
     _layoutCamera->addWidget(_angY_max_cam, 6, 9, 1, 1);
     _layoutCamera->addWidget(_l_angY_cam, 6, 10, 1, 1);
-    _layoutCamera->addWidget(_le_angY_cam, 6, 11, 1, 1);
+    _layoutCamera->addWidget(_sp_angY_cam, 6, 11, 1, 1);
     _layoutCamera->addWidget(_ldeg_angY_cam, 6, 12, 1, 1);
 
     /* Angle Z */
@@ -612,9 +613,9 @@ MainWindow::MainWindow(QWidget *parent) :
     _s_angZ_cam->setMaximum(180);
     _angZ_max_cam = new QLabel("180", this);
     _l_angZ_cam = new QLabel("valeur : ", this);
-    _le_angZ_cam = new QLineEdit("0", this);
-    _le_angZ_cam->setFixedSize(40, 26);
-    _le_angZ_cam->setReadOnly(true);
+    _sp_angZ_cam = new QSpinBox(this);
+    _sp_angZ_cam->setMinimum(-180);
+    _sp_angZ_cam->setMaximum(180);
     _ldeg_angZ_cam = new QLabel("°", this);
 
     _layoutCamera->addWidget(_angZ_cam, 7, 1, 1, 1);
@@ -622,7 +623,7 @@ MainWindow::MainWindow(QWidget *parent) :
     _layoutCamera->addWidget(_s_angZ_cam, 7, 3, 1, 5);
     _layoutCamera->addWidget(_angZ_max_cam, 7, 9, 1, 1);
     _layoutCamera->addWidget(_l_angZ_cam, 7, 10, 1, 1);
-    _layoutCamera->addWidget(_le_angZ_cam, 7, 11, 1, 1);
+    _layoutCamera->addWidget(_sp_angZ_cam, 7, 11, 1, 1);
     _layoutCamera->addWidget(_ldeg_angZ_cam, 7, 12, 1, 1);
 
 
@@ -651,52 +652,65 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(_s_red_la, &QSlider::valueChanged, _sp_red_la, &QSpinBox::setValue);
     QObject::connect(_s_green_la, &QSlider::valueChanged, _sp_green_la, &QSpinBox::setValue);
     QObject::connect(_s_blue_la, &QSlider::valueChanged, _sp_blue_la, &QSpinBox::setValue);
-    QObject::connect(_s_red_lp, &QSlider::valueChanged, _sp_red_lp, &QSpinBox::setValue);
-    QObject::connect(_s_green_lp, &QSlider::valueChanged, _sp_green_lp, &QSpinBox::setValue);
-    QObject::connect(_s_blue_lp, &QSlider::valueChanged, _sp_blue_lp, &QSpinBox::setValue);
+    QObject::connect(_s_red_lpd, &QSlider::valueChanged, _sp_red_lpd, &QSpinBox::setValue);
+    QObject::connect(_s_green_lpd, &QSlider::valueChanged, _sp_green_lpd, &QSpinBox::setValue);
+    QObject::connect(_s_blue_lpd, &QSlider::valueChanged, _sp_blue_lpd, &QSpinBox::setValue);
     QObject::connect(_s_red_obj, &QSlider::valueChanged, _sp_red_obj, &QSpinBox::setValue);
     QObject::connect(_s_green_obj, &QSlider::valueChanged, _sp_green_obj, &QSpinBox::setValue);
     QObject::connect(_s_blue_obj, &QSlider::valueChanged, _sp_blue_obj, &QSpinBox::setValue);
+    QObject::connect(_s_posDirX_lpd, &QSlider::valueChanged, _sp_posDirX_lpd, &QSpinBox::setValue);
+    QObject::connect(_s_posDirY_lpd, &QSlider::valueChanged, _sp_posDirY_lpd, &QSpinBox::setValue);
+    QObject::connect(_s_posDirZ_lpd, &QSlider::valueChanged, _sp_posDirZ_lpd, &QSpinBox::setValue);
+    QObject::connect(_s_posX_cam, &QSlider::valueChanged, _sp_posX_cam, &QSpinBox::setValue);
+    QObject::connect(_s_posY_cam, &QSlider::valueChanged, _sp_posY_cam, &QSpinBox::setValue);
+    QObject::connect(_s_posZ_cam, &QSlider::valueChanged, _sp_posZ_cam, &QSpinBox::setValue);
+    QObject::connect(_s_angX_cam, &QSlider::valueChanged, _sp_angX_cam, &QSpinBox::setValue);
+    QObject::connect(_s_angY_cam, &QSlider::valueChanged, _sp_angY_cam, &QSpinBox::setValue);
+    QObject::connect(_s_angZ_cam, &QSlider::valueChanged, _sp_angZ_cam, &QSpinBox::setValue);
+    QObject::connect(_s_posX_obj, &QSlider::valueChanged, _sp_posX_obj, &QSpinBox::setValue);
+    QObject::connect(_s_posY_obj, &QSlider::valueChanged, _sp_posY_obj, &QSpinBox::setValue);
+    QObject::connect(_s_posZ_obj, &QSlider::valueChanged, _sp_posZ_obj, &QSpinBox::setValue);
+    QObject::connect(_s_angX_obj, &QSlider::valueChanged, _sp_angX_obj, &QSpinBox::setValue);
+    QObject::connect(_s_angY_obj, &QSlider::valueChanged, _sp_angY_obj, &QSpinBox::setValue);
+    QObject::connect(_s_angZ_obj, &QSlider::valueChanged, _sp_angZ_obj, &QSpinBox::setValue);
 
     /* De QSpinBox à QSlider */
     QObject::connect(_sp_red_la, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_red_la, &QSlider::setValue);
     QObject::connect(_sp_green_la, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_green_la, &QSlider::setValue);
     QObject::connect(_sp_blue_la, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_blue_la, &QSlider::setValue);
-    QObject::connect(_sp_red_lp, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_red_lp, &QSlider::setValue);
-    QObject::connect(_sp_green_lp, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_green_lp, &QSlider::setValue);
-    QObject::connect(_sp_blue_lp, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_blue_lp, &QSlider::setValue);
+    QObject::connect(_sp_red_lpd, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_red_lpd, &QSlider::setValue);
+    QObject::connect(_sp_green_lpd, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_green_lpd, &QSlider::setValue);
+    QObject::connect(_sp_blue_lpd, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_blue_lpd, &QSlider::setValue);
     QObject::connect(_sp_red_obj, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_red_obj, &QSlider::setValue);
     QObject::connect(_sp_green_obj, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_green_obj, &QSlider::setValue);
-    QObject::connect(_sp_blue_obj, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_blue_obj, &QSlider::setValue);
-
-    /* De QSlider à QLineEdit */
-    QObject::connect(_s_posX_lp, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
-    QObject::connect(_s_posY_lp, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
-    QObject::connect(_s_posZ_lp, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
-    QObject::connect(_s_posX_cam, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
-    QObject::connect(_s_posY_cam, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
-    QObject::connect(_s_posZ_cam, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
-    QObject::connect(_s_angX_cam, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
-    QObject::connect(_s_angY_cam, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
-    QObject::connect(_s_angZ_cam, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
-    QObject::connect(_s_posX_obj, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
-    QObject::connect(_s_posY_obj, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
-    QObject::connect(_s_posZ_obj, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
-    QObject::connect(_s_angX_obj, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
-    QObject::connect(_s_angY_obj, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
-    QObject::connect(_s_angZ_obj, &QSlider::valueChanged, this, &MainWindow::SliderALineEdit);
+    QObject::connect(_sp_blue_obj, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_blue_obj, &QSlider::setValue);   
+    QObject::connect(_sp_posDirX_lpd, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_posDirX_lpd, &QSlider::setValue);
+    QObject::connect(_sp_posDirY_lpd, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_posDirY_lpd, &QSlider::setValue);
+    QObject::connect(_sp_posDirZ_lpd, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_posDirZ_lpd, &QSlider::setValue);
+    QObject::connect(_sp_posX_cam, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_posX_cam, &QSlider::setValue);
+    QObject::connect(_sp_posY_cam, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_posY_cam, &QSlider::setValue);
+    QObject::connect(_sp_posZ_cam, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_posZ_cam, &QSlider::setValue);
+    QObject::connect(_sp_angX_cam, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_angX_cam, &QSlider::setValue);
+    QObject::connect(_sp_angY_cam, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_angY_cam, &QSlider::setValue);
+    QObject::connect(_sp_angZ_cam, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_angZ_cam, &QSlider::setValue);
+    QObject::connect(_sp_posX_obj, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_posX_obj, &QSlider::setValue);
+    QObject::connect(_sp_posY_obj, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_posY_obj, &QSlider::setValue);
+    QObject::connect(_sp_posZ_obj, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_posZ_obj, &QSlider::setValue);
+    QObject::connect(_sp_angX_obj, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_angX_obj, &QSlider::setValue);
+    QObject::connect(_sp_angY_obj, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_angY_obj, &QSlider::setValue);
+    QObject::connect(_sp_angZ_obj, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_angZ_obj, &QSlider::setValue);
 
     /* De QComboBox à interface */
-    QObject::connect(_lp, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::MAJInterfaceLum);
+    QObject::connect(_lpd, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::MAJInterfaceLum);
     QObject::connect(_obj, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::MAJInterfaceObj);
 
-    /* De QSlider à la lumière positionnelle choisie */
-    QObject::connect(_s_red_lp, &QSlider::valueChanged, this, &MainWindow::SliderALumierePos);
-    QObject::connect(_s_green_lp, &QSlider::valueChanged, this, &MainWindow::SliderALumierePos);
-    QObject::connect(_s_blue_lp, &QSlider::valueChanged, this, &MainWindow::SliderALumierePos);
-    QObject::connect(_s_posX_lp, &QSlider::valueChanged, this, &MainWindow::SliderALumierePos);
-    QObject::connect(_s_posY_lp, &QSlider::valueChanged, this, &MainWindow::SliderALumierePos);
-    QObject::connect(_s_posZ_lp, &QSlider::valueChanged, this, &MainWindow::SliderALumierePos);
+    /* De QSlider à la lumière positionnelle ou directionnelle choisie */
+    QObject::connect(_s_red_lpd, &QSlider::valueChanged, this, &MainWindow::SliderALumierePosDir);
+    QObject::connect(_s_green_lpd, &QSlider::valueChanged, this, &MainWindow::SliderALumierePosDir);
+    QObject::connect(_s_blue_lpd, &QSlider::valueChanged, this, &MainWindow::SliderALumierePosDir);
+    QObject::connect(_s_posDirX_lpd, &QSlider::valueChanged, this, &MainWindow::SliderALumierePosDir);
+    QObject::connect(_s_posDirY_lpd, &QSlider::valueChanged, this, &MainWindow::SliderALumierePosDir);
+    QObject::connect(_s_posDirZ_lpd, &QSlider::valueChanged, this, &MainWindow::SliderALumierePosDir);
 
     /* De QSlider à l'objet choisi */
     QObject::connect(_s_red_obj, &QSlider::valueChanged, this, &MainWindow::SliderAObjet);
@@ -712,9 +726,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     /* Boutons */
-    QObject::connect(_new_lp, &QPushButton::clicked, this, &MainWindow::PopUpLum);
+    QObject::connect(_new_lpd, &QPushButton::clicked, this, &MainWindow::PopUpLum);
     QObject::connect(_new_obj, &QPushButton::clicked, this, &MainWindow::PopUpObj);
-    QObject::connect(_delete_lp, &QPushButton::clicked, this, &MainWindow::OnClicDeleteLum);
+    QObject::connect(_delete_lpd, &QPushButton::clicked, this, &MainWindow::OnClicDeleteLum);
     QObject::connect(_delete_obj, &QPushButton::clicked, this, &MainWindow::OnClicDeleteObj);
 
 
@@ -755,51 +769,13 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this, &MainWindow::envoiLumiereOGL, _affichage, &WidgetOGL::recepetionLumiereOGL);
 
     /* Switch lumièrePos/LumiereDir */
-    QObject::connect(_lp, static_cast<void(QComboBox::*)(const QString&)>(&QComboBox::activated), this, &MainWindow::switchPosDir);
+    QObject::connect(_lpd, static_cast<void(QComboBox::*)(const QString&)>(&QComboBox::activated), this, &MainWindow::switchPosDir);
 }
+
 
 MainWindow::~MainWindow()
 {}
 
-/**
- * @brief MainWindow::SliderALineEdit
- * @param i
- * Met le LineEdit à la valeur indiquée par le Slider
- */
-void MainWindow::SliderALineEdit(int i)
-{
-    QString texte = QString::number(i);
-    if (sender()==_s_posX_lp)
-        _le_posX_lp->setText(texte);
-    if (sender()==_s_posY_lp)
-        _le_posY_lp->setText(texte);
-    if (sender()==_s_posZ_lp)
-        _le_posZ_lp->setText(texte);
-    if (sender()==_s_posX_cam)
-        _le_posX_cam->setText(texte);
-    if (sender()==_s_posY_cam)
-        _le_posY_cam->setText(texte);
-    if (sender()==_s_posZ_cam)
-        _le_posZ_cam->setText(texte);
-    if (sender()==_s_angX_cam)
-        _le_angX_cam->setText(texte);
-    if (sender()==_s_angY_cam)
-        _le_angY_cam->setText(texte);
-    if (sender()==_s_angZ_cam)
-        _le_angZ_cam->setText(texte);
-    if (sender()==_s_posX_obj)
-        _le_posX_obj->setText(texte);
-    if (sender()==_s_posY_obj)
-        _le_posY_obj->setText(texte);
-    if (sender()==_s_posZ_obj)
-        _le_posZ_obj->setText(texte);
-    if (sender()==_s_angX_obj)
-        _le_angX_obj->setText(texte);
-    if (sender()==_s_angY_obj)
-        _le_angY_obj->setText(texte);
-    if (sender()==_s_angZ_obj)
-        _le_angZ_obj->setText(texte);
-}
 
 /**
 + * @brief MainWindow::MAJInterfaceLum
@@ -807,16 +783,16 @@ void MainWindow::SliderALineEdit(int i)
 + */
 void MainWindow::MAJInterfaceLum()
 {
-    for (unsigned int i(0); i < ENSEMBLE_LUM_POS.size(); i++)
+    for (unsigned int i(0); i < ENSEMBLE_LUM_POSDIR.size(); i++)
     {
-        if(ENSEMBLE_LUM_POS[i].getNom() == _lp->currentText().toStdString())
+        if(ENSEMBLE_LUM_POSDIR[i].getNom() == _lpd->currentText().toStdString())
         {
-            _s_red_lp->setValue(ENSEMBLE_LUM_POS[i].getRed());
-            _s_green_lp->setValue(ENSEMBLE_LUM_POS[i].getGreen());
-            _s_blue_lp->setValue(ENSEMBLE_LUM_POS[i].getBlue());
-            _s_posX_lp->setValue(ENSEMBLE_LUM_POS[i].getPosX());
-            _s_posY_lp->setValue(ENSEMBLE_LUM_POS[i].getPosY());
-            _s_posZ_lp->setValue(ENSEMBLE_LUM_POS[i].getPosZ());
+            _s_red_lpd->setValue(ENSEMBLE_LUM_POSDIR[i].getRed());
+            _s_green_lpd->setValue(ENSEMBLE_LUM_POSDIR[i].getGreen());
+            _s_blue_lpd->setValue(ENSEMBLE_LUM_POSDIR[i].getBlue());
+            _s_posDirX_lpd->setValue(ENSEMBLE_LUM_POSDIR[i].getPosX());
+            _s_posDirY_lpd->setValue(ENSEMBLE_LUM_POSDIR[i].getPosY());
+            _s_posDirZ_lpd->setValue(ENSEMBLE_LUM_POSDIR[i].getPosZ());
         }
     }
 }
@@ -868,27 +844,27 @@ void MainWindow::MAJInterfaceObj()
  * @brief MainWindow::SliderALumierePos
  * Met à jour les valeurs de la lumière positionnelle choisie quand il y a modification sur l'interface
  */
-void MainWindow::SliderALumierePos()
+void MainWindow::SliderALumierePosDir()
 {
-    for (unsigned int i(0); i < ENSEMBLE_LUM_POS.size(); i++)
+    for (unsigned int i(0); i < ENSEMBLE_LUM_POSDIR.size(); i++)
     {
-        if(ENSEMBLE_LUM_POS[i].getNom() == _lp->currentText().toStdString())
+        if(ENSEMBLE_LUM_POSDIR[i].getNom() == _lpd->currentText().toStdString())
         {
-            if (sender() == _s_red_lp)
-                ENSEMBLE_LUM_POS[i].setRed(_s_red_lp->value());
-            if (sender() == _s_green_lp)
-                ENSEMBLE_LUM_POS[i].setGreen(_s_green_lp->value());
-            if (sender() == _s_blue_lp)
-                ENSEMBLE_LUM_POS[i].setBlue(_s_blue_lp->value());
-            if (sender()==_s_posX_lp)
-                ENSEMBLE_LUM_POS[i].setPosX(_s_posX_lp->value());
-            if (sender()==_s_posY_lp)
-                ENSEMBLE_LUM_POS[i].setPosY(_s_posY_lp->value());
-            if (sender()==_s_posZ_lp)
-                ENSEMBLE_LUM_POS[i].setPosZ(_s_posZ_lp->value());
+            if (sender() == _s_red_lpd)
+                ENSEMBLE_LUM_POSDIR[i].setRed(_s_red_lpd->value());
+            if (sender() == _s_green_lpd)
+                ENSEMBLE_LUM_POSDIR[i].setGreen(_s_green_lpd->value());
+            if (sender() == _s_blue_lpd)
+                ENSEMBLE_LUM_POSDIR[i].setBlue(_s_blue_lpd->value());
+            if (sender()==_s_posDirX_lpd)
+                ENSEMBLE_LUM_POSDIR[i].setPosX(_s_posDirX_lpd->value());
+            if (sender()==_s_posDirY_lpd)
+                ENSEMBLE_LUM_POSDIR[i].setPosY(_s_posDirY_lpd->value());
+            if (sender()==_s_posDirZ_lpd)
+                ENSEMBLE_LUM_POSDIR[i].setPosZ(_s_posDirZ_lpd->value());
         }
     }
-    _affichage->changerLumiere(ENSEMBLE_LUM_POS);
+    _affichage->changerLumiere(ENSEMBLE_LUM_POSDIR);
 }
 
 /**
@@ -971,40 +947,40 @@ void MainWindow::OnClicDeleteLum()
     reply = QMessageBox::question(this, "Cancel", "Voulez-vous supprimer cette lumière positionnelle ?", (QMessageBox::No | QMessageBox::Yes));
     if (reply == QMessageBox::Yes)
     {
-        for (unsigned int i(0); i < ENSEMBLE_LUM_POS.size(); i++)
+        for (unsigned int i(0); i < ENSEMBLE_LUM_POSDIR.size(); i++)
         {
-            if(ENSEMBLE_LUM_POS[i].getNom() == _lp->currentText().toStdString())
+            if(ENSEMBLE_LUM_POSDIR[i].getNom() == _lpd->currentText().toStdString())
             {
-                ENSEMBLE_LUM_POS.erase(ENSEMBLE_LUM_POS.begin()+i);
-                _lp->removeItem(i);
+                ENSEMBLE_LUM_POSDIR.erase(ENSEMBLE_LUM_POSDIR.begin()+i);
+                _lpd->removeItem(i);
             }
         }
 
-        _nbLumierePos--;
+        _nbLumierePosDir--;
 
-        if (_nbLumierePos == 0)
+        if (_nbLumierePosDir == 0)
         {
-            _s_posX_lp->setValue(0);
-            _s_posY_lp->setValue(0);
-            _s_posZ_lp->setValue(0);
+            _s_posDirX_lpd->setValue(0);
+            _s_posDirY_lpd->setValue(0);
+            _s_posDirZ_lpd->setValue(0);
         }
         else
         {
-            _lp->setCurrentIndex(0);
-            _s_posX_lp->setValue(ENSEMBLE_LUM_POS[0].getPosX());
-            _s_posY_lp->setValue(ENSEMBLE_LUM_POS[0].getPosY());
-            _s_posZ_lp->setValue(ENSEMBLE_LUM_POS[0].getPosZ());
+            _lpd->setCurrentIndex(0);
+            _s_posDirX_lpd->setValue(ENSEMBLE_LUM_POSDIR[0].getPosX());
+            _s_posDirY_lpd->setValue(ENSEMBLE_LUM_POSDIR[0].getPosY());
+            _s_posDirZ_lpd->setValue(ENSEMBLE_LUM_POSDIR[0].getPosZ());
         }
 
-        if (_nbLumierePos == 0)
-            _delete_lp->setEnabled(false);
+        if (_nbLumierePosDir == 0)
+            _delete_lpd->setEnabled(false);
         else
-            _delete_lp->setEnabled(true);
+            _delete_lpd->setEnabled(true);
 
-        if (_nbLumierePos >= 7)
-            _new_lp->setEnabled(false);
+        if (_nbLumierePosDir >= 7)
+            _new_lpd->setEnabled(false);
         else
-            _new_lp->setEnabled(true);
+            _new_lpd->setEnabled(true);
     }
 }
 
@@ -1100,31 +1076,31 @@ void MainWindow::OnClicDeleteObj()
  */
 void MainWindow::receptionLumiere(LumierePos lp)
 {
-    _lp->addItem(QString::fromStdString(lp.getNom()));
-    ENSEMBLE_LUM_POS.push_back(lp);
+    _lpd->addItem(QString::fromStdString(lp.getNom()));
+    ENSEMBLE_LUM_POSDIR.push_back(lp);
 
-    if (_nbLumierePos == 0)
+    if (_nbLumierePosDir == 0)
     {
-        _s_posX_lp->setValue(lp.getPosX());
-        _s_posY_lp->setValue(lp.getPosY());
-        _s_posZ_lp->setValue(lp.getPosZ());
+        _s_posDirX_lpd->setValue(lp.getPosX());
+        _s_posDirY_lpd->setValue(lp.getPosY());
+        _s_posDirZ_lpd->setValue(lp.getPosZ());
     }
 
-    _nbLumierePos++;
+    _nbLumierePosDir++;
 
-    if (_nbLumierePos == 0)
-        _delete_lp->setEnabled(false);
+    if (_nbLumierePosDir == 0)
+        _delete_lpd->setEnabled(false);
     else
-        _delete_lp->setEnabled(true);
+        _delete_lpd->setEnabled(true);
 
-    if (_nbLumierePos >= 7)
-        _new_lp->setEnabled(false);
+    if (_nbLumierePosDir >= 7)
+        _new_lpd->setEnabled(false);
     else
-        _new_lp->setEnabled(true);
+        _new_lpd->setEnabled(true);
 
     std::cout << "Lumieres actuelles:" << std::endl;
-    for (unsigned int i(0); i<ENSEMBLE_LUM_POS.size(); i++)
-        std::cout << "Lumiere " << i << ": " << ENSEMBLE_LUM_POS[i].getNom() << std::endl;
+    for (unsigned int i(0); i<ENSEMBLE_LUM_POSDIR.size(); i++)
+        std::cout << "Lumiere " << i << ": " << ENSEMBLE_LUM_POSDIR[i].getNom() << std::endl;
 
     emit envoiLumiereOGL(lp);
 }
@@ -1418,23 +1394,23 @@ void MainWindow::fichierInconnu(std::string nomFichier)
 
 void MainWindow::switchPosDir()
 {
-    for (unsigned int i(0); i < ENSEMBLE_LUM_POS.size(); i++)
+    for (unsigned int i(0); i < ENSEMBLE_LUM_POSDIR.size(); i++)
     {
-        if (ENSEMBLE_LUM_POS[i].getNom() == _lp->currentText().toStdString())
+        if (ENSEMBLE_LUM_POSDIR[i].getNom() == _lpd->currentText().toStdString())
         {
-            if (ENSEMBLE_LUM_POS[i].getType() == true)
+            if (ENSEMBLE_LUM_POSDIR[i].getType() == true)
             {
-                _positionnelle->setText("Positionnelle");
-                _posX_lp->setText("PosX");
-                _posY_lp->setText("PosY");
-                _posZ_lp->setText("PosZ");
+                _positionnelleDirectionnelle->setText("Positionnelle");
+                _posDirX_lpd->setText("PosX");
+                _posDirY_lpd->setText("PosY");
+                _posDirZ_lpd->setText("PosZ");
             }
             else
             {
-                _positionnelle->setText("Directionnelle");
-                _posX_lp->setText("DirX");
-                _posY_lp->setText("DirY");
-                _posZ_lp->setText("DirZ");
+                _positionnelleDirectionnelle->setText("Directionnelle");
+                _posDirX_lpd->setText("DirX");
+                _posDirY_lpd->setText("DirY");
+                _posDirZ_lpd->setText("DirZ");
             }
         }
     }
@@ -1463,7 +1439,7 @@ void MainWindow::infoTuto()
                                                          "déroulant.\n"
                                                          "\n"
                                                          "  *** Onglet lumière ***\n"
-                                                         "Vous pouvez créer jusqu'à 8 lumières, qu'elles soient directionnelles ou positionnelle. Vous "
+                                                         "Vous pouvez créer jusqu'à 7 lumières, qu'elles soient directionnelles ou positionnelle. Vous "
                                                          "pouvez aussi modifier la lumière ambiante existante.\n"
                                                          "Lorsque vous avez séléctionné une des lumières que vous avez créé dans le menu déroulant, vous "
                                                          "pouvez modifier ses propriétés.\n"

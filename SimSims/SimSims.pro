@@ -17,7 +17,7 @@ SOURCES += main.cpp\
         mainwindow.cpp\
         forme.cpp\
         lectureDoc.cpp\
-        lumierepos.cc\
+        lumiereposdir.cc\
         normale.cc\
         popup_lum.cc\
         popup_obj.cc\
@@ -31,7 +31,7 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h\
          forme.h\
          lectureDoc.h\
-         lumierepos.hh\
+         lumiereposdir.hh\
          normale.hh\
          popup_lum.hh\
          popup_obj.hh\

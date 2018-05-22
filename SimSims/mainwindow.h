@@ -29,8 +29,6 @@ signals:
     void envoiLumiereOGL(LumierePos lp);
 
 public slots:
-    void SliderALineEdit(int i);
-
     void PopUpLum();
     void PopUpObj();
 
@@ -40,7 +38,7 @@ public slots:
     void MAJInterfaceLum();
     void MAJInterfaceObj();
 
-    void SliderALumierePos();
+    void SliderALumierePosDir();
     void SliderAObjet();
 
     void receptionLumiere(LumierePos lp);
@@ -92,56 +90,56 @@ private:
     QSpinBox * _sp_blue_la;
 
 
-    QLabel * _positionnelle;
-    QComboBox * _lp;
+    QLabel * _positionnelleDirectionnelle;
+    QComboBox * _lpd;
 
-    QLabel * _red_lp;
-    QLabel * _red_min_lp;
-    QSlider * _s_red_lp;
-    QLabel * _red_max_lp;
-    QLabel * _l_red_lp;
-    QSpinBox * _sp_red_lp;
+    QLabel * _red_lpd;
+    QLabel * _red_min_lpd;
+    QSlider * _s_red_lpd;
+    QLabel * _red_max_lpd;
+    QLabel * _l_red_lpd;
+    QSpinBox * _sp_red_lpd;
 
-    QLabel * _green_lp;
-    QLabel * _green_min_lp;
-    QSlider * _s_green_lp;
-    QLabel * _green_max_lp;
-    QLabel * _l_green_lp;
-    QSpinBox * _sp_green_lp;
+    QLabel * _green_lpd;
+    QLabel * _green_min_lpd;
+    QSlider * _s_green_lpd;
+    QLabel * _green_max_lpd;
+    QLabel * _l_green_lpd;
+    QSpinBox * _sp_green_lpd;
 
-    QLabel * _blue_lp;
-    QLabel * _blue_min_lp;
-    QSlider * _s_blue_lp;
-    QLabel * _blue_max_lp;
-    QLabel * _l_blue_lp;
-    QSpinBox * _sp_blue_lp;
+    QLabel * _blue_lpd;
+    QLabel * _blue_min_lpd;
+    QSlider * _s_blue_lpd;
+    QLabel * _blue_max_lpd;
+    QLabel * _l_blue_lpd;
+    QSpinBox * _sp_blue_lpd;
 
-    QLabel * _posX_lp;
-    QLabel * _posX_min_lp;
-    QSlider * _s_posX_lp;
-    QLabel * _posX_max_lp;
-    QLabel * _l_posX_lp;
-    QLineEdit * _le_posX_lp;
+    QLabel * _posDirX_lpd;
+    QLabel * _posDirX_min_lpd;
+    QSlider * _s_posDirX_lpd;
+    QLabel * _posDirX_max_lpd;
+    QLabel * _l_posDirX_lpd;
+    QSpinBox * _sp_posDirX_lpd;
 
-    QLabel * _posY_lp;
-    QLabel * _posY_min_lp;
-    QSlider * _s_posY_lp;
-    QLabel * _posY_max_lp;
-    QLabel * _l_posY_lp;
-    QLineEdit * _le_posY_lp;
+    QLabel * _posDirY_lpd;
+    QLabel * _posDirY_min_lpd;
+    QSlider * _s_posDirY_lpd;
+    QLabel * _posDirY_max_lpd;
+    QLabel * _l_posDirY_lpd;
+    QSpinBox * _sp_posDirY_lpd;
 
-    QLabel * _posZ_lp;
-    QLabel * _posZ_min_lp;
-    QSlider * _s_posZ_lp;
-    QLabel * _posZ_max_lp;
-    QLabel * _l_posZ_lp;
-    QLineEdit * _le_posZ_lp;
+    QLabel * _posDirZ_lpd;
+    QLabel * _posDirZ_min_lpd;
+    QSlider * _s_posDirZ_lpd;
+    QLabel * _posDirZ_max_lpd;
+    QLabel * _l_posDirZ_lpd;
+    QSpinBox * _sp_posDirZ_lpd;
 
 
-    QPushButton * _delete_lp;
-    QPushButton * _new_lp;
+    QPushButton * _delete_lpd;
+    QPushButton * _new_lpd;
 
-    int _nbLumierePos;
+    int _nbLumierePosDir;
 
 
     /* Onglet de gestion de la caméra */
@@ -153,21 +151,21 @@ private:
     QSlider * _s_posX_cam;
     QLabel * _posX_max_cam;
     QLabel * _l_posX_cam;
-    QLineEdit * _le_posX_cam;
+    QSpinBox * _sp_posX_cam;
 
     QLabel * _posY_cam;
     QLabel * _posY_min_cam;
     QSlider * _s_posY_cam;
     QLabel * _posY_max_cam;
     QLabel * _l_posY_cam;
-    QLineEdit * _le_posY_cam;
+    QSpinBox * _sp_posY_cam;
 
     QLabel * _posZ_cam;
     QLabel * _posZ_min_cam;
     QSlider * _s_posZ_cam;
     QLabel * _posZ_max_cam;
     QLabel * _l_posZ_cam;
-    QLineEdit * _le_posZ_cam;
+    QSpinBox * _sp_posZ_cam;
 
     QLabel * _angleCam;
     QLabel * _angX_cam;
@@ -175,7 +173,7 @@ private:
     QSlider * _s_angX_cam;
     QLabel * _angX_max_cam;
     QLabel * _l_angX_cam;
-    QLineEdit * _le_angX_cam;
+    QSpinBox * _sp_angX_cam;
     QLabel * _ldeg_angX_cam;
 
     QLabel * _angY_cam;
@@ -183,7 +181,7 @@ private:
     QSlider * _s_angY_cam;
     QLabel * _angY_max_cam;
     QLabel * _l_angY_cam;
-    QLineEdit * _le_angY_cam;
+    QSpinBox * _sp_angY_cam;
     QLabel * _ldeg_angY_cam;
 
     QLabel * _angZ_cam;
@@ -191,7 +189,7 @@ private:
     QSlider * _s_angZ_cam;
     QLabel * _angZ_max_cam;
     QLabel * _l_angZ_cam;
-    QLineEdit * _le_angZ_cam;
+    QSpinBox * _sp_angZ_cam;
     QLabel * _ldeg_angZ_cam;
 
 
@@ -234,21 +232,21 @@ private:
     QSlider * _s_posX_obj;
     QLabel * _posX_max_obj;
     QLabel * _l_posX_obj;
-    QLineEdit * _le_posX_obj;
+    QSpinBox * _sp_posX_obj;
 
     QLabel * _posY_obj;
     QLabel * _posY_min_obj;
     QSlider * _s_posY_obj;
     QLabel * _posY_max_obj;
     QLabel * _l_posY_obj;
-    QLineEdit * _le_posY_obj;
+    QSpinBox * _sp_posY_obj;
 
     QLabel * _posZ_obj;
     QLabel * _posZ_min_obj;
     QSlider * _s_posZ_obj;
     QLabel * _posZ_max_obj;
     QLabel * _l_posZ_obj;
-    QLineEdit * _le_posZ_obj;
+    QSpinBox * _sp_posZ_obj;
 
     QLabel * _angleObj;
     QLabel * _angX_obj;
@@ -256,7 +254,7 @@ private:
     QSlider * _s_angX_obj;
     QLabel * _angX_max_obj;
     QLabel * _l_angX_obj;
-    QLineEdit * _le_angX_obj;
+    QSpinBox * _sp_angX_obj;
     QLabel * _ldeg_angX_obj;
 
     QLabel * _angY_obj;
@@ -264,7 +262,7 @@ private:
     QSlider * _s_angY_obj;
     QLabel * _angY_max_obj;
     QLabel * _l_angY_obj;
-    QLineEdit * _le_angY_obj;
+    QSpinBox * _sp_angY_obj;
     QLabel * _ldeg_angY_obj;
 
     QLabel * _angZ_obj;
@@ -272,7 +270,7 @@ private:
     QSlider * _s_angZ_obj;
     QLabel * _angZ_max_obj;
     QLabel * _l_angZ_obj;
-    QLineEdit * _le_angZ_obj;
+    QSpinBox * _sp_angZ_obj;
     QLabel * _ldeg_angZ_obj;
 
     QLabel * _tailleObj;
@@ -307,7 +305,7 @@ private:
     std::vector<std::shared_ptr<forme>> TOUS_LES_OBJETS;
     std::vector<std::string> TOUTES_LES_ADRESSE_TEXTURES;
     std::vector<std::string> NOM_DES_FORMES;
-    std::vector<LumierePos> ENSEMBLE_LUM_POS;
+    std::vector<LumierePos> ENSEMBLE_LUM_POSDIR;
 
     QWidget * _window;
 };

@@ -7,7 +7,7 @@
 #include <string>
 #include <memory>
 #include "forme.h"
-#include "lumierepos.hh"
+#include "lumiereposdir.hh"
 
 class WidgetOGL : public QOpenGLWidget, protected QOpenGLFunctions
 {

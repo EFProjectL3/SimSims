@@ -1,6 +1,6 @@
 #pragma once
 #include <QtWidgets>
-#include "lumierepos.hh"
+#include "lumiereposdir.hh"
 
 class PopUpLumiere:
         public QWidget
@@ -11,15 +11,15 @@ public:
     PopUpLumiere();
     ~PopUpLumiere();
 
-    QPushButton * _create_lp;
-    QPushButton * _cancel_lp;
+    QPushButton * _create_lpd;
+    QPushButton * _cancel_lpd;
 
 public slots:
     void OnClicCreate();
     void OnClicCancel();
 
 signals:
-    void lumiereCreee(LumierePos lp);
+    void lumiereCreee(LumierePos lpd);
 
 private:
     QGridLayout * _layoutPrincipal;
@@ -27,15 +27,15 @@ private:
     QRadioButton * _typePos;
     QRadioButton * _typeDir;
 
-    QLabel * _name_lp;
-        QLineEdit * _le_name_lp;
+    QLabel * _name_lpd;
+        QLineEdit * _le_name_lpd;
 
-    QLabel * _posX_popup;
-        QLineEdit * _le_posX;
+    QLabel * _posDirX_popup;
+        QLineEdit * _le_posDirX;
 
-    QLabel * _posY_popup;
-        QLineEdit * _le_posY;
+    QLabel * _posDirY_popup;
+        QLineEdit * _le_posDirY;
 
-    QLabel * _posZ_popup;
-        QLineEdit * _le_posZ;
+    QLabel * _posDirZ_popup;
+        QLineEdit * _le_posDirZ;
 };
