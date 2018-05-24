@@ -59,6 +59,8 @@ public slots:
     void infoCrea();
     void infoTuto();
 
+    void receptionObjetPick(unsigned int idPick);
+
 private:
     QGridLayout * _layoutprincipal;
     WidgetOGL * _affichage;

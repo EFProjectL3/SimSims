@@ -15,7 +15,7 @@ forme::forme(int id, int nbFac, int nbSom, int nbAtt, int nbrSommetParFaceMax, i
              std::map<std::string,float> tabAtt) : _idForme(id), _nomForme(""), _nbrFaces(nbFac), _nbrSommets(nbSom), _nbrAttributs(nbAtt),
     _nbrSommetParFaceMax(nbrSommetParFaceMax), _faceConstruction(facCons), _sommets(tabSom), _faces(tabFac), _attributs(tabAtt),
     _couleurR(204), _couleurG(204), _couleurB(204), _positionX(0), _positionY(0), _positionZ(0),
-    _angleX(0), _angleY(0), _angleZ(0), _scale(1), _idTexture(-1), _FormesFille(), _parent(0)
+    _angleX(0), _angleY(0), _angleZ(0), _scale(1), _idTexture(-1), _FormesFille(), _parent(0), _valPick(-1)
 {}
 
 forme::forme(int id, std::string nomForme, int nbFac, int nbSom, int nbAtt, int nbrSommetParFaceMax, int ** facCons, struct sommet * tabSom, struct face * tabFac,
@@ -24,7 +24,7 @@ forme::forme(int id, std::string nomForme, int nbFac, int nbSom, int nbAtt, int 
     _idForme(id), _nomForme(nomForme), _nbrFaces(nbFac), _nbrSommets(nbSom), _nbrAttributs(nbAtt),
     _nbrSommetParFaceMax(nbrSommetParFaceMax), _faceConstruction(facCons), _sommets(tabSom), _faces(tabFac), _attributs(tabAtt),
     _couleurR(coulR), _couleurG(coulV), _couleurB(coulB), _positionX(posX), _positionY(posY), _positionZ(posZ),
-    _angleX(angX), _angleY(angY), _angleZ(angZ), _scale(taille), _idTexture(idTX), _FormesFille(), _parent(0)
+    _angleX(angX), _angleY(angY), _angleZ(angZ), _scale(taille), _idTexture(idTX), _FormesFille(), _parent(0), _valPick(-1)
 {}
 
 forme::~forme(){}
@@ -133,7 +133,6 @@ void forme::afficher_forme()
 {
     glPushMatrix();
     {
-
         glTranslatef(_positionX,_positionY,_positionZ);
         glPushMatrix();
         {
@@ -294,4 +293,46 @@ void forme::sauvegardeForme(std::string nomFichier)
     }
     else  // sinon
         std::cerr << "Erreur à l'ouverture !" << std::endl;
+}
+
+
+void forme::afficher_forme_picking(float &i)
+{
+    setValPick(i);
+    glDisable(GL_LIGHTING);
+    glPushMatrix();
+    {
+        glTranslatef(_positionX,_positionY,_positionZ);
+        glPushMatrix();
+        {
+            glRotatef(_angleX,1,0,0);
+            glRotatef(_angleY,0,1,0);
+            glRotatef(_angleZ,0,0,1);
+            glScalef(_scale,_scale,_scale);
+            glBegin(GL_TRIANGLES);
+            {
+                glColor3f(i/255,0.2,1);
+                //std::cout << "Couleur de " << getNomForme() << ": " << i/255 << std::endl;
+                int j;
+                for (j=0; j<=_nbrFaces; j++)	//parcours des faces
+                {
+                    for (int i(0); i<=2; i++)	// on parcours les 3 sommets de chaque face
+                    {
+                        glVertex3f(
+                                    _sommets[_faceConstruction[j][i]].coordonnees.x,
+                                _sommets[_faceConstruction[j][i]].coordonnees.y,
+                                _sommets[_faceConstruction[j][i]].coordonnees.z
+                                );
+                    }
+
+                }
+            }
+            glEnd();
+        }
+        glPopMatrix();
+        i++;
+        for (unsigned int j(0); j<_FormesFille.size(); j++) //Pour que l'affichage de la forme se face par rapport à la forme parent
+            _FormesFille[j]->afficher_forme_picking(i);
+    }
+    glPopMatrix();
 }

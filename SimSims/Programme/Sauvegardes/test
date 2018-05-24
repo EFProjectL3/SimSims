@@ -2,7 +2,7 @@
 //ID//
 0
 //NOM FORME//
-test
+truc
 //NOMBRE FACE//
 44
 //NOMBRE SOMMET//
@@ -63,13 +63,13 @@ unseptcinqlongueur
 //VALEUR ROUGE//
 255
 //VALEUR VERT//
-0
+255
 //VALEUR BLEU//
-0
+54
 //VALEUR POS X//
--2
+-3
 //VALEUR POS Y//
-3
+2
 //VALEUR POS Z//
 0
 //VALEUR ROT X//
@@ -79,7 +79,7 @@ unseptcinqlongueur
 //VALEUR ROT Z//
 0
 //ID TEXTURE//
--1
+5
 //TAILLE//
 1
 //TABLEAU CONSTRUCTION FACES//
@@ -206,7 +206,7 @@ Aucune
 //ID//
 1
 //NOM FORME//
-teez
+bidule
 //NOMBRE FACE//
 44
 //NOMBRE SOMMET//

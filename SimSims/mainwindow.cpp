@@ -683,7 +683,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(_sp_blue_lpd, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_blue_lpd, &QSlider::setValue);
     QObject::connect(_sp_red_obj, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_red_obj, &QSlider::setValue);
     QObject::connect(_sp_green_obj, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_green_obj, &QSlider::setValue);
-    QObject::connect(_sp_blue_obj, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_blue_obj, &QSlider::setValue);   
+    QObject::connect(_sp_blue_obj, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_blue_obj, &QSlider::setValue);
     QObject::connect(_sp_posDirX_lpd, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_posDirX_lpd, &QSlider::setValue);
     QObject::connect(_sp_posDirY_lpd, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_posDirY_lpd, &QSlider::setValue);
     QObject::connect(_sp_posDirZ_lpd, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), _s_posDirZ_lpd, &QSlider::setValue);
@@ -770,6 +770,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* Switch lumièrePos/LumiereDir */
     QObject::connect(_lpd, static_cast<void(QComboBox::*)(const QString&)>(&QComboBox::activated), this, &MainWindow::switchPosDir);
+
+    //Picking
+    QObject::connect(_affichage, &WidgetOGL::formePick, this, &MainWindow::receptionObjetPick);
 }
 
 
@@ -836,6 +839,19 @@ void MainWindow::MAJInterfaceObj()
             _s_angY_obj->setValue(TOUS_LES_OBJETS[i]->getAngY());
             _s_angZ_obj->setValue(TOUS_LES_OBJETS[i]->getAngZ());
             _le_scale_obj->setText(QString::number(TOUS_LES_OBJETS[i]->getScale()));
+        }
+    }
+}
+
+void MainWindow::receptionObjetPick(unsigned int idPick)
+{
+    for (unsigned int i(0); i < TOUS_LES_OBJETS.size(); i++)
+    {
+        if (TOUS_LES_OBJETS[i]->getValPick() == idPick)
+        {
+            QString nom = QString::fromStdString(TOUS_LES_OBJETS[i]->getNomForme());
+            int index = _obj->findText(nom);
+            _obj->setCurrentIndex(index);
         }
     }
 }
@@ -991,13 +1007,6 @@ void MainWindow::OnClicDeleteLum()
  */
 void MainWindow::OnClicDeleteObj()
 {
-    /*
-     *
-     * A FAIRE: VERIFIER QUE L'OBJET N'A PAS DE PARENT, SI C'EST LE CAS, LE VIRER DE SON PARENT
-     *
-     */
-
-
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Cancel", "Voulez-vous supprimer cet objet ?"
                                                   "(Tous les descendants seront aussi supprimés.)", (QMessageBox::No | QMessageBox::Yes));

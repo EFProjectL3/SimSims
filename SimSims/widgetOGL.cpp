@@ -10,7 +10,10 @@
 #include <memory>
 #include "forme.h"
 #include <QtWidgets>
+
 #define NOMBRE_TEXTURE 50
+#define SELECT 1
+#define RENDER 0
 
 int angleX;
 int angleY;
@@ -53,6 +56,8 @@ WidgetOGL::WidgetOGL(int fps, QWidget *parent, std::string type, std::vector<Lum
     _ambianteR = 0.8;
     _ambianteV = 0.8;
     _ambianteB = 0.8;
+
+    _modeRendu = RENDER;
 }
 
 WidgetOGL::~WidgetOGL()
@@ -235,57 +240,76 @@ void WidgetOGL::keyPressEvent(QKeyEvent * keyEvent)
 
 void WidgetOGL::paintGL()
 {
-    glEnable(GL_DEPTH_TEST);
-    //On enleve les couleurs ainsi que la profondeur avant de continuer
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    //Placement de la caméra
-    glRotatef(_angxcam, 0, 1, 0);
-    glRotatef(_angycam, 1, 0, 0);
-    glRotatef(_angzcam, 0, 0, 1);
-    glTranslatef(_posxcam,_posycam,_poszcam);
-
-    /* Lumières */
-    GLfloat lumiere_ambiante[4] = { _ambianteR, _ambianteV, _ambianteB, 0.0 };
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT,lumiere_ambiante);
-    for (unsigned int i(0); i<_ensemble_lumiere.size(); i++)
-        _ensemble_lumiere[i].afficher_lumiere(i);
-
-    if (_type == "main")   //affichage de toutes les formes
+    if (_modeRendu == SELECT)
     {
-        creerEnvironnement();
+        glDisable(GL_TEXTURE_2D);
+        glDisable(GL_LIGHTING);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glRotatef(angleX,0,1,0);
-        glRotatef(angleY,1,0,0);
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
 
-       // glInitNames();
-       // glPushName( 10000 );
-        for (unsigned int i(0); i<_formesAAfficher.size(); i++)
-        {
-           // glLoadName(i);
-            _formesAAfficher[i]->afficher_forme();
-        }
-    }
-    else if (_type == "popup")  //affichage type popu
-    {
-        glPushMatrix();
-        {
-            anglePopupX++;
-            anglePopupY=anglePopupY+2;
-            glRotatef(anglePopupX,0,1,0);
-            glRotatef(anglePopupY,1,0,0);
+        //Placement de la caméra
+        glRotatef(_angxcam, 0, 1, 0);
+        glRotatef(_angycam, 1, 0, 0);
+        glRotatef(_angzcam, 0, 0, 1);
+        glTranslatef(_posxcam,_posycam,_poszcam);
 
-            if (_formesAAfficher.size()>0)
-                _formesAAfficher[0]->afficher_forme();
-
-        }
-        glPopMatrix();
+        dessinPicking();
+        etudeHit();
+        glEnable(GL_TEXTURE_2D);
+        glEnable(GL_LIGHTING);
+        _modeRendu = RENDER;
     }
 
-    glDisable(GL_DEPTH_TEST);
+    if (_modeRendu == RENDER)
+    {
+        //On enleve les couleurs ainsi que la profondeur avant de continuer
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+
+        //Placement de la caméra
+        glRotatef(_angxcam, 0, 1, 0);
+        glRotatef(_angycam, 1, 0, 0);
+        glRotatef(_angzcam, 0, 0, 1);
+        glTranslatef(_posxcam,_posycam,_poszcam);
+
+        //Lumières
+        GLfloat lumiere_ambiante[4] = { _ambianteR, _ambianteV, _ambianteB, 0.0 };
+        glLightModelfv(GL_LIGHT_MODEL_AMBIENT,lumiere_ambiante);
+        for (unsigned int i(0); i<_ensemble_lumiere.size(); i++)
+            _ensemble_lumiere[i].afficher_lumiere(i);
+
+        if (_type == "main")   //affichage de toutes les formes
+        {
+            creerEnvironnement();
+
+            glRotatef(angleX,0,1,0);
+            glRotatef(angleY,1,0,0);
+
+            for (unsigned int i(0); i<_formesAAfficher.size(); i++)
+            {
+                _formesAAfficher[i]->afficher_forme();
+            }
+        }
+        else if (_type == "popup")  //affichage type popu
+        {
+            glPushMatrix();
+            {
+                anglePopupX++;
+                anglePopupY=anglePopupY+2;
+                glRotatef(anglePopupX,0,1,0);
+                glRotatef(anglePopupY,1,0,0);
+
+                if (_formesAAfficher.size()>0)
+                    _formesAAfficher[0]->afficher_forme();
+
+            }
+            glPopMatrix();
+        }
+    }
 }
 
 void WidgetOGL::resizeGL(int Width, int Height)
@@ -305,7 +329,13 @@ void WidgetOGL::resizeGL(int Width, int Height)
 
 void WidgetOGL::mousePressEvent(QMouseEvent* mouseEvent)
 {
-    //pickObjects(mouseEvent->x(),mouseEvent->y());
+    if(mouseEvent->button() == Qt::LeftButton)
+    {
+        std::cout << "Clic souris enregistré en " << mouseEvent->x() << ", " << mouseEvent->y() << std::endl;
+        _curseurX = mouseEvent->x();
+        _curseurY = mouseEvent->y();
+        _modeRendu = SELECT;
+    }
 }
 
 
@@ -641,90 +671,40 @@ void WidgetOGL::chargementScene(std::string nomFichier)
  * *************************************** PICKING ***********************************
  *
  */
-/*
-#define BUFSIZE 512
-unsigned int selectBuf[BUFSIZE];
 
-void processHits(GLint inHits, GLuint buffer[])
+void WidgetOGL::dessinPicking()
 {
-    unsigned int i, j;
-    GLuint names, *ptr, minZ,*ptrNames, numberOfNames;
-
-    ptr = (GLuint *) buffer;
-    minZ = 0xffffffff;
-    for (i = 0; i < inHits; i++) {
-        names = *ptr;
-        ptr++;
-        if (*ptr < minZ) {
-            numberOfNames = names;
-            minZ = *ptr;
-            ptrNames = ptr+2;
-        }
-        ptr += names+2;
-    }
-
-    std::cout << "Nearest: " << std::endl;
-    ptr = ptrNames;
-    for (j = 0; j < numberOfNames; j++,ptr++) {
-        std::cout<< *ptr ;
-    }
-}
-
-
-
-void WidgetOGL::afficherDansSelect(GLenum mode)
-{
-    if(mode == GL_SELECT)
+    float val(0);
+    int tmp;
+    for (unsigned int i(0); i<_formesAAfficher.size(); i++)
     {
-        for (unsigned int i(0); i<_formesAAfficher.size(); i++)
-        {
-            glLoadName(i);
-            _formesAAfficher[i]->afficher_forme();
-        }
-
+        _formesAAfficher[i]->afficher_forme_picking(val);
     }
 }
 
-void WidgetOGL::pickObjects(int x, int y)
+void WidgetOGL::etudeHit()
 {
     GLint viewport[4];
-    GLint hits;
+    unsigned char pixels[3];
 
-    glSelectBuffer(BUFSIZE, selectBuf);
-    glRenderMode(GL_SELECT);
+    glGetIntegerv(GL_VIEWPORT,viewport);
 
-    glMatrixMode(GL_PROJECTION);
-    glPushMatrix();
-    glLoadIdentity();
+    glReadPixels(_curseurX,viewport[3]-_curseurY,1,1,
+            GL_RGB,GL_UNSIGNED_BYTE,&pixels[0]);
 
-    glGetIntegerv(GL_VIEWPORT, viewport);
-
-    gluPickMatrix((GLdouble) x, (GLdouble) (viewport[3] - y), 5.0, 5.0, viewport);
-    gluPerspective(45, this->width() / this->height(), 0.1, 1000);
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
-    //Placement de la caméra
-    glRotatef(_angxcam, 0, 1, 0);
-    glRotatef(_angycam, 1, 0, 0);
-    glRotatef(_angzcam, 0, 0, 1);
-    glTranslatef(_posxcam,_posycam,_poszcam);
-
-    glInitNames();
-    glPushName( 10000 );
-
-    glPushMatrix();
-    afficherDansSelect(GL_SELECT);//draw scene in GL_SELECT mode to create the names
-    glPopMatrix();
-
-    hits = glRenderMode (GL_RENDER);//get the hits in GL_RENDER mode
-    if (hits != 0)
+    std::cout << "Couleur: " << static_cast<int>(pixels[0]) << ", " << (int)(pixels[1]) << ", " << (int)(pixels[2]) << std::endl;
+    bool trouve(false);
+    for (unsigned int c(0); c<255; c++)
     {
-        processHits(hits,selectBuf);
+        if (pixels[0] == c && pixels[1]!=0 && pixels[2]!=0)
+        {
+            trouve = true;
+            std::cout << "Forme " << c << std::endl;
+            emit formePick(c);
+        }
     }
+    if (trouve != true)
+        std::cout << "Vous n'avez cliqué sur rien" << std::endl;
 
-    glPopMatrix();
-    glDisable(GL_DEPTH_TEST);
+    std::cout << std::endl;
 }
-*/

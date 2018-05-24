@@ -1,5 +1,4 @@
 #pragma once
-
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include <QTimer>
@@ -33,8 +32,8 @@ public:
     void sauvegardeScene(std::string nomFichier);
     void chargementScene(std::string nomFichier);
 
-    void pickObjects(int x, int y);
-    void afficherDansSelect(GLenum mode);
+    void dessinPicking();
+    void etudeHit();
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
@@ -71,6 +70,7 @@ public slots:
 signals:
     void formeChargee(std::shared_ptr<forme> ptr, QString nomParent);
     void fichierNonTrouve(std::string nomFichier);
+    void formePick(unsigned int idForme);
 
 private:
     std::string _type;
@@ -93,6 +93,12 @@ private:
     std::vector<std::string> _adressesTX;
 
     /* Picking */
-    static const int _selectBufferSize = 100;
-    std::vector<unsigned int> _selectBuffer = std::vector<uint>(_selectBufferSize);
+    float _curseurX;
+    float _curseurY;
+    int _modeRendu;
+
+    //
+
+    static const int selectBufferSize = 100;
+    std::vector<unsigned int> selectBuffer = std::vector<uint>(selectBufferSize);
 };

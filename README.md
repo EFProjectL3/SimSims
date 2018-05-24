@@ -1,7 +1,7 @@
 # SimSims
 Projet SimSims L3 Informatique Angers
 
-SimSims v0.8
+SimSims v0.9
 
 Démarrage du programme
 - Executer SimSims dans le dossier Programme
@@ -10,10 +10,7 @@ Compilation
 - Executer make dans le dossier Programme
 
 Nouveau dans cette version
-- Modification de l'interface
-- Correction du bug sur les parents
-- (EN COURS) Ombrage
-- (EN COURS) Picking
+- Picking
 
 Elements implémentés (complet)
 - Lecture du fichier d'entrée
@@ -27,10 +24,12 @@ Elements implémentés (complet)
 - Load and save depuis la barre de menu (choix du nom)
 - Construction d'objets avancé (GL_TRIANGLES_STRIP). 
 - Choix de création lumière positionnelle / directionnelle (à vérifier avec les ombres)
+- Picking
 
 
 Idées et implémentations à venir
 - Résoudre les derniers bugs
+- Ombrage
 
 Bugs connus:
 - Les normales de la grosse forme ne sont pas correctes

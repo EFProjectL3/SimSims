@@ -57,6 +57,8 @@ public:
 
     void afficher_forme();
 
+    void afficher_forme_picking(float &i);
+
     void infoForme();
 
     bool checkNomFilles(std::string s);
@@ -116,6 +118,9 @@ public:
     void setTexture(int numTX)
     { _idTexture = numTX+3; }
 
+    void setValPick(int val)
+    { _valPick = val; }
+
     /* Getters */
     int getId()
     {return _idForme;}
@@ -160,6 +165,8 @@ public:
     { return _scale; }
     int getTexture()
     { return _idTexture; }
+    int getValPick()
+    { return _valPick; }
     std::vector<std::shared_ptr<forme>> getFilles()
     { return _FormesFille; }
 
@@ -192,6 +199,8 @@ private:
     GLfloat _scale;
 
     int _idTexture; //-1 si aucune texture n'est appliquée
+
+    int _valPick;
 
     std::vector<std::shared_ptr<forme>> _FormesFille;
     std::shared_ptr<forme> _parent;
