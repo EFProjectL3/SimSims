@@ -212,12 +212,6 @@ void WidgetOGL::timeOutSlot()
     update();
 }
 
-void WidgetOGL::slotUpdate()
-{
-    std::cout << "Update à la demande" << std::endl;
-    update();
-}
-
 void WidgetOGL::keyPressEvent(QKeyEvent * keyEvent)
 {
     switch (keyEvent->key())
@@ -331,13 +325,11 @@ void WidgetOGL::mousePressEvent(QMouseEvent* mouseEvent)
 {
     if(mouseEvent->button() == Qt::LeftButton)
     {
-        std::cout << "Clic souris enregistré en " << mouseEvent->x() << ", " << mouseEvent->y() << std::endl;
         _curseurX = mouseEvent->x();
         _curseurY = mouseEvent->y();
         _modeRendu = SELECT;
     }
 }
-
 
 
 /*
@@ -346,7 +338,7 @@ void WidgetOGL::mousePressEvent(QMouseEvent* mouseEvent)
 
 /**
  * @brief WidgetOGL::sauvegardeScene
- * Pour sauvegarder la scène complète
+ * Pour sauvegarder la scène (objets uniquement)
  */
 void WidgetOGL::sauvegardeScene(std::string nomFichier)
 {
@@ -377,6 +369,11 @@ void WidgetOGL::sauvegardeScene(std::string nomFichier)
     std::cout << "***** FIN DE SAUVEGARDE DE SCENE *****" << std::endl;
 }
 
+/**
+ * @brief WidgetOGL::chargementScene
+ * @param nomFichier
+ * Charge la scene (objets uniquements) à partir du nom de fichiers donné en paramètre
+ */
 void WidgetOGL::chargementScene(std::string nomFichier)
 {
     nomFichier = "./Sauvegardes/" + nomFichier;
@@ -666,12 +663,15 @@ void WidgetOGL::chargementScene(std::string nomFichier)
     }
 }
 
+
 /*
- *
- * *************************************** PICKING ***********************************
- *
+ * Picking
  */
 
+/**
+ * @brief WidgetOGL::dessinPicking
+ * Dessine la scene avec une couleur différente pour chaque objet
+ */
 void WidgetOGL::dessinPicking()
 {
     float val(0);
@@ -682,6 +682,10 @@ void WidgetOGL::dessinPicking()
     }
 }
 
+/**
+ * @brief WidgetOGL::etudeHit
+ * Vérifie la couleur de l'objet cliqué et l'envoie pour analyse
+ */
 void WidgetOGL::etudeHit()
 {
     GLint viewport[4];
@@ -692,19 +696,11 @@ void WidgetOGL::etudeHit()
     glReadPixels(_curseurX,viewport[3]-_curseurY,1,1,
             GL_RGB,GL_UNSIGNED_BYTE,&pixels[0]);
 
-    std::cout << "Couleur: " << static_cast<int>(pixels[0]) << ", " << (int)(pixels[1]) << ", " << (int)(pixels[2]) << std::endl;
-    bool trouve(false);
     for (unsigned int c(0); c<255; c++)
     {
         if (pixels[0] == c && pixels[1]!=0 && pixels[2]!=0)
         {
-            trouve = true;
-            std::cout << "Forme " << c << std::endl;
             emit formePick(c);
         }
     }
-    if (trouve != true)
-        std::cout << "Vous n'avez cliqué sur rien" << std::endl;
-
-    std::cout << std::endl;
 }

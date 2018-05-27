@@ -94,7 +94,7 @@ int nombreAttributForme(char* fichierDonnees, int indice)
  * @param from
  * @param to
  * @return
- *
+ * https://stackoverflow.com/questions/2896600/how-to-replace-all-occurrences-of-a-character-in-string/36960980
  * Remplace toutes les occurences de from dans la chaine str par la chaine to
  */
 std::string ReplaceAll(std::string str, const std::string& from, const std::string& to) {
@@ -110,7 +110,7 @@ std::string ReplaceAll(std::string str, const std::string& from, const std::stri
  * @param s
  * @param delim
  * @return
- *
+ * https://stackoverflow.com/questions/12966957/is-there-an-equivalent-in-c-of-phps-explode-function
  * Fonction eclatant une chaine par rapport à son délimiteur
  */
 std::vector<std::string> explode(std::string const & s, char delim)
@@ -202,12 +202,6 @@ std::shared_ptr<forme> creerFormesLecture(char* fichierDonnees, int numeroObjet,
         getline(fichier, ligneEnCours);
         while(getline(fichier, ligneEnCours))  // tant que l'on peut mettre la ligne dans "contenu"
         {
-            /* Pour debug. Affichage de ce qui est lu */
-            //nbLigne++;
-            //std::cout << "Lignes lues: " << nbLigne << std::endl;
-            //std::cout << "Etape : " << etape << std::endl;
-            //std::cout << ligneEnCours << std::endl;
-            /******************************************/
             if (ligneEnCours == "//NOUVELLEFORME")
             {
                 idTmp++;

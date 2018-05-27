@@ -175,6 +175,7 @@ void forme::afficher_forme()
             }
             glEnd();
             //Pour voir la normale "physiquement"
+            /*
             glBegin(GL_LINES);
             {
                 int j;
@@ -185,9 +186,10 @@ void forme::afficher_forme()
                 }
             }
             glEnd();
+            */
         }
         glPopMatrix();
-        for (unsigned int i(0); i<_FormesFille.size(); i++) //Pour que l'affichage de la forme se face par rapport à la forme parent
+        for (unsigned int i(0); i<_FormesFille.size(); i++) //Pour que l'affichage de la forme se fasee par rapport à la forme parent
             _FormesFille[i]->afficher_forme();
     }
     glPopMatrix();
@@ -288,7 +290,7 @@ void forme::sauvegardeForme(std::string nomFichier)
             fichier << std::endl;
             fichier << std::endl;
 
-            fichier.close();  // je referme le fichier
+            fichier.close();
         }
     }
     else  // sinon
@@ -312,7 +314,6 @@ void forme::afficher_forme_picking(float &i)
             glBegin(GL_TRIANGLES);
             {
                 glColor3f(i/255,0.2,1);
-                //std::cout << "Couleur de " << getNomForme() << ": " << i/255 << std::endl;
                 int j;
                 for (j=0; j<=_nbrFaces; j++)	//parcours des faces
                 {
@@ -331,7 +332,7 @@ void forme::afficher_forme_picking(float &i)
         }
         glPopMatrix();
         i++;
-        for (unsigned int j(0); j<_FormesFille.size(); j++) //Pour que l'affichage de la forme se face par rapport à la forme parent
+        for (unsigned int j(0); j<_FormesFille.size(); j++) //Pour que l'affichage de la forme se fasee par rapport à la forme parent
             _FormesFille[j]->afficher_forme_picking(i);
     }
     glPopMatrix();

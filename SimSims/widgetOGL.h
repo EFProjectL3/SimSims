@@ -44,7 +44,6 @@ protected:
 
 public slots:
     void timeOutSlot();
-    void slotUpdate();
     /* Lumière ambiante */
     void setAmbianteR(int r);
     void setAmbianteV(int v);
@@ -96,9 +95,4 @@ private:
     float _curseurX;
     float _curseurY;
     int _modeRendu;
-
-    //
-
-    static const int selectBufferSize = 100;
-    std::vector<unsigned int> selectBuffer = std::vector<uint>(selectBufferSize);
 };

@@ -15,8 +15,6 @@ public:
 
     void dessinerArbre();
 
-    void infoArbre();
-
 private:
     GLfloat _rayonInt;
     GLfloat _rayonExt;

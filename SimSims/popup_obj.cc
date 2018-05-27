@@ -111,7 +111,6 @@ PopUpObjet::PopUpObjet(std::vector<std::string> noms, std::vector<std::shared_pt
     QObject::connect(_le_attribut1, &QLineEdit::textChanged, this, &PopUpObjet::AffichagePopup);
     QObject::connect(_le_attribut2, &QLineEdit::textChanged, this, &PopUpObjet::AffichagePopup);
     QObject::connect(_le_attribut3, &QLineEdit::textChanged, this, &PopUpObjet::AffichagePopup);
-    QObject::connect(this,&PopUpObjet::pretPourUpdate,_affichage_popup,&WidgetOGL::slotUpdate);
 }
 
 PopUpObjet::~PopUpObjet()
@@ -209,7 +208,6 @@ void PopUpObjet::OnClicCreate()
             }
             j++;
         }
-        //Debug: ptrForme->infoForme();
         emit creationObjet(ptrForme, parent);
 
         this->close();

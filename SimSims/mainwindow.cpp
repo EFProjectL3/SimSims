@@ -913,9 +913,6 @@ void MainWindow::SliderAObjet()
                 TOUS_LES_OBJETS[i]->setAngZ(_s_angZ_obj->value());
             if (sender()==_le_scale_obj)
                 TOUS_LES_OBJETS[i]->setScale(_le_scale_obj->text().toFloat());
-
-            //Debug
-            //TOUS_LES_OBJETS[i]->infoForme();
         }
     }
 }

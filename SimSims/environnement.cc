@@ -31,7 +31,7 @@ std::vector<arbre> creerArbres()
     return lesArbres;
 }
 
-void affiche15(unsigned int & indiceArbre)  //15 parce qu'il y avait 15 arbres à la base
+void affiche7(unsigned int & indiceArbre)
 {
     glPushMatrix();
     {
@@ -59,14 +59,14 @@ void affiche15(unsigned int & indiceArbre)  //15 parce qu'il y avait 15 arbres �
     glPopMatrix();
 }
 
-void affiche6(unsigned int & indiceArbre)   //6 parce qu'il y a vait 6 arbres à la base
+void affiche2(unsigned int & indiceArbre)
 {
     glPushMatrix();
     {
         arbres[indiceArbre].dessinerArbre();    //Arbre 1
         indiceArbre++;
         glTranslated(70,0,0);
-        arbres[indiceArbre].dessinerArbre();    //Arbre 6
+        arbres[indiceArbre].dessinerArbre();    //Arbre 2
         indiceArbre++;
     }
     glPopMatrix();
@@ -196,19 +196,19 @@ void creerEnvironnement()
         glBindTexture(GL_TEXTURE_2D,textures[2]);
 
         glTranslated(arbXInit,arbYInit,arbZInit);
-        affiche15(indiceArbre);    //Premier rangée
+        affiche7(indiceArbre);    //Premier rangée
         glTranslated(0,0,10);
-        affiche6(indiceArbre);     //Deuxieme rangée
+        affiche2(indiceArbre);     //Deuxieme rangée
         glTranslated(0,0,10);
-        affiche6(indiceArbre);     //Troisieme rangée
+        affiche2(indiceArbre);     //Troisieme rangée
         glTranslated(0,0,10);
-        affiche6(indiceArbre);      //Quatième rangée
+        affiche2(indiceArbre);      //Quatième rangée
         glTranslated(0,0,10);
-        affiche6(indiceArbre);      //Cinquieme rangée
+        affiche2(indiceArbre);      //Cinquieme rangée
         glTranslated(0,0,10);
-        affiche6(indiceArbre);      //Sixème rangée
+        affiche2(indiceArbre);      //Sixème rangée
         glTranslated(0,0,10);
-        affiche15(indiceArbre);     //Septieme rangée
+        affiche7(indiceArbre);     //Septieme rangée
     }
     glPopMatrix();
 }

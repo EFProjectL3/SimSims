@@ -11,6 +11,7 @@ Compilation
 
 Nouveau dans cette version
 - Picking
+- Suppression du code inutile (code de debug)
 
 Elements implémentés (complet)
 - Lecture du fichier d'entrée
@@ -28,6 +29,7 @@ Elements implémentés (complet)
 
 
 Idées et implémentations à venir
+- EMPECHER LA CAMERA DE SORTIR
 - Résoudre les derniers bugs
 - Ombrage
 
